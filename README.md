@@ -11,8 +11,8 @@ Thai-language responsive gold-market dashboard with a paper trading journal.
 ## Supabase
 
 1. In Supabase SQL Editor, run `supabase/schema.sql`.
-2. Copy `.env.example` to `.env.local`, then set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` from Project Settings → API.
-3. Never put a service-role key in browser code. The app keeps a local paper-trading journal and attempts to persist trades to Supabase when configured.
+2. Copy `.env.example` to `.env.local`. The project URL is prefilled; set `VITE_SUPABASE_ANON_KEY` to the project's publishable key.
+3. Run `supabase/schema.sql` once in the Supabase SQL Editor. Enable **Allow anonymous sign-ins** under Authentication → Sign In / Providers. The app uses an anonymous Supabase account and row-level security to keep each paper-trading journal private. Never put a service-role key in browser code.
 
 ## GitHub Pages
 
