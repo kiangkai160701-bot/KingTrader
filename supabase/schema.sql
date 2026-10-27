@@ -10,5 +10,16 @@ create table if not exists public.trades (
   created_at timestamptz not null default now()
 );
 alter table public.trades enable row level security;
-create policy "Users manage their own paper trades" on public.trades
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'trades'
+      and policyname = 'Users manage their own paper trades'
+  ) then
+    create policy "Users manage their own paper trades" on public.trades
+      for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+  end if;
+end
+$$;
