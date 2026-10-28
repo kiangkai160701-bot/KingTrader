@@ -31,7 +31,7 @@ main[data-v=home]{grid-template-columns:minmax(0,1fr) 370px}
 .card h3{margin:0 0 12px;font-size:15px}.sub{color:var(--mut);font-size:12px}
 #sC{grid-column:1}#sM{grid-column:1}#sH{grid-column:1}#sA{grid-column:2;grid-row:1/span 3}
 main:not([data-v=home])>*{grid-column:1!important;grid-row:auto!important}
-#chart{height:min(52vh,470px);min-height:320px}
+#chart{height:min(52vh,470px);min-height:320px;position:relative;overflow:hidden;background:#050a12;border-radius:8px}
 .three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.three .card{padding:14px}
 table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px 4px;text-align:left;border-top:1px solid var(--line)}th{color:var(--mut);font-weight:400;font-size:12px}td:last-child,th:last-child{text-align:right}
 .bar{height:5px;border-radius:9px;background:#16202f;overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#7af0cb)}
@@ -62,7 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px 4px;t
 <div class="stat"><div class="acct"><span class="sub">Equity</span><br><b id="eq">$0</b></div><span class="live">● LIVE</span><span class="dt" id="clock"></span></div></div>
 
 <main id="main" data-v="home">
-<section class="card" id="sC"><div class="sub" style="margin-bottom:8px"><b style="color:#fff;font-size:15px">XAUUSD</b> · Gold / US Dollar · กราฟแท่งเทียน (TradingView Lightweight Charts)</div><div id="chart"></div></section>
+<section class="card" id="sC"><div class="sub" style="margin-bottom:8px"><b style="color:#fff;font-size:15px">XAUUSD</b> · Gold / US Dollar · Live chart จาก TradingView · XAU/USD</div><div id="chart"><iframe title="TradingView XAUUSD live chart" loading="eager" referrerpolicy="origin" allowfullscreen src="https://www.tradingview.com/widgetembed/?frameElementId=tvxau&symbol=OANDA%3AXAUUSD&interval=60&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=070d18&theme=dark&style=1&timezone=Asia%2FBangkok&withdateranges=1&hideideas=1&locale=th" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:8px;z-index:5"></iframe></div></section>
 <div class="three" id="sM">
 <div class="card"><h3>ข้อมูลตลาด</h3><table id="mk"></table></div>
 <div class="card"><h3>Timeframe Analysis</h3><table id="tfa"></table></div>
@@ -106,7 +106,7 @@ function load(){data=gen(tf,px);open0=data[Math.max(0,data.length-Math.round(864
 vs.setData(data.map(x=>({time:x.time,value:x.v,color:x.close>=x.open?'#14c99a55':'#ef516155'})));const c=data.map(x=>x.close),a=ema(c,20),b=ema(c,50);
 l1.setData(data.map((x,i)=>({time:x.time,value:a[i]})));l2.setData(data.map((x,i)=>({time:x.time,value:b[i]})));ch.timeScale().fitContent();ai()}
 $('#tfs').innerHTML=TFS.map(t=>`<button data-t="${t[1]}" class="${t[1]==tf?'on':''}">${t[0]}</button>`).join('');
-$('#tfs').onclick=e=>{const t=e.target.dataset.t;if(!t)return;tf=+t;document.querySelectorAll('#tfs button').forEach(b=>b.classList.toggle('on',b===e.target));load()};
+$('#tfs').onclick=e=>{const t=e.target.dataset.t;if(!t)return;tf=+t;document.querySelectorAll('#tfs button').forEach(b=>b.classList.toggle('on',b===e.target));const frame=document.querySelector('#chart iframe');if(frame){const q=new URL(frame.src);q.searchParams.set('interval',t);frame.src=q.href}load()};
 /* AI */
 const base={};[3600,14400,86400,604800].forEach(t=>{base[t]=metrics(gen(t,px))});
 function ai(){const m=metrics(data),sc=(m.tr*.6+Math.max(-1,Math.min(1,m.cc/150))*.4);$('#needle').style.transform=`rotate(${sc*80}deg)`;
