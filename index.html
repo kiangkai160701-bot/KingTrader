@@ -2466,7 +2466,8 @@ async function optimizeSiteLogo(file) {
     reader.onerror = () => reject(new Error('อ่านไฟล์รูปภาพไม่สำเร็จ'));
     reader.readAsDataURL(blob);
   });
-}\napplySiteSettings(siteSettings);
+}
+applySiteSettings(siteSettings);
 function enter(u, branch = currentBranch) {
 setCurrentBranch(branch);
 me = u; $('#lgPinInput').value = ''; $('#lgUser').value = '';
