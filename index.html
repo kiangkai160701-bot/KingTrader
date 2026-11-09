@@ -862,7 +862,7 @@ html.dark-theme .theme-opt:not([data-dark="1"]) .theme-emoji{background:linear-g
 /* KING STOCK core build: hide optional modules without dedicated RPC support. */
 .announce-bar,.announce-card,.chat-btn,.chat-rooms-btn,.chat-dot,.chp,#chatRooms,#chatRoom,#chatRoomsBtn,
 #eggFeedPage,.ef-page,.backup-admin-card{display:none!important}
-</style>
+.appearance-mode-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--theme-soft)}.appearance-mode-row b{font-size:13px}.appearance-mode-row .settings-hint{margin:2px 0 0}.color-theme-opt{min-height:62px!important;gap:7px!important}.color-swatch{display:block;width:27px;height:27px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 2px 5px rgba(0,0,0,.12)}.color-theme-opt.active{outline:2px solid var(--acc)!important}</style>
 <style id="smooth-motion">
 html{-webkit-text-size-adjust:100%}
 button,.row,[data-t]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -2274,24 +2274,16 @@ function createCorporateTheme(id, name, dark, accent, accentHover) {
     }
   };
 }
-const KINGSTOCK_THEME_IDS = [
-  'king-red','king-red-dark','king-carbon','king-carbon-dark','king-wine',
-  'executive-blue','executive-blue-dark','executive-green','executive-green-dark','executive-slate'
+const THEME_PALETTE = [
+  ['ui-red','แดง','#dc3545','#b92332'],['ui-orange','ส้ม','#ea7b25','#c65e16'],
+  ['ui-amber','เหลืองทอง','#d39b19','#ad7910'],['ui-green','เขียว','#23966b','#16764f'],
+  ['ui-teal','เขียวน้ำทะเล','#159c9a','#0d7776'],['ui-blue','น้ำเงิน','#3478d4','#245eae'],
+  ['ui-indigo','คราม','#6658d3','#4e41b4'],['ui-purple','ม่วง','#9254c8','#7139a6'],
+  ['ui-pink','ชมพู','#d94f91','#b93674'],['ui-slate','เทา','#64748b','#475569']
 ];
-[
-  ['king-red','แดงผู้บริหาร · สว่าง',false,'#c62828','#a91f28'],
-  ['king-red-dark','แดงผู้บริหาร · มืด',true,'#f0444e','#d92d36'],
-  ['king-carbon','คาร์บอนแดง · สว่าง',false,'#a61f2b','#861923'],
-  ['king-carbon-dark','คาร์บอนแดง · มืด',true,'#e5484d','#bd3038'],
-  ['king-wine','ไวน์ดำ · มืด',true,'#d13b50','#aa263b'],
-  ['executive-blue','น้ำเงินองค์กร · สว่าง',false,'#315f91','#244a73'],
-  ['executive-blue-dark','น้ำเงินองค์กร · มืด',true,'#6da8e8','#4d88c9'],
-  ['executive-green','เขียวองค์กร · สว่าง',false,'#28765b','#1d5d47'],
-  ['executive-green-dark','เขียวองค์กร · มืด',true,'#5dbb91','#36966c'],
-  ['executive-slate','สเลต · มืด',true,'#a4adba','#828c9a']
-].forEach(([id,name,dark,accent,hover]) => {
-  THEMES[id] = createCorporateTheme(id,name,dark,accent,hover);
-});
+const KINGSTOCK_THEME_IDS = THEME_PALETTE.map(([id]) => id);
+THEME_PALETTE.forEach(([id,name,accent,hover]) => { THEMES[id] = createCorporateTheme(id,name,false,accent,hover); });
+let uiDarkMode = store.get('inv_dark_mode', false) === true;
 
 let uiTopRunners = store.get('inv_top_runners', true) !== false;
 const RUNNER_LANE_H = 20;
@@ -2330,18 +2322,17 @@ if (window.visualViewport) window.visualViewport.addEventListener('resize', size
 }
 }
 }
-let currentTheme = KINGSTOCK_THEME_IDS.includes(store.get('inv_theme', 'king-red')) ? store.get('inv_theme', 'king-red') : 'king-red';
+let currentTheme = KINGSTOCK_THEME_IDS.includes(store.get('inv_theme', 'ui-red')) ? store.get('inv_theme', 'ui-red') : 'ui-red';
 function applyTheme(id) {
-const aliases = { teal:'sakura', indigo:'lavender', emerald:'peach', ruby:'ocean' };
-currentTheme = KINGSTOCK_THEME_IDS.includes(id) ? id : (KINGSTOCK_THEME_IDS.includes(aliases[id]) ? aliases[id] : 'king-red');
-const theme = THEMES[currentTheme];
+currentTheme = KINGSTOCK_THEME_IDS.includes(id) ? id : 'ui-red';
+const palette = THEME_PALETTE.find(item => item[0] === currentTheme) || THEME_PALETTE[0];
+const theme = createCorporateTheme(palette[0],palette[1],uiDarkMode,palette[2],palette[3]);
+THEMES[currentTheme] = theme;
 document.body.setAttribute('data-theme', currentTheme);
-document.documentElement.classList.toggle('formal-theme', !!theme.formal);
-document.documentElement.classList.toggle('dark-theme', !!theme.dark);
+document.documentElement.classList.toggle('formal-theme', true);
+document.documentElement.classList.toggle('dark-theme', uiDarkMode);
 ['--warn','--warn-bg'].forEach(k => document.documentElement.style.removeProperty(k));
 Object.entries(theme.colors).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
-if (theme.friends.length) document.querySelectorAll('.stock-friend').forEach((friend, index) => { const first = friend.childNodes[0]; if (first?.nodeType === Node.TEXT_NODE) first.nodeValue = theme.friends[index % theme.friends.length]; });
-document.querySelectorAll('.story-mark,.brand-badge,.boot-mascot,.lg-icon,.theme-emoji').forEach(mark => { if (mark.classList.contains('theme-emoji') || (mark.classList.contains('boot-mascot') && mark.querySelector('img'))) return; mark.textContent = theme.mascot; });
 try { renderTopRunners(); } catch {}
 }
 applyTheme(currentTheme);
@@ -3902,10 +3893,9 @@ return `<div class="sect"><h2>ตั้งค่าระบบ</h2><small>ก�
     ${canViewStorage ? `<div class="dash-card storage-card disclosure-card" id="storageUsageCard"><button type="button" class="disclosure-summary" data-disclosure-toggle aria-expanded="false" aria-controls="storageDisclosurePanel"><span>🗄️ พื้นที่ฐานข้อมูล</span><span class="disclosure-chevron" aria-hidden="true"></span></button><div class="disclosure-panel" id="storageDisclosurePanel" aria-hidden="true" inert><div class="disclosure-inner"><div class="storage-heading"><div><p class="settings-hint">ขนาดฐานข้อมูลจริง เทียบกับโควตาแผน Free 500 MB</p></div><button type="button" class="btn sm sec" id="refreshStorageUsage">ตรวจตอนนี้</button></div><div class="storage-usage-grid"><div class="storage-metric"><small>ใช้ไปแล้ว</small><b id="storageUsed">กำลังตรวจสอบ…</b><small>ฐานข้อมูลจริง</small></div><div class="storage-metric"><small>พื้นที่เหลือ</small><b id="storageRemaining">กำลังตรวจสอบ…</b><small>จากโควตา</small></div><div class="storage-metric"><small>เปอร์เซ็นต์ที่ใช้</small><b id="storagePercent">กำลังตรวจสอบ…</b><small id="storageQuota">โควตา 500 MB</small></div></div><div class="storage-progress" role="progressbar" aria-label="สัดส่วนพื้นที่ฐานข้อมูล" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="storageUsageBar"></span></div><div class="storage-footer"><small>ตรวจล่าสุด: <span id="storageCheckedAt">กำลังโหลด</span></small><small>ตรวจอัตโนมัติทุก 1 ชั่วโมงขณะเปิดหน้านี้</small></div><small class="storage-error" id="storageUsageError" role="status"></small></div></div></div>` : ''}
     <div class="dash-card disclosure-card text-scale-card"><button type="button" class="disclosure-summary" data-disclosure-toggle aria-expanded="false" aria-controls="textScaleDisclosurePanel"><span>🔠 ขนาดตัวอักษร</span><span class="disclosure-chevron" aria-hidden="true"></span></button><div class="disclosure-panel" id="textScaleDisclosurePanel" aria-hidden="true" inert><div class="disclosure-inner"><p class="settings-hint">เลือกขนาดข้อความที่อ่านสบาย ระบบจะจำค่าที่เลือกไว้ในอุปกรณ์นี้</p><div class="text-scale-presets" id="textScalePresets" role="group" aria-label="ขนาดตัวอักษร">${[[92,'เล็ก'],[100,'ปกติ'],[112,'ใหญ่']].map(([value,label]) => `<button type="button" class="btn sm sec text-scale-option" data-text-scale="${value}" aria-pressed="${uiTextScale===value}">${label}</button>`).join('')}</div></div></div></div>
     <div class="dash-card disclosure-card theme-picker-card"><button type="button" class="disclosure-summary" data-disclosure-toggle aria-expanded="false" aria-controls="themeDisclosurePanel"><span>🎨 เลือกธีม</span><span class="disclosure-chevron" aria-hidden="true"></span></button><div class="disclosure-panel" id="themeDisclosurePanel" aria-hidden="true" inert><div class="disclosure-inner">
-      <p style="font-size:12.5px;color:var(--mute);margin-bottom:6px">เลือกธีมที่ชอบ ธีมจะบันทึกแยกในอุปกรณ์นี้ ${isWideDesktop()?'เลื่อนแถบด้านล่างเพื่อดูธีมเพิ่มเติม':'ปัดซ้ายหรือขวาเพื่อดูธีมเพิ่มเติม'}</p>
-      <div class="theme-picker" id="themePicker" aria-label="แถบเลือกธีม">${themePages.map((page,index) => `<div class="theme-page" data-theme-page="${index}" role="group" aria-label="ชุดธีมที่ ${index+1}">${page.map(theme => `<button type="button" class="theme-opt ${currentTheme===theme.id?'active':''}" data-th="${theme.id}" data-dark="${theme.dark?1:0}" style="--theme-chip:${theme.colors['--theme-chip']}" aria-pressed="${currentTheme===theme.id}" title="ธีม${esc(theme.name)}"><span class="theme-emoji" aria-hidden="true">${theme.mascot}</span><span class="theme-label">${esc(theme.name)}</span></button>`).join('')}</div>`).join('')}</div>
-      
-
+      <div class="appearance-mode-row"><div><b>🌗 โหมดมืด / สว่าง</b><p class="settings-hint">เลือกโหมดการแสดงผลแยกจากสีหลักของระบบ</p></div><button type="button" class="runner-switch ${uiDarkMode?'on':''}" id="darkModeSwitch" role="switch" aria-checked="${uiDarkMode}" aria-label="เปิดปิดโหมดมืด"></button></div>
+      <p style="font-size:12.5px;color:var(--mute);margin:12px 0 6px">เลือกสีหลักของ UI ได้ 10 สี และบันทึกไว้ในอุปกรณ์นี้</p>
+      <div class="theme-picker" id="themePicker" aria-label="เลือกสีระบบ">${THEME_PALETTE.map(([id,name,accent]) => `<button type="button" class="theme-opt color-theme-opt ${currentTheme===id?'active':''}" data-th="${id}" style="--swatch:${accent}" aria-pressed="${currentTheme===id}" title="สี${esc(name)}"><span class="color-swatch" aria-hidden="true"></span><span class="theme-label">${name}</span></button>`).join('')}</div>
       <div class="sticker-level-box runner-toggle-box"><div class="runner-toggle-row"><div><b>🏃 ตัวการ์ตูนวิ่งบนแถบเมนูล่าง</b><p class="settings-hint">ตัวการ์ตูนจิ๋วตามธีมที่เลือกวิ่งไปกลับบนขอบบนของแถบเมนูด้านล่าง ปิดได้ถ้าอยากให้เครื่องลื่นขึ้น</p></div><button type="button" class="runner-switch ${uiTopRunners?'on':''}" id="topRunnerSwitch" role="switch" aria-checked="${uiTopRunners}" aria-label="เปิดปิดตัวการ์ตูนวิ่งบนแถบเมนู"></button></div></div>
       <div class="sticker-level-box"><b>🧸 จำนวนสติ๊กเกอร์การ์ตูน</b><p class="settings-hint">ลดจำนวนสติ๊กเกอร์ถ้าเครื่องกระตุกหรือช้า ค่าเริ่มต้น 100% ระบบจำค่านี้ไว้ในอุปกรณ์นี้</p><div class="text-scale-presets sticker-level-presets" id="stickerLevelPresets" role="group" aria-label="จำนวนสติ๊กเกอร์">${STK_LEVELS.map(v => `<button type="button" class="btn sm sec text-scale-option" data-sticker-level="${v}" aria-pressed="${uiStickerLevel===v}">${v}%</button>`).join('')}</div></div>
     </div></div></div>
@@ -4259,10 +4249,16 @@ if (verificationToken) cloudRpc('api_logout', { p_token: verificationToken }).ca
 $('#themePicker').onclick = e => {
 const opt = e.target.closest('.theme-opt'); if (!opt) return;
 applyTheme(opt.dataset.th);
-updatePageMascots();
 store.set('inv_theme', currentTheme);
 document.querySelectorAll('.theme-opt').forEach(o => { const selected = o.dataset.th === currentTheme; o.classList.toggle('active', selected); o.setAttribute('aria-pressed', selected); });
-toast(`เปลี่ยนเป็นธีม${THEMES[currentTheme].name}แล้ว`);
+toast(`เปลี่ยนสีระบบเป็น${THEMES[currentTheme].name}แล้ว`);
+};
+$('#darkModeSwitch').onclick = e => {
+uiDarkMode = !uiDarkMode; store.set('inv_dark_mode',uiDarkMode);
+applyTheme(currentTheme);
+e.currentTarget.classList.toggle('on',uiDarkMode);
+e.currentTarget.setAttribute('aria-checked',String(uiDarkMode));
+toast(uiDarkMode ? 'เปิดโหมดมืดแล้ว' : 'เปิดโหมดสว่างแล้ว');
 };
 $('#topRunnerSwitch').onclick = e => {
 uiTopRunners = !uiTopRunners; store.set('inv_top_runners', uiTopRunners);
