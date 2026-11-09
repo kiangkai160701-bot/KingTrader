@@ -80,11 +80,11 @@ button{cursor:pointer;border:0;background:none;user-select:none}
 .fish{background:linear-gradient(145deg,#fff7fb,#ffd5df)}
 .leaf{background:linear-gradient(145deg,#fff,#e4f1ff)}
 .art-caption{color:#98778a}
-.sushi-friends{position:absolute;right:26px;bottom:62px;z-index:2;display:flex;align-items:flex-end;gap:8px}
-.sushi-friend{width:53px;height:53px;border:3px solid #fff;border-radius:18px;background:#fff9f7;display:grid;place-items:center;position:relative;box-shadow:0 8px 18px rgba(165,111,135,.18);font-size:29px;transform:rotate(-7deg)}
-.sushi-friend:nth-child(2){width:46px;height:46px;border-radius:50%;background:#fff7dd;transform:rotate(7deg)}
-.sushi-friend:nth-child(3){width:39px;height:39px;border-radius:14px;background:#eaf3ff;transform:rotate(-3deg)}
-.sushi-friend i{position:absolute;bottom:-8px;font-style:normal;font-size:10px;line-height:1;color:#76546a;background:#fff;border-radius:99px;padding:2px 5px;box-shadow:0 2px 5px rgba(100,70,90,.12)}
+.stock-friends{position:absolute;right:26px;bottom:62px;z-index:2;display:flex;align-items:flex-end;gap:8px}
+.stock-friend{width:53px;height:53px;border:3px solid #fff;border-radius:18px;background:#fff9f7;display:grid;place-items:center;position:relative;box-shadow:0 8px 18px rgba(165,111,135,.18);font-size:29px;transform:rotate(-7deg)}
+.stock-friend:nth-child(2){width:46px;height:46px;border-radius:50%;background:#fff7dd;transform:rotate(7deg)}
+.stock-friend:nth-child(3){width:39px;height:39px;border-radius:14px;background:#eaf3ff;transform:rotate(-3deg)}
+.stock-friend i{position:absolute;bottom:-8px;font-style:normal;font-size:10px;line-height:1;color:#76546a;background:#fff;border-radius:99px;padding:2px 5px;box-shadow:0 2px 5px rgba(100,70,90,.12)}
 #login .lg{background:#fffdfb}
 .lg-icon{background:linear-gradient(140deg,#f4a8bf,#f5c99e);box-shadow:0 8px 18px rgba(224,151,174,.22)}
 .lg .eyebrow{color:#c26c88}
@@ -111,7 +111,7 @@ button{cursor:pointer;border:0;background:none;user-select:none}
 .branch-confirm-note b{color:var(--bad)}
 .branch-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 .branch-confirm-actions .btn{min-height:43px}
-@media(max-width:680px){.login-story{min-height:265px;background:linear-gradient(145deg,#ffe0e8 0%,#ffefdc 54%,#e5eaff 100%)}.sushi-friends{right:18px;bottom:53px;gap:4px}.sushi-friend{width:42px;height:42px;font-size:24px;border-radius:15px}.sushi-friend:nth-child(2){width:37px;height:37px}.sushi-friend:nth-child(3){width:32px;height:32px;font-size:20px}.story-foot{position:relative;z-index:3}}
+@media(max-width:680px){.login-story{min-height:265px;background:linear-gradient(145deg,#ffe0e8 0%,#ffefdc 54%,#e5eaff 100%)}.stock-friends{right:18px;bottom:53px;gap:4px}.stock-friend{width:42px;height:42px;font-size:24px;border-radius:15px}.stock-friend:nth-child(2){width:37px;height:37px}.stock-friend:nth-child(3){width:32px;height:32px;font-size:20px}.story-foot{position:relative;z-index:3}}
 #app{min-height: 100vh;display: flex;flex-direction: column;background: var(--bg-app)}
 .top{position: sticky;top: 0;z-index: 30;background: rgba(15,23,42,0.94);backdrop-filter: blur(12px);color: #fff;padding: 12px 18px;padding-top: calc(12px + env(safe-area-inset-top,0px));display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid rgba(255,255,255,0.08)}
 .brand{font-weight: 700;font-size: 17px;display: flex;align-items: center;gap: 10px}
@@ -232,7 +232,7 @@ html,body{background:var(--bg-app);color:var(--ink)}
 #app{position:relative;isolation:isolate}
 #app main{position:relative;z-index:1}
 #app::before,#app::after{position:fixed;z-index:0;pointer-events:none;opacity:.075;filter:saturate(.9);user-select:none}
-#app::before{content:"🍙";right:18px;top:88px;font-size:54px;transform:rotate(12deg)}
+#app::before{content:"📋";right:18px;top:88px;font-size:54px;transform:rotate(12deg)}
 #app::after{content:"📦";left:15px;bottom:104px;font-size:46px;transform:rotate(-12deg)}
 .theme-opt{transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 3px 8px rgba(125,83,105,.1)}
 .theme-opt:hover{transform:scale(1.08)}
@@ -348,7 +348,7 @@ html,body{background:var(--bg-app);color:var(--ink)}
 .lg .in{min-height:48px;font-size:15px}
 .login-submit{min-height:48px}
 .login-note{font-size:11px!important}
-@media(max-width:680px){#login{min-height:100dvh;align-items:center;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}.login-wrap{width:100%;max-width:440px;min-height:0;grid-template-columns:1fr;border-radius:22px;overflow:hidden}.login-story{min-height:112px;padding:19px 18px 16px;display:block}.story-brand,.ingredient-art,.story-foot{display:none}.story-copy{margin:0;padding-right:94px}.story-copy h2{font-size:17px;line-height:1.5;margin:0;font-weight:600}.story-copy h2 span{font-size:15px;font-weight:500}.sushi-friends{right:14px;bottom:18px;gap:3px}.sushi-friend{width:37px;height:37px;border-width:2px;border-radius:13px;font-size:21px}.sushi-friend:nth-child(2){width:33px;height:33px}.sushi-friend:nth-child(3){width:29px;height:29px;font-size:18px}.sushi-friend i{font-size:8px;bottom:-7px}#login .lg{padding:21px 20px 20px}.lg-header{text-align:left;margin-bottom:17px}.lg-icon{display:none}.lg h1{font-size:20px;margin:0}.lg .fld{margin-bottom:13px}.lg .fld span{font-size:13px;margin-bottom:6px}.lg .in{min-height:48px;font-size:15px}.login-submit{min-height:48px;font-size:15px}.login-submit span{font-size:17px}.login-note{display:none}.msg{margin-bottom:4px}}
+@media(max-width:680px){#login{min-height:100dvh;align-items:center;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}.login-wrap{width:100%;max-width:440px;min-height:0;grid-template-columns:1fr;border-radius:22px;overflow:hidden}.login-story{min-height:112px;padding:19px 18px 16px;display:block}.story-brand,.ingredient-art,.story-foot{display:none}.story-copy{margin:0;padding-right:94px}.story-copy h2{font-size:17px;line-height:1.5;margin:0;font-weight:600}.story-copy h2 span{font-size:15px;font-weight:500}.stock-friends{right:14px;bottom:18px;gap:3px}.stock-friend{width:37px;height:37px;border-width:2px;border-radius:13px;font-size:21px}.stock-friend:nth-child(2){width:33px;height:33px}.stock-friend:nth-child(3){width:29px;height:29px;font-size:18px}.stock-friend i{font-size:8px;bottom:-7px}#login .lg{padding:21px 20px 20px}.lg-header{text-align:left;margin-bottom:17px}.lg-icon{display:none}.lg h1{font-size:20px;margin:0}.lg .fld{margin-bottom:13px}.lg .fld span{font-size:13px;margin-bottom:6px}.lg .in{min-height:48px;font-size:15px}.login-submit{min-height:48px;font-size:15px}.login-submit span{font-size:17px}.login-note{display:none}.msg{margin-bottom:4px}}
 @media(max-height:620px) and (max-width:680px){#login{align-items:flex-start}.login-wrap{margin:auto 0}.login-story{min-height:96px}.#login .lg{padding-top:16px;padding-bottom:16px}}
 .theme-picker{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px!important;margin-top:13px!important}
 .theme-opt{width:auto!important;height:auto!important;min-height:62px;border-radius:15px!important;padding:8px 6px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid var(--line)!important;background:var(--theme-chip)!important;color:var(--ink)!important;font-size:11px;font-weight:600;line-height:1.2}
@@ -682,7 +682,7 @@ button:not(.drag-handle),.in,.row,.st,.history-item,.dash-card,.card,.theme-opt,
 html.formal-theme #login{background:radial-gradient(ellipse at 12% 8%,var(--theme-wash),transparent 38%),radial-gradient(ellipse at 90% 92%,var(--theme-wash-2),transparent 40%),var(--bg-app)}
 html.formal-theme .login-story{color:var(--ink);background:linear-gradient(145deg,var(--theme-story-1),var(--theme-story-2) 58%,var(--theme-story-3))}
 html.formal-theme .login-story:after{opacity:.32;background-image:radial-gradient(circle at 13% 77%,rgba(255,255,255,.7) 0 5px,transparent 6px),radial-gradient(circle at 88% 23%,rgba(255,255,255,.7) 0 7px,transparent 8px),radial-gradient(circle at 73% 80%,var(--theme-wash) 0 45px,transparent 46px)}
-html.formal-theme .ingredient-art,html.formal-theme .sushi-friends{display:none!important}
+html.formal-theme .ingredient-art,html.formal-theme .stock-friends{display:none!important}
 html.formal-theme #app::before,html.formal-theme #app::after,html.formal-theme .sect h2::before{content:none!important;display:none!important}
 html.formal-theme .card-mascot{display:none!important}
 html.formal-theme .story-brand,html.formal-theme .story-copy h2{color:var(--ink)}
@@ -783,7 +783,7 @@ html.dark-theme :is(.history-badge.out,.p-out){background:var(--bad-bg)!importan
 html.dark-theme :is(.p-low,.owner-tag){background:var(--warn-bg)!important;color:var(--warn)!important}
 html.dark-theme .seg input:checked+span{background:var(--theme-chip);color:var(--ink)!important}
 html.dark-theme :is(.permission-option,.icon-tool,.operator-note){background:var(--theme-soft)!important;color:var(--ink)}
-html.dark-theme .sushi-friend i{background:var(--card-bg);color:var(--ink)}
+html.dark-theme .stock-friend i{background:var(--card-bg);color:var(--ink)}
 html.dark-theme .btn.sec{color:var(--ink)!important;box-shadow:0 3px 9px var(--theme-shadow)}
 html.dark-theme .btn.sec:hover{background:var(--theme-soft)!important}
 html.dark-theme .meter{box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
@@ -854,6 +854,10 @@ html.dark-theme .theme-opt:not([data-dark="1"]) .theme-emoji{background:linear-g
 .ef-preview{max-width:100%;max-height:150px;border-radius:10px;margin-top:8px}
 @media(min-width:1100px){.ef-page{inset:10px 10px 10px auto;width:min(760px,96vw);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 40px rgba(0,0,0,.18)}}
 
+
+/* KING STOCK core build: hide optional modules without dedicated RPC support. */
+.announce-bar,.announce-card,.chat-btn,.chat-rooms-btn,.chat-dot,.chp,#chatRooms,#chatRoom,#chatRoomsBtn,
+#eggFeedPage,.ef-page,.backup-admin-card{display:none!important}
 </style>
 <style id="smooth-motion">
 html{-webkit-text-size-adjust:100%}
@@ -1721,7 +1725,7 @@ html.formal-theme .top-runway{display:none!important}
     <div class="login-story" aria-hidden="true">
       <div class="story-brand"><span class="story-mark" aria-hidden="true">📦</span><span>KING STOCK<span class="story-brand-sub">ระบบจัดการสต๊อกสำหรับร้านค้าทั่วไป</span></span></div>
       <div class="story-copy"><h2>ระบบจัดการสต๊อกสำหรับร้านค้าทั่วไป</h2></div>
-      <div class="ingredient-art"><span class="ingredient rice">🍚</span><span class="ingredient fish">🐟</span><span class="ingredient leaf">🌿</span><span class="art-caption">จัดการสินค้าได้ครบในที่เดียว</span></div>
+      <div class="ingredient-art"><span class="ingredient rice">📦</span><span class="ingredient fish">🏷️</span><span class="ingredient leaf">🛒</span><span class="art-caption">จัดการสินค้าได้ครบในที่เดียว</span></div>
       <div class="story-foot"><span>KING STOCK</span><span>จัดการง่าย · ใช้งานสะดวก · แยกข้อมูลเป็นสัดส่วน</span></div>
     </div>
     <form class="lg" id="lgForm" autocomplete="on">
@@ -1746,7 +1750,7 @@ html.formal-theme .top-runway{display:none!important}
       <div class="brand-badge">📦</div>
       <div class="brand-copy">
         <div class="brand-title-row"><span class="brand-title">KING STOCK</span><span class="sync-status hide" id="syncStatus" role="status" aria-live="polite" aria-label="ข้อมูลอัปเดตจากเครื่องอื่นแล้ว"><i class="sync-status-dot" aria-hidden="true"></i><span>อัปเดต</span></span></div>
-        <small class="brand-branch" id="branchName">สาขาพันท้ายนรสิงห์</small><small id="clock">กำลังโหลดเวลา...</small>
+        <small class="brand-branch" id="branchName">สาขาหลัก</small><small id="clock">กำลังโหลดเวลา...</small>
       </div>
     </div>
     <nav class="dtabs" id="dtabs"></nav>
@@ -1841,8 +1845,8 @@ this.persist({ token: v, branchId, expiresAt: now + 7 * 24 * 60 * 60 * 1000, log
 };
 let cloudToken = cloudTokenStore.get(), syncSnapshot = null, syncVersion = 0, syncQueue = Promise.resolve(), cloudBusy = false, storageUsageTimer = null, storageUsageBusy = false;
 const branchStore = { key: 'inv_selected_branch', get() { try { return localStorage.getItem(this.key) || ''; } catch { return ''; } }, set(id) { try { if (id) localStorage.setItem(this.key, id); else localStorage.removeItem(this.key); } catch {} } };
-const PRIMARY_BRANCH_FALLBACK = { id: 'e735a3bf-8a74-4a8c-9e9b-7af778e91234', name: 'พันท้ายนรสิงห์' };
-let branches = [], currentBranch = { id: '', name: 'พันท้ายนรสิงห์' };
+const PRIMARY_BRANCH_FALLBACK = { id: 'ce097f86-216a-4e9c-a8df-521b04111cff', name: 'หลัก' };
+let branches = [], currentBranch = { id: '', name: 'หลัก' };
 function setCurrentBranch(branch) {
 if (!branch?.id || !branch?.name) return;
 currentBranch = { id: String(branch.id), name: String(branch.name) }; branchStore.set(currentBranch.id);
@@ -2094,10 +2098,10 @@ const READ_ONLY_PERMISSIONS = { eggFeed: false, editStock: false, manageLists: f
 const normalizeRemovedViewerAccounts = users => (Array.isArray(users) ? users : []).map(user => String(user?.role || '').toLowerCase() === 'viewer'
 ? { ...user, role: 'staff', permissions: { ...READ_ONLY_PERMISSIONS } }
 : user);
-let CATS = store.get('inv_categories', ['ปลาและอาหารทะเล', 'ข้าวและเส้น', 'สาหร่ายและเครื่องปรุง', 'ผักและผลไม้', 'บรรจุภัณฑ์', 'อื่นๆ']);
+let CATS = store.get('inv_categories', ['สินค้าอุปโภคบริโภค', 'อะไหล่', 'เครื่องมือ', 'อุปกรณ์', 'บรรจุภัณฑ์', 'อื่นๆ']);
 let UNITS = store.get('inv_units', ['กิโลกรัม', 'กรัม', 'ลิตร', 'มิลลิลิตร', 'ชิ้น', 'แพ็ค', 'กล่อง', 'ขวด', 'ถุง']);
-const fullAccessUser = user => !!(user?.owner || user?.role === 'admin' || String(user?.name || '').toLowerCase() === 'kiangkai');
-const globalAdminDirectoryUser = Object.freeze({ name: 'kiangkai', role: 'admin', active: true, owner: true, globalAdmin: true });
+const fullAccessUser = user => !!(user?.owner || user?.role === 'admin' || String(user?.name || '').toLowerCase() === 'kingstock');
+const globalAdminDirectoryUser = Object.freeze({ name: 'kingstock', role: 'admin', active: true, owner: true, globalAdmin: true });
 const isGlobalBranchAdmin = user => !!user?.owner && !user?.branchManagerAccess;
 const defaultPermissions = role => role === 'admin'
 ? { eggFeed: true, editStock: true, manageLists: true, manageUsers: true, deleteUsers: true, deleteStock: true, managePermissions: true, resetData: true, manageBranches: false, sideMenu: true, manageJobs: true }
@@ -2119,21 +2123,21 @@ dl: '<path d="M12 4v11m-4-4 4 4 4-4M5 20h14"/>'
 const ic = n => `<svg viewBox="0 0 24 24">${I[n] || ''}</svg>`;
 let U = [], P = [], L = [];
 const THEMES = {
-sakura:{id:'sakura',name:'ซากุระ',mascot:'📦',friends:['📦','🍙','🍤'],colors:{'--bg-app':'#fff6f8','--card-bg':'#fffdfd','--ink':'#634653','--mute':'#967d89','--line':'#f1dce4','--acc':'#df829f','--acc-hover':'#ca6888','--acc-light':'#fff0f4','--acc-glow':'rgba(223,130,159,.2)','--theme-soft':'#ffedf2','--theme-chip':'#f8d7e2','--theme-input':'#fff9fb','--theme-wash':'rgba(255,191,210,.34)','--theme-wash-2':'rgba(239,221,255,.32)','--theme-story-1':'#ffe0e9','--theme-story-2':'#fff0df','--theme-story-3':'#e8eaff','--theme-top-bg':'rgba(255,249,251,.96)','--theme-nav-bg':'rgba(255,250,252,.97)','--theme-shadow':'rgba(159,91,118,.12)','--theme-border-strong':'#edc3d1','--theme-warn-ink':'#96672e','--theme-mascot-a':'"🍙"','--theme-mascot-b':'"📦"','--bad':'#c96f83','--bad-bg':'#fff0f3','--ok':'#6e9d87','--ok-bg':'#edf7f1'}},
-matcha:{id:'matcha',name:'มัทฉะ',mascot:'🍵',friends:['🍵','🍙','🥑'],colors:{'--bg-app':'#f5faf3','--card-bg':'#fdfffb','--ink':'#405545','--mute':'#758a79','--line':'#dcebdc','--acc':'#78a982','--acc-hover':'#5d8d69','--acc-light':'#eaf6e9','--acc-glow':'rgba(120,169,130,.2)','--theme-soft':'#e9f5e7','--theme-chip':'#d5ebd3','--theme-input':'#fbfff9','--theme-wash':'rgba(177,219,171,.34)','--theme-wash-2':'rgba(255,230,185,.3)','--theme-story-1':'#dff1dc','--theme-story-2':'#f5f5db','--theme-story-3':'#d8ece3','--theme-top-bg':'rgba(249,255,247,.96)','--theme-nav-bg':'rgba(250,255,248,.97)','--theme-shadow':'rgba(79,123,83,.12)','--theme-border-strong':'#c3dfc2','--theme-warn-ink':'#8e682e','--theme-mascot-a':'"🍙"','--theme-mascot-b':'"🥑"','--bad':'#bd6e68','--bad-bg':'#fff0ed','--ok':'#598866','--ok-bg':'#e9f5e9'}},
-ocean:{id:'ocean',name:'ทะเล',mascot:'🐟',friends:['🐟','📦','🦀'],colors:{'--bg-app':'#f2f9ff','--card-bg':'#fcfeff','--ink':'#3e5269','--mute':'#71869d','--line':'#d9e8f4','--acc':'#72a9d2','--acc-hover':'#568cb8','--acc-light':'#eaf5ff','--acc-glow':'rgba(114,169,210,.2)','--theme-soft':'#e6f3ff','--theme-chip':'#d2e9fa','--theme-input':'#f9fcff','--theme-wash':'rgba(176,218,247,.35)','--theme-wash-2':'rgba(220,211,255,.3)','--theme-story-1':'#d9efff','--theme-story-2':'#e7f4ee','--theme-story-3':'#e3e2ff','--theme-top-bg':'rgba(247,252,255,.96)','--theme-nav-bg':'rgba(249,253,255,.97)','--theme-shadow':'rgba(77,117,157,.12)','--theme-border-strong':'#bfd9ed','--theme-warn-ink':'#92662f','--theme-mascot-a':'"🐟"','--theme-mascot-b':'"🦀"','--bad':'#c66f79','--bad-bg':'#fff0f1','--ok':'#619b92','--ok-bg':'#eaf7f3'}},
-lavender:{id:'lavender',name:'ลาเวนเดอร์',mascot:'🍙',friends:['🍙','📦','🐙'],colors:{'--bg-app':'#f8f5ff','--card-bg':'#fffefe','--ink':'#574c6c','--mute':'#887c9c','--line':'#e7def3','--acc':'#a18ac7','--acc-hover':'#866eaf','--acc-light':'#f3edff','--acc-glow':'rgba(161,138,199,.2)','--theme-soft':'#f0eaff','--theme-chip':'#e2d6f5','--theme-input':'#fdfbff','--theme-wash':'rgba(213,197,245,.35)','--theme-wash-2':'rgba(255,218,229,.28)','--theme-story-1':'#eee2ff','--theme-story-2':'#ffeaf1','--theme-story-3':'#e0eeff','--theme-top-bg':'rgba(252,249,255,.96)','--theme-nav-bg':'rgba(252,250,255,.97)','--theme-shadow':'rgba(112,87,147,.12)','--theme-border-strong':'#d4c4e9','--theme-warn-ink':'#916734','--theme-mascot-a':'"🍙"','--theme-mascot-b':'"🐙"','--bad':'#bd718d','--bad-bg':'#fff0f5','--ok':'#6d9c88','--ok-bg':'#edf7f1'}},
-peach:{id:'peach',name:'พีช',mascot:'🍤',friends:['🍤','📦','🍋'],colors:{'--bg-app':'#fff7f1','--card-bg':'#fffefd','--ink':'#685044','--mute':'#987d6e','--line':'#f3dfcf','--acc':'#e49a70','--acc-hover':'#cf7a54','--acc-light':'#fff0e5','--acc-glow':'rgba(228,154,112,.2)','--theme-soft':'#ffede1','--theme-chip':'#f8ddc8','--theme-input':'#fffaf6','--theme-wash':'rgba(255,205,171,.34)','--theme-wash-2':'rgba(255,231,178,.3)','--theme-story-1':'#ffe0ca','--theme-story-2':'#fff1d9','--theme-story-3':'#f9e5e7','--theme-top-bg':'rgba(255,251,247,.96)','--theme-nav-bg':'rgba(255,251,248,.97)','--theme-shadow':'rgba(159,103,70,.12)','--theme-border-strong':'#edc7ad','--theme-warn-ink':'#93612e','--theme-mascot-a':'"🍤"','--theme-mascot-b':'"🍋"','--bad':'#c86d65','--bad-bg':'#fff0eb','--ok':'#729b79','--ok-bg':'#eff7ed'}},
-lemon:{id:'lemon',name:'ยูซุ',mascot:'🍋',friends:['🍋','📦','🍙'],colors:{'--bg-app':'#fffbed','--card-bg':'#fffefb','--ink':'#62573d','--mute':'#948766','--line':'#eee5c5','--acc':'#c8a94f','--acc-hover':'#aa8c38','--acc-light':'#fff7d9','--acc-glow':'rgba(200,169,79,.2)','--theme-soft':'#fff5d5','--theme-chip':'#f6e9b4','--theme-input':'#fffdf5','--theme-wash':'rgba(255,230,148,.35)','--theme-wash-2':'rgba(255,211,191,.28)','--theme-story-1':'#fff0b9','--theme-story-2':'#ffefd9','--theme-story-3':'#e8f2d4','--theme-top-bg':'rgba(255,254,246,.96)','--theme-nav-bg':'rgba(255,254,247,.97)','--theme-shadow':'rgba(144,122,60,.12)','--theme-border-strong':'#e6d696','--theme-warn-ink':'#8b672a','--theme-mascot-a':'"🍋"','--theme-mascot-b':'"🍙"','--bad':'#c56e66','--bad-bg':'#fff0ec','--ok':'#72946a','--ok-bg':'#eff7e8'}},
-mint:{id:'mint',name:'โซดามินต์',mascot:'🐳',friends:['🐳','📦','🍙'],colors:{'--bg-app':'#effbf9','--card-bg':'#fcfffe','--ink':'#3d5c5b','--mute':'#728f8d','--line':'#d4ece8','--acc':'#62b9ad','--acc-hover':'#479d92','--acc-light':'#e3f8f4','--acc-glow':'rgba(98,185,173,.2)','--theme-soft':'#e1f6f1','--theme-chip':'#c9ede6','--theme-input':'#f8fffd','--theme-wash':'rgba(160,228,215,.35)','--theme-wash-2':'rgba(191,221,255,.3)','--theme-story-1':'#d4f5ed','--theme-story-2':'#e8f7df','--theme-story-3':'#d8eeff','--theme-top-bg':'rgba(247,255,253,.96)','--theme-nav-bg':'rgba(249,255,254,.97)','--theme-shadow':'rgba(67,139,128,.12)','--theme-border-strong':'#b5e1d9','--theme-warn-ink':'#88652f','--theme-mascot-a':'"🐳"','--theme-mascot-b':'"🍙"','--bad':'#c66c78','--bad-bg':'#fff0f2','--ok':'#559b88','--ok-bg':'#e5f6ef'}},
-grape:{id:'grape',name:'องุ่น',mascot:'🍇',friends:['🍇','🍙','📦'],colors:{'--bg-app':'#faf5ff','--card-bg':'#fffefe','--ink':'#5f4d6d','--mute':'#907b9e','--line':'#eadcf1','--acc':'#ad82bd','--acc-hover':'#9064a3','--acc-light':'#f5eaff','--acc-glow':'rgba(173,130,189,.2)','--theme-soft':'#f3e7f8','--theme-chip':'#e7d4ee','--theme-input':'#fefbff','--theme-wash':'rgba(220,188,232,.34)','--theme-wash-2':'rgba(255,213,227,.28)','--theme-story-1':'#efddf7','--theme-story-2':'#ffe8ee','--theme-story-3':'#e4e6ff','--theme-top-bg':'rgba(253,249,255,.96)','--theme-nav-bg':'rgba(253,250,255,.97)','--theme-shadow':'rgba(124,81,139,.12)','--theme-border-strong':'#d9c0e5','--theme-warn-ink':'#8e6530','--theme-mascot-a':'"🍇"','--theme-mascot-b':'"📦"','--bad':'#c16f87','--bad-bg':'#fff0f4','--ok':'#70977d','--ok-bg':'#edf7ed'}},
-coral:{id:'coral',name:'ปะการัง',mascot:'🦀',friends:['🦀','📦','🐟'],colors:{'--bg-app':'#fff5f2','--card-bg':'#fffefd','--ink':'#684a48','--mute':'#997775','--line':'#f2ddd7','--acc':'#df887e','--acc-hover':'#c96c63','--acc-light':'#fff0ec','--acc-glow':'rgba(223,136,126,.2)','--theme-soft':'#ffebe6','--theme-chip':'#f8d8d0','--theme-input':'#fffaf8','--theme-wash':'rgba(255,190,174,.34)','--theme-wash-2':'rgba(255,225,190,.3)','--theme-story-1':'#ffded4','--theme-story-2':'#fff0d5','--theme-story-3':'#e6eff7','--theme-top-bg':'rgba(255,250,248,.96)','--theme-nav-bg':'rgba(255,251,249,.97)','--theme-shadow':'rgba(149,82,74,.12)','--theme-border-strong':'#ecc1b8','--theme-warn-ink':'#8d642e','--theme-mascot-a':'"🦀"','--theme-mascot-b':'"🐟"','--bad':'#bf6a68','--bad-bg':'#fff0ed','--ok':'#6e9b86','--ok-bg':'#edf7f1'}},
-ramune:{id:'ramune',name:'รามูเนะ',mascot:'🫧',friends:['🫧','🐟','📦'],colors:{'--bg-app':'#f2fbff','--card-bg':'#fdffff','--ink':'#40586a','--mute':'#748c9d','--line':'#d8eaf2','--acc':'#70b7c8','--acc-hover':'#5298aa','--acc-light':'#e7f8fc','--acc-glow':'rgba(112,183,200,.2)','--theme-soft':'#e4f6fa','--theme-chip':'#d2edf3','--theme-input':'#f9fdff','--theme-wash':'rgba(175,228,239,.36)','--theme-wash-2':'rgba(208,219,255,.3)','--theme-story-1':'#d7f3f7','--theme-story-2':'#e6f4ff','--theme-story-3':'#e9e4ff','--theme-top-bg':'rgba(248,254,255,.96)','--theme-nav-bg':'rgba(249,254,255,.97)','--theme-shadow':'rgba(72,129,146,.12)','--theme-border-strong':'#bfe2eb','--theme-warn-ink':'#8d672f','--theme-mascot-a':'"🫧"','--theme-mascot-b':'"🐟"','--bad':'#c46f7a','--bad-bg':'#fff0f2','--ok':'#619b92','--ok-bg':'#eaf7f3'}},
-taro:{id:'taro',name:'เผือก',mascot:'🍠',friends:['🍠','🍙','📦'],colors:{'--bg-app':'#fbf6f7','--card-bg':'#fffefe','--ink':'#604e5c','--mute':'#917d8b','--line':'#ebdfe5','--acc':'#b58e9e','--acc-hover':'#987183','--acc-light':'#f8eff3','--acc-glow':'rgba(181,142,158,.2)','--theme-soft':'#f4e9ee','--theme-chip':'#ead8e0','--theme-input':'#fffafb','--theme-wash':'rgba(224,195,207,.34)','--theme-wash-2':'rgba(229,215,246,.3)','--theme-story-1':'#f1dfe8','--theme-story-2':'#fff0e4','--theme-story-3':'#e8e8fa','--theme-top-bg':'rgba(255,251,253,.96)','--theme-nav-bg':'rgba(255,252,253,.97)','--theme-shadow':'rgba(124,87,106,.12)','--theme-border-strong':'#dbc2ce','--theme-warn-ink':'#8c6631','--theme-mascot-a':'"🍠"','--theme-mascot-b':'"🍙"','--bad':'#c27285','--bad-bg':'#fff0f3','--ok':'#6f9987','--ok-bg':'#edf7f1'}},
-nori:{id:'nori',name:'โนริ',mascot:'🌿',friends:['🌿','📦','🍙'],colors:{'--bg-app':'#f3f9f4','--card-bg':'#fcfffc','--ink':'#42574b','--mute':'#788d7f','--line':'#dce9df','--acc':'#789d7f','--acc-hover':'#5f8367','--acc-light':'#ebf5ec','--acc-glow':'rgba(120,157,127,.2)','--theme-soft':'#e8f2e9','--theme-chip':'#d4e7d7','--theme-input':'#fafffa','--theme-wash':'rgba(185,218,190,.33)','--theme-wash-2':'rgba(245,224,184,.29)','--theme-story-1':'#dff0e0','--theme-story-2':'#f8f2dc','--theme-story-3':'#e1eee8','--theme-top-bg':'rgba(249,255,250,.96)','--theme-nav-bg':'rgba(250,255,251,.97)','--theme-shadow':'rgba(75,113,82,.12)','--theme-border-strong':'#c4dcc8','--theme-warn-ink':'#8b662f','--theme-mascot-a':'"🌿"','--theme-mascot-b':'"📦"','--bad':'#bd6d6e','--bad-bg':'#fff0ee','--ok':'#5d8e6e','--ok-bg':'#e9f5eb'}},
-midnight:{id:'midnight',name:'ดาวซูชิ',mascot:'🐙',friends:['🐙','🌙','📦'],colors:{'--bg-app':'#f3f5fb','--card-bg':'#fcfdff','--ink':'#46516b','--mute':'#77839d','--line':'#dce2ef','--acc':'#8293c8','--acc-hover':'#6879ae','--acc-light':'#edf0ff','--acc-glow':'rgba(130,147,200,.2)','--theme-soft':'#e8ecfa','--theme-chip':'#d8dff3','--theme-input':'#f9faff','--theme-wash':'rgba(190,202,241,.35)','--theme-wash-2':'rgba(255,216,230,.28)','--theme-story-1':'#e2e8ff','--theme-story-2':'#f2e7ff','--theme-story-3':'#dceefa','--theme-top-bg':'rgba(249,251,255,.96)','--theme-nav-bg':'rgba(250,252,255,.97)','--theme-shadow':'rgba(73,86,132,.13)','--theme-border-strong':'#c5cfe7','--theme-warn-ink':'#8b652e','--theme-mascot-a':'"🐙"','--theme-mascot-b':'"🌙"','--bad':'#bd7284','--bad-bg':'#fff0f3','--ok':'#6c9988','--ok-bg':'#edf7f1'}},
-cosmos:{id:'cosmos',name:'อวกาศซูชิ',mascot:'🚀',friends:['🚀','🪐','📦'],colors:{'--bg-app':'#f5f2ff','--card-bg':'#fdfbff','--ink':'#463d68','--mute':'#81779f','--line':'#e2daf6','--acc':'#9180d5','--acc-hover':'#7562bb','--acc-light':'#f0ebff','--acc-glow':'rgba(145,128,213,.22)','--theme-soft':'#eee8ff','--theme-chip':'#ddd4fb','--theme-input':'#fbf9ff','--theme-wash':'rgba(198,185,255,.32)','--theme-wash-2':'rgba(255,204,230,.26)','--theme-story-1':'#e5ddff','--theme-story-2':'#ffe4f0','--theme-story-3':'#dceaff','--theme-top-bg':'rgba(251,249,255,.96)','--theme-nav-bg':'rgba(252,250,255,.97)','--theme-shadow':'rgba(83,66,145,.13)','--theme-border-strong':'#d0c4f0','--theme-warn-ink':'#8d672f','--theme-mascot-a':'"🪐"','--theme-mascot-b':'"🚀"','--bad':'#c16e91','--bad-bg':'#fff0f5','--ok':'#668f9c','--ok-bg':'#eaf6f8'}},
-kawaii:{id:'kawaii',name:'การ์ตูนน่ารัก',mascot:'🐱',friends:['🐱','🍙','🐙'],colors:{'--bg-app':'#fff3fa','--card-bg':'#fffdfd','--ink':'#68485e','--mute':'#997a90','--line':'#f1dbe9','--acc':'#e58fbd','--acc-hover':'#cc70a2','--acc-light':'#fff0f8','--acc-glow':'rgba(229,143,189,.22)','--theme-soft':'#ffeafa','--theme-chip':'#f8d7e9','--theme-input':'#fff9fc','--theme-wash':'rgba(255,190,221,.34)','--theme-wash-2':'rgba(216,205,255,.29)','--theme-story-1':'#ffdfef','--theme-story-2':'#fff0d9','--theme-story-3':'#e9e4ff','--theme-top-bg':'rgba(255,249,253,.96)','--theme-nav-bg':'rgba(255,250,253,.97)','--theme-shadow':'rgba(151,81,123,.12)','--theme-border-strong':'#edc4db','--theme-warn-ink':'#916630','--theme-mascot-a':'"🐱"','--theme-mascot-b':'"🍙"','--bad':'#c66d8d','--bad-bg':'#fff0f4','--ok':'#6c9a88','--ok-bg':'#edf7f1'}},
+sakura:{id:'sakura',name:'ซากุระ',mascot:'📦',friends:['📦','📋','🛒'],colors:{'--bg-app':'#fff6f8','--card-bg':'#fffdfd','--ink':'#634653','--mute':'#967d89','--line':'#f1dce4','--acc':'#df829f','--acc-hover':'#ca6888','--acc-light':'#fff0f4','--acc-glow':'rgba(223,130,159,.2)','--theme-soft':'#ffedf2','--theme-chip':'#f8d7e2','--theme-input':'#fff9fb','--theme-wash':'rgba(255,191,210,.34)','--theme-wash-2':'rgba(239,221,255,.32)','--theme-story-1':'#ffe0e9','--theme-story-2':'#fff0df','--theme-story-3':'#e8eaff','--theme-top-bg':'rgba(255,249,251,.96)','--theme-nav-bg':'rgba(255,250,252,.97)','--theme-shadow':'rgba(159,91,118,.12)','--theme-border-strong':'#edc3d1','--theme-warn-ink':'#96672e','--theme-mascot-a':'"📋"','--theme-mascot-b':'"📦"','--bad':'#c96f83','--bad-bg':'#fff0f3','--ok':'#6e9d87','--ok-bg':'#edf7f1'}},
+matcha:{id:'matcha',name:'มัทฉะ',mascot:'🍵',friends:['🍵','📋','🥑'],colors:{'--bg-app':'#f5faf3','--card-bg':'#fdfffb','--ink':'#405545','--mute':'#758a79','--line':'#dcebdc','--acc':'#78a982','--acc-hover':'#5d8d69','--acc-light':'#eaf6e9','--acc-glow':'rgba(120,169,130,.2)','--theme-soft':'#e9f5e7','--theme-chip':'#d5ebd3','--theme-input':'#fbfff9','--theme-wash':'rgba(177,219,171,.34)','--theme-wash-2':'rgba(255,230,185,.3)','--theme-story-1':'#dff1dc','--theme-story-2':'#f5f5db','--theme-story-3':'#d8ece3','--theme-top-bg':'rgba(249,255,247,.96)','--theme-nav-bg':'rgba(250,255,248,.97)','--theme-shadow':'rgba(79,123,83,.12)','--theme-border-strong':'#c3dfc2','--theme-warn-ink':'#8e682e','--theme-mascot-a':'"📋"','--theme-mascot-b':'"🥑"','--bad':'#bd6e68','--bad-bg':'#fff0ed','--ok':'#598866','--ok-bg':'#e9f5e9'}},
+ocean:{id:'ocean',name:'ทะเล',mascot:'📦',friends:['📦','📦','🦀'],colors:{'--bg-app':'#f2f9ff','--card-bg':'#fcfeff','--ink':'#3e5269','--mute':'#71869d','--line':'#d9e8f4','--acc':'#72a9d2','--acc-hover':'#568cb8','--acc-light':'#eaf5ff','--acc-glow':'rgba(114,169,210,.2)','--theme-soft':'#e6f3ff','--theme-chip':'#d2e9fa','--theme-input':'#f9fcff','--theme-wash':'rgba(176,218,247,.35)','--theme-wash-2':'rgba(220,211,255,.3)','--theme-story-1':'#d9efff','--theme-story-2':'#e7f4ee','--theme-story-3':'#e3e2ff','--theme-top-bg':'rgba(247,252,255,.96)','--theme-nav-bg':'rgba(249,253,255,.97)','--theme-shadow':'rgba(77,117,157,.12)','--theme-border-strong':'#bfd9ed','--theme-warn-ink':'#92662f','--theme-mascot-a':'"📦"','--theme-mascot-b':'"🦀"','--bad':'#c66f79','--bad-bg':'#fff0f1','--ok':'#619b92','--ok-bg':'#eaf7f3'}},
+lavender:{id:'lavender',name:'ลาเวนเดอร์',mascot:'📋',friends:['📋','📦','📦'],colors:{'--bg-app':'#f8f5ff','--card-bg':'#fffefe','--ink':'#574c6c','--mute':'#887c9c','--line':'#e7def3','--acc':'#a18ac7','--acc-hover':'#866eaf','--acc-light':'#f3edff','--acc-glow':'rgba(161,138,199,.2)','--theme-soft':'#f0eaff','--theme-chip':'#e2d6f5','--theme-input':'#fdfbff','--theme-wash':'rgba(213,197,245,.35)','--theme-wash-2':'rgba(255,218,229,.28)','--theme-story-1':'#eee2ff','--theme-story-2':'#ffeaf1','--theme-story-3':'#e0eeff','--theme-top-bg':'rgba(252,249,255,.96)','--theme-nav-bg':'rgba(252,250,255,.97)','--theme-shadow':'rgba(112,87,147,.12)','--theme-border-strong':'#d4c4e9','--theme-warn-ink':'#916734','--theme-mascot-a':'"📋"','--theme-mascot-b':'"📦"','--bad':'#bd718d','--bad-bg':'#fff0f5','--ok':'#6d9c88','--ok-bg':'#edf7f1'}},
+peach:{id:'peach',name:'พีช',mascot:'🛒',friends:['🛒','📦','🍋'],colors:{'--bg-app':'#fff7f1','--card-bg':'#fffefd','--ink':'#685044','--mute':'#987d6e','--line':'#f3dfcf','--acc':'#e49a70','--acc-hover':'#cf7a54','--acc-light':'#fff0e5','--acc-glow':'rgba(228,154,112,.2)','--theme-soft':'#ffede1','--theme-chip':'#f8ddc8','--theme-input':'#fffaf6','--theme-wash':'rgba(255,205,171,.34)','--theme-wash-2':'rgba(255,231,178,.3)','--theme-story-1':'#ffe0ca','--theme-story-2':'#fff1d9','--theme-story-3':'#f9e5e7','--theme-top-bg':'rgba(255,251,247,.96)','--theme-nav-bg':'rgba(255,251,248,.97)','--theme-shadow':'rgba(159,103,70,.12)','--theme-border-strong':'#edc7ad','--theme-warn-ink':'#93612e','--theme-mascot-a':'"🛒"','--theme-mascot-b':'"🍋"','--bad':'#c86d65','--bad-bg':'#fff0eb','--ok':'#729b79','--ok-bg':'#eff7ed'}},
+lemon:{id:'lemon',name:'ยูซุ',mascot:'🍋',friends:['🍋','📦','📋'],colors:{'--bg-app':'#fffbed','--card-bg':'#fffefb','--ink':'#62573d','--mute':'#948766','--line':'#eee5c5','--acc':'#c8a94f','--acc-hover':'#aa8c38','--acc-light':'#fff7d9','--acc-glow':'rgba(200,169,79,.2)','--theme-soft':'#fff5d5','--theme-chip':'#f6e9b4','--theme-input':'#fffdf5','--theme-wash':'rgba(255,230,148,.35)','--theme-wash-2':'rgba(255,211,191,.28)','--theme-story-1':'#fff0b9','--theme-story-2':'#ffefd9','--theme-story-3':'#e8f2d4','--theme-top-bg':'rgba(255,254,246,.96)','--theme-nav-bg':'rgba(255,254,247,.97)','--theme-shadow':'rgba(144,122,60,.12)','--theme-border-strong':'#e6d696','--theme-warn-ink':'#8b672a','--theme-mascot-a':'"🍋"','--theme-mascot-b':'"📋"','--bad':'#c56e66','--bad-bg':'#fff0ec','--ok':'#72946a','--ok-bg':'#eff7e8'}},
+mint:{id:'mint',name:'โซดามินต์',mascot:'🐳',friends:['🐳','📦','📋'],colors:{'--bg-app':'#effbf9','--card-bg':'#fcfffe','--ink':'#3d5c5b','--mute':'#728f8d','--line':'#d4ece8','--acc':'#62b9ad','--acc-hover':'#479d92','--acc-light':'#e3f8f4','--acc-glow':'rgba(98,185,173,.2)','--theme-soft':'#e1f6f1','--theme-chip':'#c9ede6','--theme-input':'#f8fffd','--theme-wash':'rgba(160,228,215,.35)','--theme-wash-2':'rgba(191,221,255,.3)','--theme-story-1':'#d4f5ed','--theme-story-2':'#e8f7df','--theme-story-3':'#d8eeff','--theme-top-bg':'rgba(247,255,253,.96)','--theme-nav-bg':'rgba(249,255,254,.97)','--theme-shadow':'rgba(67,139,128,.12)','--theme-border-strong':'#b5e1d9','--theme-warn-ink':'#88652f','--theme-mascot-a':'"🐳"','--theme-mascot-b':'"📋"','--bad':'#c66c78','--bad-bg':'#fff0f2','--ok':'#559b88','--ok-bg':'#e5f6ef'}},
+grape:{id:'grape',name:'องุ่น',mascot:'🍇',friends:['🍇','📋','📦'],colors:{'--bg-app':'#faf5ff','--card-bg':'#fffefe','--ink':'#5f4d6d','--mute':'#907b9e','--line':'#eadcf1','--acc':'#ad82bd','--acc-hover':'#9064a3','--acc-light':'#f5eaff','--acc-glow':'rgba(173,130,189,.2)','--theme-soft':'#f3e7f8','--theme-chip':'#e7d4ee','--theme-input':'#fefbff','--theme-wash':'rgba(220,188,232,.34)','--theme-wash-2':'rgba(255,213,227,.28)','--theme-story-1':'#efddf7','--theme-story-2':'#ffe8ee','--theme-story-3':'#e4e6ff','--theme-top-bg':'rgba(253,249,255,.96)','--theme-nav-bg':'rgba(253,250,255,.97)','--theme-shadow':'rgba(124,81,139,.12)','--theme-border-strong':'#d9c0e5','--theme-warn-ink':'#8e6530','--theme-mascot-a':'"🍇"','--theme-mascot-b':'"📦"','--bad':'#c16f87','--bad-bg':'#fff0f4','--ok':'#70977d','--ok-bg':'#edf7ed'}},
+coral:{id:'coral',name:'ปะการัง',mascot:'🦀',friends:['🦀','📦','📦'],colors:{'--bg-app':'#fff5f2','--card-bg':'#fffefd','--ink':'#684a48','--mute':'#997775','--line':'#f2ddd7','--acc':'#df887e','--acc-hover':'#c96c63','--acc-light':'#fff0ec','--acc-glow':'rgba(223,136,126,.2)','--theme-soft':'#ffebe6','--theme-chip':'#f8d8d0','--theme-input':'#fffaf8','--theme-wash':'rgba(255,190,174,.34)','--theme-wash-2':'rgba(255,225,190,.3)','--theme-story-1':'#ffded4','--theme-story-2':'#fff0d5','--theme-story-3':'#e6eff7','--theme-top-bg':'rgba(255,250,248,.96)','--theme-nav-bg':'rgba(255,251,249,.97)','--theme-shadow':'rgba(149,82,74,.12)','--theme-border-strong':'#ecc1b8','--theme-warn-ink':'#8d642e','--theme-mascot-a':'"🦀"','--theme-mascot-b':'"📦"','--bad':'#bf6a68','--bad-bg':'#fff0ed','--ok':'#6e9b86','--ok-bg':'#edf7f1'}},
+ramune:{id:'ramune',name:'รามูเนะ',mascot:'🫧',friends:['🫧','📦','📦'],colors:{'--bg-app':'#f2fbff','--card-bg':'#fdffff','--ink':'#40586a','--mute':'#748c9d','--line':'#d8eaf2','--acc':'#70b7c8','--acc-hover':'#5298aa','--acc-light':'#e7f8fc','--acc-glow':'rgba(112,183,200,.2)','--theme-soft':'#e4f6fa','--theme-chip':'#d2edf3','--theme-input':'#f9fdff','--theme-wash':'rgba(175,228,239,.36)','--theme-wash-2':'rgba(208,219,255,.3)','--theme-story-1':'#d7f3f7','--theme-story-2':'#e6f4ff','--theme-story-3':'#e9e4ff','--theme-top-bg':'rgba(248,254,255,.96)','--theme-nav-bg':'rgba(249,254,255,.97)','--theme-shadow':'rgba(72,129,146,.12)','--theme-border-strong':'#bfe2eb','--theme-warn-ink':'#8d672f','--theme-mascot-a':'"🫧"','--theme-mascot-b':'"📦"','--bad':'#c46f7a','--bad-bg':'#fff0f2','--ok':'#619b92','--ok-bg':'#eaf7f3'}},
+taro:{id:'taro',name:'เผือก',mascot:'🍠',friends:['🍠','📋','📦'],colors:{'--bg-app':'#fbf6f7','--card-bg':'#fffefe','--ink':'#604e5c','--mute':'#917d8b','--line':'#ebdfe5','--acc':'#b58e9e','--acc-hover':'#987183','--acc-light':'#f8eff3','--acc-glow':'rgba(181,142,158,.2)','--theme-soft':'#f4e9ee','--theme-chip':'#ead8e0','--theme-input':'#fffafb','--theme-wash':'rgba(224,195,207,.34)','--theme-wash-2':'rgba(229,215,246,.3)','--theme-story-1':'#f1dfe8','--theme-story-2':'#fff0e4','--theme-story-3':'#e8e8fa','--theme-top-bg':'rgba(255,251,253,.96)','--theme-nav-bg':'rgba(255,252,253,.97)','--theme-shadow':'rgba(124,87,106,.12)','--theme-border-strong':'#dbc2ce','--theme-warn-ink':'#8c6631','--theme-mascot-a':'"🍠"','--theme-mascot-b':'"📋"','--bad':'#c27285','--bad-bg':'#fff0f3','--ok':'#6f9987','--ok-bg':'#edf7f1'}},
+nori:{id:'nori',name:'โนริ',mascot:'🌿',friends:['🌿','📦','📋'],colors:{'--bg-app':'#f3f9f4','--card-bg':'#fcfffc','--ink':'#42574b','--mute':'#788d7f','--line':'#dce9df','--acc':'#789d7f','--acc-hover':'#5f8367','--acc-light':'#ebf5ec','--acc-glow':'rgba(120,157,127,.2)','--theme-soft':'#e8f2e9','--theme-chip':'#d4e7d7','--theme-input':'#fafffa','--theme-wash':'rgba(185,218,190,.33)','--theme-wash-2':'rgba(245,224,184,.29)','--theme-story-1':'#dff0e0','--theme-story-2':'#f8f2dc','--theme-story-3':'#e1eee8','--theme-top-bg':'rgba(249,255,250,.96)','--theme-nav-bg':'rgba(250,255,251,.97)','--theme-shadow':'rgba(75,113,82,.12)','--theme-border-strong':'#c4dcc8','--theme-warn-ink':'#8b662f','--theme-mascot-a':'"🌿"','--theme-mascot-b':'"📦"','--bad':'#bd6d6e','--bad-bg':'#fff0ee','--ok':'#5d8e6e','--ok-bg':'#e9f5eb'}},
+midnight:{id:'midnight',name:'ดาวกลางคืน',mascot:'📦',friends:['📦','🌙','📦'],colors:{'--bg-app':'#f3f5fb','--card-bg':'#fcfdff','--ink':'#46516b','--mute':'#77839d','--line':'#dce2ef','--acc':'#8293c8','--acc-hover':'#6879ae','--acc-light':'#edf0ff','--acc-glow':'rgba(130,147,200,.2)','--theme-soft':'#e8ecfa','--theme-chip':'#d8dff3','--theme-input':'#f9faff','--theme-wash':'rgba(190,202,241,.35)','--theme-wash-2':'rgba(255,216,230,.28)','--theme-story-1':'#e2e8ff','--theme-story-2':'#f2e7ff','--theme-story-3':'#dceefa','--theme-top-bg':'rgba(249,251,255,.96)','--theme-nav-bg':'rgba(250,252,255,.97)','--theme-shadow':'rgba(73,86,132,.13)','--theme-border-strong':'#c5cfe7','--theme-warn-ink':'#8b652e','--theme-mascot-a':'"📦"','--theme-mascot-b':'"🌙"','--bad':'#bd7284','--bad-bg':'#fff0f3','--ok':'#6c9988','--ok-bg':'#edf7f1'}},
+cosmos:{id:'cosmos',name:'อวกาศ',mascot:'🚀',friends:['🚀','🪐','📦'],colors:{'--bg-app':'#f5f2ff','--card-bg':'#fdfbff','--ink':'#463d68','--mute':'#81779f','--line':'#e2daf6','--acc':'#9180d5','--acc-hover':'#7562bb','--acc-light':'#f0ebff','--acc-glow':'rgba(145,128,213,.22)','--theme-soft':'#eee8ff','--theme-chip':'#ddd4fb','--theme-input':'#fbf9ff','--theme-wash':'rgba(198,185,255,.32)','--theme-wash-2':'rgba(255,204,230,.26)','--theme-story-1':'#e5ddff','--theme-story-2':'#ffe4f0','--theme-story-3':'#dceaff','--theme-top-bg':'rgba(251,249,255,.96)','--theme-nav-bg':'rgba(252,250,255,.97)','--theme-shadow':'rgba(83,66,145,.13)','--theme-border-strong':'#d0c4f0','--theme-warn-ink':'#8d672f','--theme-mascot-a':'"🪐"','--theme-mascot-b':'"🚀"','--bad':'#c16e91','--bad-bg':'#fff0f5','--ok':'#668f9c','--ok-bg':'#eaf6f8'}},
+kawaii:{id:'kawaii',name:'การ์ตูนน่ารัก',mascot:'🐱',friends:['🐱','📋','📦'],colors:{'--bg-app':'#fff3fa','--card-bg':'#fffdfd','--ink':'#68485e','--mute':'#997a90','--line':'#f1dbe9','--acc':'#e58fbd','--acc-hover':'#cc70a2','--acc-light':'#fff0f8','--acc-glow':'rgba(229,143,189,.22)','--theme-soft':'#ffeafa','--theme-chip':'#f8d7e9','--theme-input':'#fff9fc','--theme-wash':'rgba(255,190,221,.34)','--theme-wash-2':'rgba(216,205,255,.29)','--theme-story-1':'#ffdfef','--theme-story-2':'#fff0d9','--theme-story-3':'#e9e4ff','--theme-top-bg':'rgba(255,249,253,.96)','--theme-nav-bg':'rgba(255,250,253,.97)','--theme-shadow':'rgba(151,81,123,.12)','--theme-border-strong':'#edc4db','--theme-warn-ink':'#916630','--theme-mascot-a':'"🐱"','--theme-mascot-b':'"📋"','--bad':'#c66d8d','--bad-bg':'#fff0f4','--ok':'#6c9a88','--ok-bg':'#edf7f1'}},
 cyber:{id:'cyber',name:'ไฮเทค',mascot:'🤖',friends:['🤖','🛰️','🪼'],colors:{'--bg-app':'#effaff','--card-bg':'#fcfeff','--ink':'#3c5268','--mute':'#71889d','--line':'#d4e9f3','--acc':'#50b7d1','--acc-hover':'#3496b1','--acc-light':'#e5f8ff','--acc-glow':'rgba(80,183,209,.22)','--theme-soft':'#e2f7ff','--theme-chip':'#ccecf6','--theme-input':'#f8fdff','--theme-wash':'rgba(150,225,245,.32)','--theme-wash-2':'rgba(207,195,255,.28)','--theme-story-1':'#d5f4ff','--theme-story-2':'#e7e7ff','--theme-story-3':'#d9f5eb','--theme-top-bg':'rgba(247,253,255,.96)','--theme-nav-bg':'rgba(249,254,255,.97)','--theme-shadow':'rgba(55,122,151,.13)','--theme-border-strong':'#b7deeb','--theme-warn-ink':'#8c672e','--theme-mascot-a':'"🤖"','--theme-mascot-b':'"🛰️"','--bad':'#c66f87','--bad-bg':'#fff0f3','--ok':'#589b91','--ok-bg':'#e7f7f2'}},
 executive:{id:'executive',name:'มืออาชีพน้ำเงิน',mascot:'◈',friends:[],formal:true,colors:{'--bg-app':'#f2f5f9','--card-bg':'#ffffff','--ink':'#26384d','--mute':'#69798b','--line':'#d9e1ea','--acc':'#42688f','--acc-hover':'#2e4f73','--acc-light':'#e7eef6','--acc-glow':'rgba(66,104,143,.16)','--theme-soft':'#e9eff6','--theme-chip':'#dfe8f1','--theme-input':'#fbfcfe','--theme-wash':'rgba(177,198,219,.28)','--theme-wash-2':'rgba(219,228,237,.3)','--theme-story-1':'#dce6f0','--theme-story-2':'#eef2f6','--theme-story-3':'#d4e0ec','--theme-top-bg':'rgba(250,252,254,.97)','--theme-nav-bg':'rgba(255,255,255,.97)','--theme-shadow':'rgba(37,58,81,.13)','--theme-border-strong':'#c5d2df','--theme-warn-ink':'#85682e','--theme-mascot-a':'""','--theme-mascot-b':'""','--bad':'#b76870','--bad-bg':'#f9ecee','--ok':'#568273','--ok-bg':'#e9f3ef'}},
 graphite:{id:'graphite',name:'กราไฟต์',mascot:'◈',friends:[],formal:true,colors:{'--bg-app':'#f3f4f5','--card-bg':'#ffffff','--ink':'#303942','--mute':'#737d87','--line':'#dfe3e6','--acc':'#66727d','--acc-hover':'#4c5863','--acc-light':'#edf0f2','--acc-glow':'rgba(76,88,99,.15)','--theme-soft':'#eceff1','--theme-chip':'#e1e5e8','--theme-input':'#fbfbfc','--theme-wash':'rgba(190,198,204,.3)','--theme-wash-2':'rgba(225,229,232,.32)','--theme-story-1':'#dfe3e6','--theme-story-2':'#f0f2f3','--theme-story-3':'#d7dde1','--theme-top-bg':'rgba(250,251,252,.97)','--theme-nav-bg':'rgba(255,255,255,.97)','--theme-shadow':'rgba(45,54,62,.12)','--theme-border-strong':'#cbd1d6','--theme-warn-ink':'#82672f','--theme-mascot-a':'""','--theme-mascot-b':'""','--bad':'#b7666d','--bad-bg':'#f8ecee','--ok':'#5c8272','--ok-bg':'#eaf2ee'}},
@@ -2154,31 +2158,31 @@ return { id, name, mascot, friends, colors: {
 }};
 }
 [
-['cream','ครีมนม','🍮',['🍮','🍙','📦'],'#fff9ef','#615444','#92836e','#eee2cf','#c99a5b','#aa7842','#fff2d9','#f6e4c6','#fff0d2','#fff7e9','#edf0dd','rgba(255,218,154,.32)','rgba(255,214,221,.25)','rgba(118,89,54,.12)','#e6d1ad','#bd7074','#719778'],
-['sky','ฟ้าคราม','☁️',['☁️','🐟','📦'],'#f1f9ff','#3d536a','#73889c','#d7e7f2','#659fc8','#4b80a8','#e5f4ff','#cee7f7','#d8efff','#e7f7ff','#e2edff','rgba(153,210,248,.32)','rgba(201,225,255,.28)','rgba(63,105,145,.12)','#bcd7e9','#c27380','#5f9b93'],
-['rose','กุหลาบ','🌹',['🌹','🍙','🍡'],'#fff4f5','#65454f','#987b84','#f0d9de','#d77f96','#b95f7b','#ffebef','#f5d2da','#ffdee5','#fff0e2','#e9e4f7','rgba(255,178,194,.3)','rgba(238,203,232,.27)','rgba(143,76,99,.12)','#e9c0cb','#bd6c79','#6e9d87'],
+['cream','ครีมนม','🍮',['🍮','📋','📦'],'#fff9ef','#615444','#92836e','#eee2cf','#c99a5b','#aa7842','#fff2d9','#f6e4c6','#fff0d2','#fff7e9','#edf0dd','rgba(255,218,154,.32)','rgba(255,214,221,.25)','rgba(118,89,54,.12)','#e6d1ad','#bd7074','#719778'],
+['sky','ฟ้าคราม','☁️',['☁️','📦','📦'],'#f1f9ff','#3d536a','#73889c','#d7e7f2','#659fc8','#4b80a8','#e5f4ff','#cee7f7','#d8efff','#e7f7ff','#e2edff','rgba(153,210,248,.32)','rgba(201,225,255,.28)','rgba(63,105,145,.12)','#bcd7e9','#c27380','#5f9b93'],
+['rose','กุหลาบ','🌹',['🌹','📋','🍡'],'#fff4f5','#65454f','#987b84','#f0d9de','#d77f96','#b95f7b','#ffebef','#f5d2da','#ffdee5','#fff0e2','#e9e4f7','rgba(255,178,194,.3)','rgba(238,203,232,.27)','rgba(143,76,99,.12)','#e9c0cb','#bd6c79','#6e9d87'],
 ['blueberry','บลูเบอร์รี','🫐',['🫐','🐻','📦'],'#f5f5ff','#494866','#817f9a','#e1e0f0','#8582bd','#6865a0','#efedff','#dddaf4','#e3e0ff','#f4eaff','#dff0ff','rgba(192,188,255,.3)','rgba(223,205,255,.27)','rgba(80,75,137,.13)','#cecae8','#bc718b','#709a88'],
-['melon','เมลอน','🍈',['🍈','🐸','🍙'],'#f3fbf3','#405849','#788d7c','#dcebdc','#79a887','#5e8d6c','#e8f5e9','#d4ead7','#ddf2d8','#fff2dd','#d9f0e8','rgba(176,222,176,.3)','rgba(249,225,170,.26)','rgba(72,117,83,.12)','#c5dfc8','#bd7073','#5f9475'],
+['melon','เมลอน','🍈',['🍈','🐸','📋'],'#f3fbf3','#405849','#788d7c','#dcebdc','#79a887','#5e8d6c','#e8f5e9','#d4ead7','#ddf2d8','#fff2dd','#d9f0e8','rgba(176,222,176,.3)','rgba(249,225,170,.26)','rgba(72,117,83,.12)','#c5dfc8','#bd7073','#5f9475'],
 ['strawberry','สตรอว์เบอร์รี','🍓',['🍓','🐰','📦'],'#fff3f6','#673f4e','#977684','#efd9e1','#df718d','#c75070','#ffe9ef','#f7cad7','#ffd9e2','#fff0df','#f2e3fa','rgba(255,169,190,.33)','rgba(239,202,242,.27)','rgba(154,70,97,.13)','#e9bdca','#bd667b','#6c9a85'],
-['vanilla','วานิลลา','🍦',['🍦','🍮','🍙'],'#fffbed','#615a3f','#938b6d','#eee6c9','#c0a34f','#9e8237','#fff6d8','#f3e7b3','#fff1bd','#fff0d7','#e9f2d7','rgba(255,229,144,.34)','rgba(255,209,180,.26)','rgba(141,118,56,.12)','#e4d69d','#bd7269','#74966e'],
+['vanilla','วานิลลา','🍦',['🍦','🍮','📋'],'#fffbed','#615a3f','#938b6d','#eee6c9','#c0a34f','#9e8237','#fff6d8','#f3e7b3','#fff1bd','#fff0d7','#e9f2d7','rgba(255,229,144,.34)','rgba(255,209,180,.26)','rgba(141,118,56,.12)','#e4d69d','#bd7269','#74966e'],
 ['plum','บ๊วย','🍑',['🍑','🐦','📦'],'#faf4f9','#5e4858','#907c8c','#e9dce7','#b079a5','#8d5d82','#f4e8f3','#e7d3e5','#f0d9ee','#fff0e1','#e2eafa','rgba(220,180,216,.32)','rgba(255,215,187,.26)','rgba(111,72,101,.12)','#ddc3da','#bf7180','#6d9983'],
-['pistachio','พิสตาชิโอ','🥜',['🥜','🍃','🍙'],'#f6f9ec','#4f5940','#828c70','#e1e8ce','#91a458','#72863c','#edf3d9','#dfe8be','#e5efc6','#fff2d7','#dceee5','rgba(205,222,154,.32)','rgba(255,218,165,.25)','rgba(91,111,55,.12)','#d1ddb0','#b9756c','#648b67'],
+['pistachio','พิสตาชิโอ','🥜',['🥜','🍃','📋'],'#f6f9ec','#4f5940','#828c70','#e1e8ce','#91a458','#72863c','#edf3d9','#dfe8be','#e5efc6','#fff2d7','#dceee5','rgba(205,222,154,.32)','rgba(255,218,165,.25)','rgba(91,111,55,.12)','#d1ddb0','#b9756c','#648b67'],
 ['cocoa','โกโก้','🍫',['🍫','🐻','📦'],'#faf5f0','#5b493f','#8c7b70','#e8dcd2','#a9785c','#86583f','#f3e7dc','#e6d2c1','#edd8c9','#fff0dd','#e8e4f1','rgba(221,181,151,.3)','rgba(229,209,242,.24)','rgba(101,72,53,.13)','#d8c2b2','#ba6e69','#718b77'],
 ['apricot','แอปริคอต','🍊',['🍊','🐥','📦'],'#fff7ed','#654d3d','#967d69','#f0dfca','#df9863','#bd7545','#ffedde','#f5d7bb','#ffe1c6','#fff1d7','#e9e9f7','rgba(255,194,147,.32)','rgba(255,225,166,.26)','rgba(142,91,54,.12)','#e9c5a5','#c36e68','#739779'],
-['hydrangea','ไฮเดรนเยีย','💠',['💠','🐸','🍙'],'#f5f7ff','#4d536c','#8189a0','#dfe3f2','#8e9fce','#6d7fb0','#ebefff','#d9e1f6','#dde6ff','#f3e9ff','#dff2f1','rgba(185,200,248,.3)','rgba(221,195,246,.27)','rgba(76,91,139,.12)','#cbd5ed','#bd7082','#65968f'],
-['peachtea','ชาพีช','🧋',['🧋','🍑','🍙'],'#fff6f1','#624b45','#927a70','#efddd4','#d88e79','#b96c5b','#ffede6','#f4d4c9','#ffddd1','#fff0d9','#ece8f8','rgba(255,190,168,.32)','rgba(243,213,164,.27)','rgba(145,87,76,.12)','#e8c4b9','#c16d73','#72977f'],
+['hydrangea','ไฮเดรนเยีย','💠',['💠','🐸','📋'],'#f5f7ff','#4d536c','#8189a0','#dfe3f2','#8e9fce','#6d7fb0','#ebefff','#d9e1f6','#dde6ff','#f3e9ff','#dff2f1','rgba(185,200,248,.3)','rgba(221,195,246,.27)','rgba(76,91,139,.12)','#cbd5ed','#bd7082','#65968f'],
+['peachtea','ชาพีช','🧋',['🧋','🍑','📋'],'#fff6f1','#624b45','#927a70','#efddd4','#d88e79','#b96c5b','#ffede6','#f4d4c9','#ffddd1','#fff0d9','#ece8f8','rgba(255,190,168,.32)','rgba(243,213,164,.27)','rgba(145,87,76,.12)','#e8c4b9','#c16d73','#72977f'],
 ['oceanfoam','ฟองคลื่น','🪼',['🪼','🐬','📦'],'#effbfc','#3e5d62','#739195','#d4e9e8','#63aaa7','#478b89','#def4f1','#c4e8e3','#d3f3ec','#e1f4ff','#e5e5fa','rgba(145,221,209,.3)','rgba(166,215,247,.27)','rgba(54,120,116,.12)','#b8dcda','#bd6c82','#57998d'],
-['sunset','ตะวันยามเย็น','🌅',['🌅','🐟','📦'],'#fff5ef','#614b4b','#947b79','#f0ddd7','#d98270','#b96559','#ffebe5','#f5d1c6','#ffd8c7','#ffe9c8','#eee1f5','rgba(255,181,155,.32)','rgba(255,218,146,.28)','rgba(139,75,69,.13)','#e9bfb6','#bd6972','#71967d'],
-['polar','หิมะขั้วโลก','🐧',['🐧','❄️','🍙'],'#f1f8fb','#465b68','#7d909b','#d9e6eb','#7caaba','#5d899b','#e4f2f6','#d0e5eb','#d9eef1','#f0f5ff','#e6ebfa','rgba(172,215,227,.3)','rgba(199,211,248,.25)','rgba(67,101,119,.12)','#c4dce4','#bd7180','#66928e'],
+['sunset','ตะวันยามเย็น','🌅',['🌅','📦','📦'],'#fff5ef','#614b4b','#947b79','#f0ddd7','#d98270','#b96559','#ffebe5','#f5d1c6','#ffd8c7','#ffe9c8','#eee1f5','rgba(255,181,155,.32)','rgba(255,218,146,.28)','rgba(139,75,69,.13)','#e9bfb6','#bd6972','#71967d'],
+['polar','หิมะขั้วโลก','🐧',['🐧','❄️','📋'],'#f1f8fb','#465b68','#7d909b','#d9e6eb','#7caaba','#5d899b','#e4f2f6','#d0e5eb','#d9eef1','#f0f5ff','#e6ebfa','rgba(172,215,227,.3)','rgba(199,211,248,.25)','rgba(67,101,119,.12)','#c4dce4','#bd7180','#66928e'],
 ['honey','น้ำผึ้ง','🐝',['🐝','🍯','📦'],'#fff9eb','#60513d','#928066','#eee2c8','#c69b4a','#a87b2e','#fff2d4','#f2e2b7','#ffedbb','#fff2d6','#e8efda','rgba(255,221,135,.32)','rgba(255,203,159,.25)','rgba(130,101,47,.12)','#e5d09e','#be706b','#748e67'],
-['lilac','ไลแลค','🪻',['🪻','🐰','🍙'],'#faf5ff','#594c68','#897c9c','#e7dcf1','#a487bf','#82629f','#f2eaff','#e3d5f0','#eddef9','#ffeaf1','#e1efff','rgba(212,188,239,.32)','rgba(255,207,225,.27)','rgba(100,75,132,.12)','#d7c3e6','#bd718a','#6f9b89'],
+['lilac','ไลแลค','🪻',['🪻','🐰','📋'],'#faf5ff','#594c68','#897c9c','#e7dcf1','#a487bf','#82629f','#f2eaff','#e3d5f0','#eddef9','#ffeaf1','#e1efff','rgba(212,188,239,.32)','rgba(255,207,225,.27)','rgba(100,75,132,.12)','#d7c3e6','#bd718a','#6f9b89'],
 ['sakuradusk','ซากุระยามค่ำ','🌙',['🌙','🌸','📦'],'#f7f3fb','#51465f','#82778e','#e4dce9','#a37c9f','#805b7d','#f1e8f2','#e2d2e3','#eeddf0','#f9e8dc','#dce8f6','rgba(211,179,216,.3)','rgba(238,204,183,.25)','rgba(87,64,96,.13)','#d5c2da','#b96c82','#6b9185'],
 ['seaglass','แก้วทะเล','🐚',['🐚','🐠','📦'],'#f0faf7','#415b55','#758f87','#d5e9e2','#70a99a','#518b7c','#e2f3ed','#cce7dc','#d4eee4','#e4f4ef','#e2eff9','rgba(164,219,196,.3)','rgba(168,212,241,.26)','rgba(58,111,93,.12)','#badbcf','#bd6d7a','#5d927e'],
-['berrycream','เบอร์รีครีม','🧁',['🧁','🍓','🍙'],'#fff5f8','#604858','#92798b','#eddae4','#c47f9f','#a25d7d','#f8e8f0','#efd2e0','#f8dce8','#fff0df','#e7e8fa','rgba(237,178,207,.3)','rgba(255,218,169,.24)','rgba(129,76,103,.12)','#dfc1d1','#bd6f82','#6e9985']
+['berrycream','เบอร์รีครีม','🧁',['🧁','🍓','📋'],'#fff5f8','#604858','#92798b','#eddae4','#c47f9f','#a25d7d','#f8e8f0','#efd2e0','#f8dce8','#fff0df','#e7e8fa','rgba(237,178,207,.3)','rgba(255,218,169,.24)','rgba(129,76,103,.12)','#dfc1d1','#bd6f82','#6e9985']
 ].forEach(spec => { THEMES[spec[0]] = createExtraTheme(spec); });
 const THEME_CARD_FRIENDS = {
-sakura:['🌸','🎎','🪭','🎐'], matcha:['🍵','🐸','🥬','🫛'], ocean:['🐬','🦈','🐳','🦑'], lavender:['🦄','🪽','🧚','🦋'], peach:['🍑','🐥','🦆','🍊'], lemon:['🍋','🐝','🍍','🥭'], mint:['🦭','🧊','🐧','🐠'], grape:['🍇','🫐','🍷','🧃'], coral:['🦀','🪸','🐢','🐙'], ramune:['🫧','🥤','🐡','🦐'], taro:['🍠','🐼','🍮','🧸'], nori:['🌿','🥑','🪴','🌱'], midnight:['🐈‍⬛','🌙','⭐','🌌'], cosmos:['🚀','🪐','👾','🛰️'], kawaii:['🐱','🐰','🦝','🐹'], cyber:['🤖','🦾','💾','📡'],
-cream:['🐄','🧈','🥛','🥐'], sky:['☁️','🌈','🌤️','🪁'], rose:['🌹','💌','💐','🎀'], blueberry:['🪺','🦉','🧿','🦤'], melon:['🍈','🥒','🐊','🦎'], strawberry:['🍓','🍰','🍬','🍡'], vanilla:['🍦','🍨','🥄','🧇'], plum:['🍏','🦚','🦜','🪶'], pistachio:['🥜','🌰','🌻','🐿️'], cocoa:['🍫','☕','🫘','🐻'], apricot:['🦒','🦓','🐆','🦩'], hydrangea:['💠','🪻','🪷','🦢'], peachtea:['🧋','🫖','🍶','🍸'], oceanfoam:['🌊','🐚','🛟','⛵'], sunset:['🌅','🏜️','🌄','🌇'], polar:['❄️','🐻‍❄️','🛷','🧣'], honey:['🐜','🪲','🕸️','🐌'], lilac:['🦇','🪄','🧙','👻'], sakuradusk:['🌃','🌠','🛸','🗼'], seaglass:['🪼','🪿','🦞','🧜‍♀️'], berrycream:['🧁','🍧','🍩','🥧'], panda:['🐼','🎋','🐼','🌿','🐼','🪴','🐼','🍃']
+sakura:['🌸','🎎','🪭','🎐'], matcha:['🍵','🐸','🥬','🫛'], ocean:['🐬','🦈','🐳','🦑'], lavender:['🦄','🪽','🧚','🦋'], peach:['🍑','🐥','🦆','🍊'], lemon:['🍋','🐝','🍍','🥭'], mint:['🦭','🧊','🐧','🐠'], grape:['🍇','🫐','🍷','🧃'], coral:['🦀','🪸','🐢','📦'], ramune:['🫧','🥤','📦','📦'], taro:['🍠','🐼','🍮','🧸'], nori:['🌿','🥑','🪴','🌱'], midnight:['🐈‍⬛','🌙','⭐','🌌'], cosmos:['🚀','🪐','👾','🛰️'], kawaii:['🐱','🐰','🦝','🐹'], cyber:['🤖','🦾','💾','📡'],
+cream:['🐄','🧈','🥛','🥐'], sky:['☁️','🌈','🌤️','🪁'], rose:['🌹','💌','💐','🎀'], blueberry:['🪺','🦉','🧿','🦤'], melon:['🍈','🥒','🐊','🦎'], strawberry:['🍓','🍰','🍬','🍡'], vanilla:['🍦','🍨','🥄','🧇'], plum:['🍏','🦚','🦜','🪶'], pistachio:['🥜','🌰','🌻','🐿️'], cocoa:['🍫','☕','🫘','🐻'], apricot:['🦒','🦓','🐆','🦩'], hydrangea:['💠','🪻','🪷','🦢'], peachtea:['🧋','🫖','📦','🍸'], oceanfoam:['🌊','🐚','🛟','⛵'], sunset:['🌅','🏜️','🌄','🌇'], polar:['❄️','🐻‍❄️','🛷','🧣'], honey:['🐜','🪲','🕸️','🐌'], lilac:['🦇','🪄','🧙','👻'], sakuradusk:['🌃','🌠','🛸','🗼'], seaglass:['🪼','🪿','🦞','🧜‍♀️'], berrycream:['🧁','🍧','🍩','🥧'], panda:['🐼','🎋','🐼','🌿','🐼','🪴','🐼','🍃']
 };
 Object.entries(THEME_CARD_FRIENDS).forEach(([id, friends]) => {
 const theme = THEMES[id]; if (!theme) return;
@@ -2216,10 +2220,10 @@ NEW_LIGHT_THEMES.forEach(s => { THEMES[s[0]] = createHueTheme(s); });
 NEW_DARK_THEMES.forEach(s => { THEMES[s[0]] = createHueTheme([...s, true]); });
 const NEW_DARK_THEMES2 = [["rhino","แรดราตรี",["🦏","🌾","🪨","🌑"],190,30],["camel","อูฐทะเลทราย",["🐫","🕌","🪬","🥙"],35,55],["gorilla","กอริลลาป่าลึก",["🦍","🥁","🪘","🏝️"],290,30],["vampire","แวมไพร์น้อย",["🧛","🩸","🏰","🦷"],345,60],["zombie","ซอมบี้ตลก",["🧟","🧠","⚰️","🪦"],62,35],["elf","เอลฟ์แสงจันทร์",["🧝","🏹","📿","🍃"],152,50],["snake","งูน้อยมรกต",["🐍","🪱","🦠","💚"],100,55],["eagle","อินทรีเวหา",["🦅","⛰️","🌬️","🎖️"],255,50],["rooster","ไก่แจ้ยามเช้ามืด",["🐓","🌽","🛖","🎶"],70,65],["whale","วาฬน้อย",["🐋","⚓","🧭","🏝️"],215,55],["poodle","พุดเดิ้ลหรู",["🐩","💅","🛍️","👒"],305,50],["scorpion","แมงป่องทราย",["🦂","🌶️","🧨","🏺"],5,75],["troll","ทรอลล์ป่าลึก",["🧌","🪓","🛖","🪨"],175,45]];
 NEW_DARK_THEMES2.forEach(s => { THEMES[s[0]] = createHueTheme([...s, true]); });
-const SUSHI_LIGHT_THEMES = [["nigiri","นิกิริซาลม่อน",["📦","🐟","🥢","🍙"],14,72],["maki","มากิม้วนสาหร่าย",["🌯","🥑","🥒","🍙"],130,38],["sashimi","ซาชิมิเส้นตัด",["🐟","🌊","🍚","🥢"],205,55],["tamago","ทามาโกะไข่หวาน",["🍳","🍙","🥚","🍱"],45,78],["wasabi","วาซาบิเผ็ดซ่า",["🌿","🍙","🐸","🌶️"],95,58],["shari","ชาริข้าวสวย",["🍚","🌾","🍥","🍶"],50,38],["ebi","เอบิกุ้งชุบ",["🍤","🦐","🍋","🥢"],26,75],["ikura","อิคุระไข่ปลา",["🍥","🧡","🌊","🥢"],16,68],["bento","เบนโตะกล่องข้าว",["🍱","🍵","🥢","🍥"],165,42],["inari","อินาริเต้าหู้",["🍢","🍚","🏮","🧡"],33,60]];
-const SUSHI_DARK_THEMES = [["soy","โชยุกลางคืน",["🍶","🏮","🌙","🥢"],22,58],["fugu","ฟุกุราตรี",["🐡","🎴","🌊","⭐"],190,48],["tako","ทาโกะยามค่ำ",["🐙","🌀","🌑","🥢"],280,42],["unagi","อุนากิย่าง",["🐡","🔥","🏮","🍚"],30,62],["edomae","เอโดะมาเอะ",["🐟","⚓","🌉","📦"],215,44],["onigiri","โอนิกิริราตรี",["🍙","🌌","⭐","🥢"],240,38],["norinight","โนริราตรี",["🌿","🌊","🌑","🍙"],158,38],["sushiparty","ซูชิปาร์ตี้",["🎉","📦","🏮","✨"],330,52],["kaiten","ไคเทนซูชิ",["📦","🎡","🏮","🥢"],6,58],["sushibar","ซูชิบาร์ยามค่ำ",["🍶","🍸","🏮","📦"],258,34]];
-SUSHI_LIGHT_THEMES.forEach(s => { const t = createHueTheme(s); t.sushi = true; THEMES[s[0]] = t; });
-SUSHI_DARK_THEMES.forEach(s => { const t = createHueTheme([...s, true]); t.sushi = true; THEMES[s[0]] = t; });
+const STOCK_LIGHT_THEMES = [["stock-soft","ซอฟต์",["📦","🏷️","🛒","📋"],14,72],["stock-forest","ป่า",["🌿","📦","📋","🏷️"],130,38],["stock-sky","ฟ้าคราม",["☁️","📦","🏷️","🛒"],205,55],["stock-sunrise","รุ่งอรุณ",["🌅","📦","🏷️","🛒"],45,78],["stock-mint","มินต์",["🌿","📦","🛒","🏷️"],95,58],["stock-sand","ทราย",["🪨","📦","🏷️","📋"],50,38],["stock-citrus","เหลืองสด",["🍋","📦","🏷️","🛒"],26,75],["stock-berry","เบอร์รี",["🍇","📦","🏷️","📋"],16,68],["stock-classic","คลาสสิก",["📦","📋","🏷️","🛒"],165,42],["stock-stone","สโตน",["🪨","📦","🏷️","🛒"],33,60]];
+const STOCK_DARK_THEMES = [["stock-night","ราตรี",["🌙","📦","📋","🏷️"],22,58],["stock-deepblue","น้ำเงินเข้ม",["🌌","📦","🛒","🏷️"],190,48],["stock-graphite","กราไฟต์",["⚫","📦","🏷️","📋"],280,42],["stock-ember","อำพัน",["🔥","📦","🏷️","📋"],30,62],["stock-harbor","ท่าเรือ",["⚓","📦","🏷️","🛒"],215,44],["stock-space","อวกาศ",["🪐","📦","📋","🏷️"],240,38],["stock-forestnight","ป่ากลางคืน",["🌲","📦","🛒","🏷️"],158,38],["stock-party","ปาร์ตี้",["🎉","📦","🏷️","✨"],330,52],["stock-orbit","วงโคจร",["🪐","📦","🏷️","📋"],6,58],["stock-midnight","เที่ยงคืน",["🌙","📦","🏷️","📋"],258,34]];
+STOCK_LIGHT_THEMES.forEach(s => { THEMES[s[0]] = createHueTheme(s); });
+STOCK_DARK_THEMES.forEach(s => { THEMES[s[0]] = createHueTheme([...s, true]); });
 (function enrichThemeFriends() {
 const CUTE = ['🎀','✨','💖','🍭','🧸','🌈','🫧','⭐','🍓','🐾','🌸','🧁'];
 Object.keys(THEMES).forEach(id => {
@@ -2282,7 +2286,7 @@ document.documentElement.classList.toggle('formal-theme', !!theme.formal);
 document.documentElement.classList.toggle('dark-theme', !!theme.dark);
 ['--warn','--warn-bg'].forEach(k => document.documentElement.style.removeProperty(k));
 Object.entries(theme.colors).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
-if (theme.friends.length) document.querySelectorAll('.sushi-friend').forEach((friend, index) => { const first = friend.childNodes[0]; if (first?.nodeType === Node.TEXT_NODE) first.nodeValue = theme.friends[index % theme.friends.length]; });
+if (theme.friends.length) document.querySelectorAll('.stock-friend').forEach((friend, index) => { const first = friend.childNodes[0]; if (first?.nodeType === Node.TEXT_NODE) first.nodeValue = theme.friends[index % theme.friends.length]; });
 document.querySelectorAll('.story-mark,.brand-badge,.boot-mascot,.lg-icon,.theme-emoji').forEach(mark => { if (mark.classList.contains('theme-emoji')) return; mark.textContent = theme.mascot; });
 try { renderTopRunners(); } catch {}
 }
@@ -2467,8 +2471,8 @@ build(true); showSyncUpdateStatus(); if (logNeedsPrune) save();
 }
 } catch {} finally { cloudRefreshBusy = false; }
 }
-/* ---------- Announcement ticker (shown under the header, set by kiangkai only) ---------- */
-const isAnnouncer = () => String(me?.name || '').toLowerCase() === 'kiangkai';
+/* ---------- Announcement ticker (shown under the header, set by kingstock only) ---------- */
+const isAnnouncer = () => String(me?.name || '').toLowerCase() === 'kingstock';
 const annState = { id: null, message: '', endAt: 0, timer: null, unavailable: false, busy: false, resize: null };
 function annFill(message) {
   const bar = $('#announceBar'), track = $('#announceTrack'), move = $('#announceMove');
@@ -2886,7 +2890,7 @@ document.addEventListener('pointerup', e => end(e, false));
 document.addEventListener('pointercancel', e => end(e, true));
 })();
 function updatePageMascots() {
-const main = $('#main'), friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','🍙','🍤'];
+const main = $('#main'), friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','📋','🛒'];
 main.querySelectorAll('.page-mascots').forEach(row => row.remove());
 main.querySelectorAll('.card-mascot').forEach(mascot => mascot.remove());
 main.querySelectorAll('.has-card-mascot').forEach(card => card.classList.remove('has-card-mascot'));
@@ -2935,7 +2939,7 @@ if (!list) return;
 list.querySelectorAll('.card-mascot').forEach(mascot => mascot.remove());
 list.querySelectorAll('.has-card-mascot').forEach(card => card.classList.remove('has-card-mascot'));
 if (THEMES[currentTheme]?.formal) return;
-const friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','🍙','🍤'];
+const friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','📋','🛒'];
 list.querySelectorAll('.row .c-name').forEach((card, index) => {
 if (!stkKeep(index)) return;
 const mascot = document.createElement('span');
@@ -3106,7 +3110,7 @@ function rows(withMascots = false, from = 0, to = (IS_MOBILE_BROWSER ? 36 : 60))
 const all = filtered(), list = all.slice(from, to); stockTotal = all.length; if (from === 0) stockShown = list.length;
 if (!all.length) return `<div class="empty"><b>ไม่พบวัตถุดิบ</b>${P.length ? 'ลองเปลี่ยนตัวกรองค้นหา' : 'กดปุ่มเพิ่มวัตถุดิบเพื่อเริ่มใช้งาน'}</div>`;
 const mascotOn = withMascots && !THEMES[currentTheme]?.formal;
-const friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','🍙','🍤'];
+const friends = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦','📋','🛒'];
 return list.map((p, index) => {
 const mOn = mascotOn && stkKeep(from + index);
 const state = status(p);
@@ -3629,13 +3633,13 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
     <div class="dash-card"><h3>⚠️ วัตถุดิบที่ควรจัดการ</h3><div class="dash-rank-list">${needsAttention.map(p=>`<div class="dash-rank-row"><b>${esc(p.name)}</b><span class="dash-status ${status(p)}">${num(p.qty)} ${esc(p.unit)} · ${STX[status(p)]}</span></div>`).join('')||'<small class="dash-empty-note">วัตถุดิบทุกชนิดอยู่ในระดับปกติ</small>'}</div></div>
     <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>📦 รายการที่เบิกจ่ายมาก</h3><small>${outRankRange.logs.filter(x=>x.type==='out').length} รายการ</small></div>${rankFilter('out',outRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topOut,'ไม่มีรายการเบิกจ่ายในช่วงนี้','out')}</div></div>
     <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>🚚 รายการรับเข้ามาก</h3><small>${inRankRange.logs.filter(x=>x.type==='in').length} รายการ</small></div>${rankFilter('in',inRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topIn,'ไม่มีรายการรับเข้าในช่วงนี้','in')}</div></div>
-    <div class="dash-card"><h3>🍱 ภาพรวมหมวดหมู่</h3><div class="dash-rank-list">${categoryRows.map(row=>`<div class="dash-rank-row"><b>${esc(row.name)}</b><span>${row.count} รายการ</span></div>`).join('')||'<small class="dash-empty-note">ยังไม่มีหมวดหมู่</small>'}</div></div>
+    <div class="dash-card"><h3>📦 ภาพรวมหมวดหมู่</h3><div class="dash-rank-list">${categoryRows.map(row=>`<div class="dash-rank-row"><b>${esc(row.name)}</b><span>${row.count} รายการ</span></div>`).join('')||'<small class="dash-empty-note">ยังไม่มีหมวดหมู่</small>'}</div></div>
     <div class="dash-card desktop-recent-history">${isWideDesktop()?`<div class="desktop-history-heading"><h3>🕘 ประวัติล่าสุด${inlineHistoryType && inlineHistoryLabels[inlineHistoryType] ? ` · ${inlineHistoryLabels[inlineHistoryType]}` : ''}</h3>${inlineHistoryType ? '<button type="button" class="desktop-history-clear" data-clear-inline-history>ล้าง</button>' : ''}</div>`:'<h3>📦 รายการเคลื่อนไหวล่าสุดในช่วงนี้</h3>'}<div class="recent-movements">${latestHistoryRows || (isWideDesktop() ? '<small class="dash-empty-note">ยังไม่มีประวัติการทำรายการ</small>' : '<small class="dash-empty-note">ไม่มีรายการในช่วงวันที่เลือก</small>')}</div></div>
   </div>`;
 }
 
 function isBackupOwner() {
-return String(me?.name || '').trim().toLowerCase() === 'kiangkai' && me?.owner === true;
+return String(me?.name || '').trim().toLowerCase() === 'kingstock' && me?.owner === true;
 }
 function formatBackupDate(value) {
 const date = new Date(value);
@@ -3712,7 +3716,7 @@ const stamp = String(backup.saved_at || new Date().toISOString()).replace(/[:.]/
 const safeBranch = String(branchId).replace(/[^a-zA-Z0-9_-]/g, '');
 const link = document.createElement('a');
 link.href = url;
-link.download = 'stokinventory-backup-' + safeBranch + '-' + stamp + '.json';
+link.download = 'kingstock-backup-' + safeBranch + '-' + stamp + '.json';
 document.body.appendChild(link);
 link.click();
 link.remove();
@@ -3741,7 +3745,7 @@ if (!username || /^\d{6}$/.test(password)) { if (errorEl) errorEl.textContent = 
 confirmBtn.disabled = true; confirmBtn.textContent = 'กำลังตรวจสอบและกู้คืน…';
 try {
 const verification = await cloudRpc('api_branch_login', { p_branch_id: currentBranch.id, p_name: username, p_pin_hash: await hash(password) });
-if (!verification?.ok || !verification.token || !verification.me?.owner || username !== 'kiangkai') throw new Error(verification?.error || 'ยืนยันได้เฉพาะบัญชีผู้ดูแลหลัก kiangkai เท่านั้น');
+if (!verification?.ok || !verification.token || !verification.me?.owner || username !== 'kingstock') throw new Error(verification?.error || 'ยืนยันได้เฉพาะบัญชีผู้ดูแลหลัก KING STOCK เท่านั้น');
 await syncQueue;
 const result = await cloudRpc('api_inventory_backup_restore_branch', { p_token: verification.token, p_backup_id: backupId, p_branch_id: branchId });
 if (!result?.ok) throw new Error(result?.error || 'กู้คืนข้อมูลไม่สำเร็จ');
@@ -3758,14 +3762,14 @@ confirmBtn.disabled = false; confirmBtn.textContent = 'ยืนยันแล�
 
 function settingsView() {
 const canViewStorage = !!(me?.owner || me?.role === 'admin');
-const canManageBackup = String(me?.name || '').trim().toLowerCase() === 'kiangkai' && me?.owner === true;
+const canManageBackup = String(me?.name || '').trim().toLowerCase() === 'kingstock' && me?.owner === true;
 const allThemes = Object.values(THEMES);
 const themePages = [allThemes]; // KING STOCK theme selector: one page only.
 const stockResetLog = L.find(x => x.note === STOCK_RESET_NOTE);
 const resetAudit = stockResetLog && (!lastReset || Number(stockResetLog.ts) > Number(lastReset.ts || 0)) ? { scope: 'stock', user: stockResetLog.user, ts: stockResetLog.ts } : lastReset;
 return `<div class="sect"><h2>ตั้งค่าระบบ</h2><small>กำหนดค่าการแสดงผลและข้อมูล</small></div>
   <div class="dash-grid settings-grid">
-    ${can.manageBranches() ? `<div class="dash-card branch-admin-card bm-card"><div class="bm-head"><h3>🏬 จัดการสาขา<span class="bm-count">${branches.length}</span></h3><button type="button" class="btn sm bm-add" id="createBranchBtn">${ic('plus')} เพิ่มสาขา</button></div><details class="bm-info"><summary>วิธีเข้าถึงสาขา</summary><p class="settings-hint">จัดการสาขาได้เฉพาะบัญชีหลัก kiangkai ผู้ใช้งานสาขาอื่นต้องเข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสของตนเอง และเข้าได้เฉพาะสาขาที่เลือกไว้</p></details><div class="bm-list">${branches.map(b => { const isCurrent = String(b.id)===String(currentBranch.id); return `<div class="bm-row${isCurrent?' is-current':''}"><span class="bm-name-wrap"><span class="bm-name" title="${esc(b.name)}">${esc(b.name)}</span>${branchOnlineHtml(b)}</span>${isCurrent?`<span class="bm-badge">กำลังใช้งาน</span>`:`<span class="bm-actions"><button type="button" class="btn sm bm-btn bm-close" data-deactivate-branch="${esc(b.id)}" aria-label="ปิดสาขา ${esc(b.name)}">ปิด</button><button type="button" class="btn sm bm-btn bm-enter" data-switch-branch="${esc(b.id)}" aria-label="เข้าสาขา ${esc(b.name)}">เข้า</button></span>`}</div>`; }).join('')}</div></div>` : ''}
+    ${can.manageBranches() ? `<div class="dash-card branch-admin-card bm-card"><div class="bm-head"><h3>🏬 จัดการสาขา<span class="bm-count">${branches.length}</span></h3><button type="button" class="btn sm bm-add" id="createBranchBtn">${ic('plus')} เพิ่มสาขา</button></div><details class="bm-info"><summary>วิธีเข้าถึงสาขา</summary><p class="settings-hint">จัดการสาขาได้เฉพาะบัญชีหลัก kingstock ผู้ใช้งานสาขาอื่นต้องเข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสของตนเอง และเข้าได้เฉพาะสาขาที่เลือกไว้</p></details><div class="bm-list">${branches.map(b => { const isCurrent = String(b.id)===String(currentBranch.id); return `<div class="bm-row${isCurrent?' is-current':''}"><span class="bm-name-wrap"><span class="bm-name" title="${esc(b.name)}">${esc(b.name)}</span>${branchOnlineHtml(b)}</span>${isCurrent?`<span class="bm-badge">กำลังใช้งาน</span>`:`<span class="bm-actions"><button type="button" class="btn sm bm-btn bm-close" data-deactivate-branch="${esc(b.id)}" aria-label="ปิดสาขา ${esc(b.name)}">ปิด</button><button type="button" class="btn sm bm-btn bm-enter" data-switch-branch="${esc(b.id)}" aria-label="เข้าสาขา ${esc(b.name)}">เข้า</button></span>`}</div>`; }).join('')}</div></div>` : ''}
     ${isAnnouncer() ? `<div class="dash-card disclosure-card announce-card" id="announceCard"><button type="button" class="disclosure-summary" data-disclosure-toggle aria-expanded="false" aria-controls="announceDisclosurePanel"><span>📢 ประกาศข้อความ</span><span class="disclosure-count" id="announceCount"></span><span class="disclosure-chevron" aria-hidden="true"></span></button><div class="disclosure-panel" id="announceDisclosurePanel" aria-hidden="true" inert><div class="disclosure-inner">
       <p class="settings-hint">ข้อความจะเลื่อนจากขวาไปซ้ายใต้หัวเว็บไซต์ของผู้ใช้ในสาขาที่เลือก จนครบเวลาที่กำหนด หรือจนกว่าจะยกเลิก</p>
       <label class="fld"><span>ข้อความประกาศ</span><textarea class="in" id="annText" rows="3" maxlength="200" placeholder="พิมพ์ข้อความที่ต้องการประกาศ"></textarea><small class="ann-counter" id="annCounter">0/200</small></label>
@@ -3787,7 +3791,7 @@ return `<div class="sect"><h2>ตั้งค่าระบบ</h2><small>ก�
     <div class="dash-card disclosure-card backup-admin-card" id="backupAdminCard">
       <button type="button" class="disclosure-summary" data-disclosure-toggle aria-expanded="false" aria-controls="adminBackupDisclosurePanel"><span>🗂️ Backup ข้อมูล (ทุกสาขา)</span><span class="disclosure-chevron" aria-hidden="true"></span></button>
       <div class="disclosure-panel" id="adminBackupDisclosurePanel" aria-hidden="true" inert><div class="disclosure-inner">
-        <p class="settings-hint">แสดงข้อมูลสำรองทุกสาขาอัตโนมัติทุก 1 ชั่วโมง เก็บย้อนหลัง 12 ชั่วโมง · ดาวน์โหลดได้ทุก User · กู้คืนได้เฉพาะ kiangkai</p>
+        <p class="settings-hint">แสดงข้อมูลสำรองทุกสาขาอัตโนมัติทุก 1 ชั่วโมง เก็บย้อนหลัง 12 ชั่วโมง · ดาวน์โหลดได้ทุก User · กู้คืนได้เฉพาะผู้ดูแลหลัก</p>
         <div class="backup-admin-summary"><b id="adminBackupStatus" role="status" aria-live="polite">กำลังโหลดสถานะ Backup…</b><small id="adminBackupBranches">ตรวจสอบรายชื่อสาขา…</small></div>
         <div class="backup-admin-actions">${canManageBackup ? '<button type="button" class="btn sm" id="adminBackupNow">สำรองข้อมูลตอนนี้</button>' : ''}<button type="button" class="btn sm sec" id="adminBackupRefresh">รีเฟรชรายการ</button></div>
         <div class="backup-admin-list" id="adminBackupList"><small class="dash-empty-note">กำลังโหลดรายการสำรอง…</small></div>
@@ -4469,7 +4473,7 @@ return `<section class="ih" id="ih" aria-label="ประวัติของ�
     <div class="ih-list" id="ihList"></div>
   </section>`;
 }
-const IH_STK_FALLBACK = ['📦', '🍙', '🍤'];
+const IH_STK_FALLBACK = ['📦', '📋', '🛒'];
 function itemSheetFriends() {
 if (THEMES[currentTheme]?.formal) return [];
 const f = THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || IH_STK_FALLBACK;
@@ -4692,7 +4696,7 @@ openModal(`<h3>${id ? 'แก้ไขวัตถุดิบ' : 'เพิ่�
      ${id ? '' : `<label class="fld"><span>จำนวนเริ่มต้น *</span><input class="in" name="qty" type="number" min="0" step="1" inputmode="numeric" required value="${p.qty || 0}"></label>`}
      <label class="fld"><span>แจ้งเตือนเมื่อเหลือต่ำกว่า</span><input class="in" name="min" type="number" min="0" step="1" inputmode="numeric" value="${p.min ?? 1}"></label>
    </div>
-   <label class="fld"><span>ซัพพลายเออร์ / แหล่งจัดซื้อ</span><input class="in" name="loc" placeholder="เช่น ตลาดมหาชัย หรือผู้จำหน่ายปลา" value="${esc(p.loc || '')}"></label>
+   <label class="fld"><span>ซัพพลายเออร์ / แหล่งจัดซื้อ</span><input class="in" name="loc" placeholder="เช่น เช่น ผู้จำหน่ายหรือบริษัทจัดซื้อ" value="${esc(p.loc || '')}"></label>
    <div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button class="btn">${id ? 'บันทึก' : 'เพิ่มวัตถุดิบ'}</button></div>
   </form>`, 'product');
 const captureProductDraft = () => { const f = $('#pf'); return { name: fv(f, 'name'), cat: f.elements.cat.value, unit: f.elements.unit.value, qty: f.elements.qty ? f.elements.qty.value : p.qty, min: f.elements.min.value, loc: fv(f, 'loc') }; };
@@ -4908,7 +4912,7 @@ if (!card) return;
 e.preventDefault(); card.click();
 });
 function usersView() {
-const manageUsers = can.users(); const users = manageUsers ? [globalAdminDirectoryUser, ...U.filter(user => String(user.name || '').toLowerCase() !== 'kiangkai')] : [globalAdminDirectoryUser];
+const manageUsers = can.users(); const users = manageUsers ? [globalAdminDirectoryUser, ...U.filter(user => String(user.name || '').toLowerCase() !== 'kingstock')] : [globalAdminDirectoryUser];
 const activity = user => { const logs=L.filter(x=>String(x.user||'').toLowerCase()===String(user.name).toLowerCase()); const last=logs.reduce((best,x)=>Math.max(best,Number(x.ts)||0),0); const day=86400000, now=Date.now(); return {count:logs.length, recent:logs.filter(x=>now-(Number(x.ts)||0)<=30*day).length, last:last?new Date(last).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}):'ยังไม่มีประวัติ',ins:logs.filter(x=>x.type==='in').length,outs:logs.filter(x=>x.type==='out').length}; };
 const summary=users.map(activity), totalMoves=summary.reduce((n,x)=>n+x.count,0), onlineCount=users.filter(u=>onlineUsers.has(u.name.toLowerCase())).length;
 return `<div class="sect"><h2>${manageUsers ? 'จัดการผู้ใช้' : 'ผู้ใช้'}</h2><span style="display:flex;gap:8px">${isAnnouncer() ? '<button type="button" class="btn sm sec chat-rooms-btn" id="chatRoomsBtn">💬 ห้องแชท<i class="chat-dot" data-chat-dot="rooms"></i></button>' : ''}${manageUsers ? `<button class="btn sm" id="nu">${ic('plus')} เพิ่ม</button>` : ''}</span></div>
@@ -4958,7 +4962,7 @@ $('#uf').onsubmit = async e => {
 e.preventDefault(); const f = e.target, n = fv(f, 'name').toLowerCase(), pn = canEditDetails ? f.elements.pin.value : '';
 const usernameChanged = !!name && n !== target.name.toLowerCase();
 if (!name && U.some(x => x.name === n)) return toast('ชื่อผู้ใช้ซ้ำ', 1);
-if (!name && n === 'boykiangkai') return toast('ชื่อผู้ใช้นี้ถูกสงวนไว้', 1);
+if (!name && n === 'kingstock_reserved') return toast('ชื่อผู้ใช้นี้ถูกสงวนไว้', 1);
 if (usernameChanged && !canEditUsername) return toast('ไม่มีสิทธิ์เปลี่ยนชื่อบัญชีนี้', 1);
 if (usernameChanged && U.some(x => x !== target && x.name.toLowerCase() === n)) return toast('ชื่อผู้ใช้นี้มีคนใช้แล้ว', 1);
 if (pn && !/^\d{6}$/.test(pn)) return toast('รหัส ต้องเป็นตัวเลข 6 หลัก', 1);
@@ -5026,7 +5030,7 @@ if (!me || me.branchManagerAccess) return toast('ไม่สามารถแ�
 openModal(`<h3>แก้ไขชื่อผู้ใช้</h3><form id="myUsernameForm">
    <label class="fld"><span>ชื่อผู้ใช้</span><div class="select-tools"><input class="in" name="username" required minlength="3" maxlength="20" pattern="[\\p{L}\\p{M}0-9_]{3,20}" autocomplete="username" readonly value="${esc(me.name)}"><button type="button" class="icon-tool" id="editMyUsername" title="แก้ไขชื่อผู้ใช้" aria-label="แก้ไขชื่อผู้ใช้">✎</button></div></label>
    <label class="fld"><span>ยืนยันรหัสปัจจุบัน 6 หลัก</span><input class="in" name="pin" type="password" inputmode="numeric" pattern="\\d{6}" maxlength="6" autocomplete="current-password" required></label>
-   <p class="settings-hint">ทุกบัญชีเปลี่ยนชื่อผู้ใช้ของตนเองได้ ผู้มีสิทธิจัดการบัญชีเปลี่ยนชื่อบัญชีอื่นในสาขาได้ และ kiangkai จัดการได้ทุกสาขา ชื่อต้องไม่ซ้ำกัน</p>
+   <p class="settings-hint">ทุกบัญชีเปลี่ยนชื่อผู้ใช้ของตนเองได้ ผู้มีสิทธิจัดการบัญชีเปลี่ยนชื่อบัญชีอื่นในสาขาได้ และ kingstock จัดการได้ทุกสาขา ชื่อต้องไม่ซ้ำกัน</p>
    <div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button class="btn">บันทึกชื่อ</button></div></form>`);
 const f = $('#myUsernameForm');
 $('#editMyUsername').onclick = () => { f.elements.username.readOnly = false; f.elements.username.focus(); };
@@ -5078,7 +5082,7 @@ if (!branchResult.ok || !Array.isArray(branchResult.branches) || !branchResult.b
 renderBranchOptions(branchResult.branches);
 } catch (error) {
 renderBranchOptions([PRIMARY_BRANCH_FALLBACK]);
-startupMessage = 'โหลดรายชื่อสาขาไม่สำเร็จ กำลังใช้สาขาพันท้ายนรสิงห์ชั่วคราว';
+startupMessage = 'โหลดรายชื่อสาขาไม่สำเร็จ กำลังใช้สาขาหลักชั่วคราว';
 }
 try { const status = await cloudRpc('api_bootstrap_status'); showHint(!!status.firstLogin); }
 catch { showHint(false); }
@@ -5141,7 +5145,7 @@ function loadJ() {
 }
 function saveJ() { store.set(jKey(), J); if (JOBS_CLOUD) save(); }
 // พนักงานที่อยู่ในจ๊อบ: หัวหน้าติ๊กเลือกเอง (ถ้ายังไม่เลือก ใช้บัญชีที่ไม่ใช่เจ้าของ/ผู้ดูแล/หัวหน้างาน)
-const jCand = () => U.filter(u => u.active !== false && String(u.name).toLowerCase() !== 'kiangkai');
+const jCand = () => U.filter(u => u.active !== false && String(u.name).toLowerCase() !== 'kingstock');
 const jStaff = () => Array.isArray(J.staff) ? jCand().filter(u => J.staff.includes(u.name)).map(u => u.name) : jCand().filter(u => !fullAccessUser(u) && u.role !== 'supervisor').map(u => u.name);
 const JS = (() => { const t = new Date(); return { y: t.getFullYear(), m: t.getMonth(), sel: dk(t), view: 'cal', who: 'all', periodWeek: 'w1', teamMode: 'month', teamWeek: 'w1' }; })();
 const jNames = () => jMgr() ? (JS.who !== 'all' && jStaff().includes(JS.who) ? [JS.who] : jStaff()) : (jStaff().includes(me.name) ? [me.name] : []);
@@ -5269,7 +5273,7 @@ function jPeriodAction() {
 }
 const jPill = e => `<span class="jp-pill t-${e.t}">${JT[e.t].e} ${JT[e.t].l}${e.t === 'late' && e.m ? ` ${e.m} นาที` : ''}</span>`;
 const jChips = s => ['normal', 'absent', 'late', 'leave', 'off'].map(t => t === 'normal' ? `<span class="jp-chip t-ok">ปกติ ${s.normal || 0}</span>` : `<span class="jp-chip t-${t}">${JT[t].l} ${s[t]}${t === 'late' && s.min ? ` (${s.min} น.)` : ''}</span>`).join('');
-const jFriends = () => THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦', '🍙', '🍤'];
+const jFriends = () => THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦', '📋', '🛒'];
 const jMas = (i, cls) => { const f = jFriends(); return f.length && stkKeep(i) ? `<span class="card-mascot ${cls}" aria-hidden="true">${f[i % f.length]}</span>` : ''; };
 const jNav = () => `<button type="button" class="jp-btn sq" data-mon="-1" aria-label="เดือนก่อน"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><b>${jFmt(dk(new Date(JS.y, JS.m, 1)), { month: 'long', year: 'numeric' })}</b><button type="button" class="jp-btn sq" data-mon="1" aria-label="เดือนถัดไป"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="jp-btn" data-calendar-today>ปัจจุบัน</button>`;
 const jPeriodNav = range => {
@@ -5549,7 +5553,7 @@ function jSettings() {
     });
   }, { passive: true });
 })();
-const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนักงาน', show: () => can.sideMenu(), open: () => jOpenPage() }, { id: 'eggfeed', icon: '🥚', label: 'ข่าวสารร้านค้า', show: () => can.eggFeed(), open: () => window.eggFeedOpen && window.eggFeedOpen() }, { id: 'chat', icon: '💬', label: 'ห้องแชท', show: () => true, open: () => window.chatOpenRooms && window.chatOpenRooms() }];
+const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนักงาน', show: () => can.sideMenu(), open: () => jOpenPage() }];
 (function setupSideMenu() {
   const scrim = document.createElement('div'); scrim.className = 'sd-scrim';
   const dock = document.createElement('div'); dock.className = 'sd-dock';
@@ -5667,18 +5671,18 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
  });
 })();
 
-// ===== ระบบแชท: ผู้ใช้ทุกสาขา <-> ผู้ดูแลระบบ (kiangkai) | ข้อความอยู่ได้ 3 วัน =====
+// ===== ระบบแชท: ผู้ใช้ทุกสาขา <-> ผู้ดูแลระบบ (kingstock) | ข้อความอยู่ได้ 3 วัน =====
 (function chatSystem() {
   const NOTE = '🕒 ข้อความในแชทนี้อยู่ได้ 3 วัน หลังจากนั้นระบบจะล้างให้อัตโนมัติเพื่อประหยัดพื้นที่เก็บข้อมูล';
   const BACK = '<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
   const CH = { admin: false, total: 0, rooms: {}, branchId: '', unavailable: false, busy: false,
     room: null, peer: '', msgs: [], lastId: 0, readUpto: 0, timer: null, roomsTimer: null, pulling: false,
     sending: false, rec: null, pending: null, audio: null, audioId: 0 };
-  const isAdminMe = () => String(me?.name || '').toLowerCase() === 'kiangkai';
+  const isAdminMe = () => String(me?.name || '').toLowerCase() === 'kingstock';
   const missing = e => /Could not find the function|schema cache|chat_/i.test(String(e?.message || ''));
   const rpc = (name, args = {}) => cloudRpc(name, { p_token: cloudToken, ...args });
   const q = s => document.querySelector(s);
-  const friends = () => THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦', '🍙', '🍤'];
+  const friends = () => THEME_CARD_FRIENDS[currentTheme] || THEMES[currentTheme]?.friends || ['📦', '📋', '🛒'];
   const stk = (i, cls = '') => { const f = friends(); return f.length && stkKeep(i) ? `<span class="card-mascot ${cls}" aria-hidden="true">${f[i % f.length]}</span>` : ''; };
 
   const layer = document.createElement('div');
@@ -5763,7 +5767,7 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
   const preview = r => (r.last_sender === 'admin' ? 'คุณ: ' : '') + (r.last_kind === 'image' ? '📷 รูปภาพ' : r.last_kind === 'audio' ? '🎤 ข้อความเสียง' : (r.last_body || ''));
   const errText = (e, fb) => missing(e) ? 'ยังไม่ได้ติดตั้งระบบแชทบน Supabase (รันไฟล์ supabase-chat-migration.sql)' : (e?.message || fb);
 
-  /* ---------- รายการห้อง (เฉพาะ kiangkai) ---------- */
+  /* ---------- รายการห้อง (เฉพาะ kingstock) ---------- */
   let roomData = [];
   function renderRooms() {
     const term = q('#crSearch').value.trim().toLowerCase();
@@ -5792,7 +5796,7 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
       roomData = r.rooms || []; renderRooms();
     } catch (e) { q('#crList').innerHTML = `<div class="cr-empty">${esc(errText(e, 'โหลดรายชื่อไม่สำเร็จ'))}</div>`; }
   }
-  /* ผู้ใช้ทั่วไปเห็นห้องเดียว: ผู้ดูแลระบบ (kiangkai) */
+  /* ผู้ใช้ทั่วไปเห็นห้องเดียว: ผู้ดูแลระบบ (kingstock) */
   let selfLast = null;
   function renderSelfRoom() {
     const unread = CH.total || 0, m = selfLast;
@@ -5893,7 +5897,7 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
     CH.admin = isAdminMe();
     CH.room = CH.admin ? opt.room : null; CH.msgs = []; CH.lastId = 0; CH.readUpto = 0;
     q('#chTitle').textContent = CH.admin ? (opt.name || 'ผู้ใช้') : 'ผู้ดูแลระบบ';
-    q('#chSub').textContent = CH.admin ? (opt.branch ? `สาขา${opt.branch}` : '') : 'kiangkai · ตอบกลับเมื่อว่าง';
+    q('#chSub').textContent = CH.admin ? (opt.branch ? `สาขา${opt.branch}` : '') : 'KING STOCK · ตอบกลับเมื่อว่าง';
     q('#chDel').hidden = !CH.admin;
     elText.value = ''; clearPending(); syncComposer(); autoGrow();
     elMsgs.innerHTML = '<div class="cr-empty">กำลังโหลด…</div>';
