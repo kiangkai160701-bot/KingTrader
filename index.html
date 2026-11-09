@@ -5227,7 +5227,27 @@ function revealLogin(message = '') {
 $('#bootScreen').classList.add('hide'); $('#app').classList.add('hide'); $('#login').classList.remove('hide'); prefillLastUsername();
 if (message) $('#lgMsg').textContent = message;
 }
+const bootWatchdog = setTimeout(() => {
+  const boot = $('#bootScreen');
+  if (boot && !boot.classList.contains('hide')) {
+    revealLogin('ระบบเริ่มต้นใช้เวลานานเกินไป กรุณาตรวจอินเทอร์เน็ตแล้วกดรีเฟรชหน้าเว็บอีกครั้ง');
+  }
+}, 30000);
+window.addEventListener('error', event => {
+  const boot = $('#bootScreen');
+  if (boot && !boot.classList.contains('hide')) {
+    revealLogin('ระบบเริ่มต้นไม่สำเร็จ: ' + (event.message || 'เกิดข้อผิดพลาดในหน้าเว็บ'));
+  }
+});
+window.addEventListener('unhandledrejection', event => {
+  const boot = $('#bootScreen');
+  if (boot && !boot.classList.contains('hide')) {
+    const reason = event.reason;
+    revealLogin('ระบบเริ่มต้นไม่สำเร็จ: ' + (reason?.message || String(reason || 'เกิดข้อผิดพลาด')));
+  }
+});
 (async () => {
+try {
 await init();
 let startupMessage = '';
 try {
@@ -5251,6 +5271,14 @@ enter(result.me, result.branch || currentBranch); checkSaturdayAutoLogout(); if 
 } else { sess.set(null); showHint(false); revealLogin(result.error || 'กรุณาเข้าสู่ระบบใหม่'); }
 } catch (error) { showHint(false); revealLogin(error.message || 'ยังเชื่อมต่อฐานข้อมูลไม่ได้ กรุณาติดต่อผู้ดูแลระบบ'); }
 } else revealLogin(startupMessage);
+} catch (error) {
+  showHint(false);
+  revealLogin(error?.message || 'ระบบเริ่มต้นไม่สำเร็จ กรุณารีเฟรชหน้าเว็บ');
+} finally {
+  clearTimeout(bootWatchdog);
+  const boot = $('#bootScreen');
+  if (boot && !boot.classList.contains('hide')) revealLogin('ไม่สามารถเริ่มระบบได้ กรุณาเข้าสู่ระบบใหม่หรือรีเฟรชหน้าเว็บ');
+}
 })();
 (function(){
 const btn=document.createElement('button');
