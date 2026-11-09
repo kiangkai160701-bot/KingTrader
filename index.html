@@ -2104,8 +2104,8 @@ const normalizeRemovedViewerAccounts = users => (Array.isArray(users) ? users : 
 : user);
 let CATS = store.get('inv_categories', ['สินค้าอุปโภคบริโภค', 'อะไหล่', 'เครื่องมือ', 'อุปกรณ์', 'บรรจุภัณฑ์', 'อื่นๆ']);
 let UNITS = store.get('inv_units', ['กิโลกรัม', 'กรัม', 'ลิตร', 'มิลลิลิตร', 'ชิ้น', 'แพ็ค', 'กล่อง', 'ขวด', 'ถุง']);
-const fullAccessUser = user => !!(user?.owner || user?.role === 'admin' || String(user?.name || '').toLowerCase() === 'kingstock');
-const globalAdminDirectoryUser = Object.freeze({ name: 'kingstock', role: 'admin', active: true, owner: true, globalAdmin: true });
+const fullAccessUser = user => !!(user?.owner || user?.role === 'admin' || String(user?.name || '').toLowerCase() === 'kiangkai');
+const globalAdminDirectoryUser = Object.freeze({ name: 'kiangkai', role: 'admin', active: true, owner: true, globalAdmin: true });
 const isGlobalBranchAdmin = user => !!user?.owner && !user?.branchManagerAccess;
 const defaultPermissions = role => role === 'admin'
 ? { eggFeed: true, editStock: true, manageLists: true, manageUsers: true, deleteUsers: true, deleteStock: true, managePermissions: true, resetData: true, manageBranches: false, sideMenu: true, manageJobs: true }
@@ -2582,7 +2582,7 @@ build(true); showSyncUpdateStatus(); if (logNeedsPrune) save();
 } catch {} finally { cloudRefreshBusy = false; }
 }
 /* ---------- Announcement ticker (shown under the header, set by kingstock only) ---------- */
-const isAnnouncer = () => String(me?.name || '').toLowerCase() === 'kingstock';
+const isAnnouncer = () => String(me?.name || '').toLowerCase() === 'kiangkai';
 const annState = { id: null, message: '', endAt: 0, timer: null, unavailable: false, busy: false, resize: null };
 function annFill(message) {
   const bar = $('#announceBar'), track = $('#announceTrack'), move = $('#announceMove');
@@ -3749,7 +3749,7 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
 }
 
 function isBackupOwner() {
-return String(me?.name || '').trim().toLowerCase() === 'kingstock' && me?.owner === true;
+return String(me?.name || '').trim().toLowerCase() === 'kiangkai' && me?.owner === true;
 }
 function formatBackupDate(value) {
 const date = new Date(value);
@@ -3855,7 +3855,7 @@ if (!username || /^\d{6}$/.test(password)) { if (errorEl) errorEl.textContent = 
 confirmBtn.disabled = true; confirmBtn.textContent = 'กำลังตรวจสอบและกู้คืน…';
 try {
 const verification = await cloudRpc('api_branch_login', { p_branch_id: currentBranch.id, p_name: username, p_pin_hash: await hash(password) });
-if (!verification?.ok || !verification.token || !verification.me?.owner || username !== 'kingstock') throw new Error(verification?.error || 'ยืนยันได้เฉพาะบัญชีผู้ดูแลหลัก KING STOCK เท่านั้น');
+if (!verification?.ok || !verification.token || !verification.me?.owner || username !== 'kiangkai') throw new Error(verification?.error || 'ยืนยันได้เฉพาะบัญชีผู้ดูแลหลัก KING STOCK เท่านั้น');
 await syncQueue;
 const result = await cloudRpc('api_inventory_backup_restore_branch', { p_token: verification.token, p_backup_id: backupId, p_branch_id: branchId });
 if (!result?.ok) throw new Error(result?.error || 'กู้คืนข้อมูลไม่สำเร็จ');
@@ -3873,7 +3873,7 @@ confirmBtn.disabled = false; confirmBtn.textContent = 'ยืนยันแล�
 function settingsView() {
 const canManageSite = me?.owner === true && String(me?.name || '').trim().toLowerCase() === 'kiangkai';
 const canViewStorage = !!(me?.owner || me?.role === 'admin');
-const canManageBackup = String(me?.name || '').trim().toLowerCase() === 'kingstock' && me?.owner === true;
+const canManageBackup = String(me?.name || '').trim().toLowerCase() === 'kiangkai' && me?.owner === true;
 const allThemes = KINGSTOCK_THEME_IDS.map(id => THEMES[id]);
 const themePages = [allThemes]; // KING STOCK theme selector: one page only.
 const stockResetLog = L.find(x => x.note === STOCK_RESET_NOTE);
@@ -5073,7 +5073,7 @@ if (!card) return;
 e.preventDefault(); card.click();
 });
 function usersView() {
-const manageUsers = can.users(); const users = manageUsers ? [globalAdminDirectoryUser, ...U.filter(user => String(user.name || '').toLowerCase() !== 'kingstock')] : [globalAdminDirectoryUser];
+const manageUsers = can.users(); const users = manageUsers ? [globalAdminDirectoryUser, ...U.filter(user => String(user.name || '').toLowerCase() !== 'kiangkai')] : [globalAdminDirectoryUser];
 const activity = user => { const logs=L.filter(x=>String(x.user||'').toLowerCase()===String(user.name).toLowerCase()); const last=logs.reduce((best,x)=>Math.max(best,Number(x.ts)||0),0); const day=86400000, now=Date.now(); return {count:logs.length, recent:logs.filter(x=>now-(Number(x.ts)||0)<=30*day).length, last:last?new Date(last).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}):'ยังไม่มีประวัติ',ins:logs.filter(x=>x.type==='in').length,outs:logs.filter(x=>x.type==='out').length}; };
 const summary=users.map(activity), totalMoves=summary.reduce((n,x)=>n+x.count,0), onlineCount=users.filter(u=>onlineUsers.has(u.name.toLowerCase())).length;
 return `<div class="sect"><h2>${manageUsers ? 'จัดการผู้ใช้' : 'ผู้ใช้'}</h2><span style="display:flex;gap:8px">${isAnnouncer() ? '<button type="button" class="btn sm sec chat-rooms-btn" id="chatRoomsBtn">💬 ห้องแชท<i class="chat-dot" data-chat-dot="rooms"></i></button>' : ''}${manageUsers ? `<button class="btn sm" id="nu">${ic('plus')} เพิ่ม</button>` : ''}</span></div>
@@ -5191,7 +5191,7 @@ if (!me || me.branchManagerAccess) return toast('ไม่สามารถแ�
 openModal(`<h3>แก้ไขชื่อผู้ใช้</h3><form id="myUsernameForm">
    <label class="fld"><span>ชื่อผู้ใช้</span><div class="select-tools"><input class="in" name="username" required minlength="3" maxlength="20" pattern="[\\p{L}\\p{M}0-9_]{3,20}" autocomplete="username" readonly value="${esc(me.name)}"><button type="button" class="icon-tool" id="editMyUsername" title="แก้ไขชื่อผู้ใช้" aria-label="แก้ไขชื่อผู้ใช้">✎</button></div></label>
    <label class="fld"><span>ยืนยันรหัสปัจจุบัน 6 หลัก</span><input class="in" name="pin" type="password" inputmode="numeric" pattern="\\d{6}" maxlength="6" autocomplete="current-password" required></label>
-   <p class="settings-hint">ทุกบัญชีเปลี่ยนชื่อผู้ใช้ของตนเองได้ ผู้มีสิทธิจัดการบัญชีเปลี่ยนชื่อบัญชีอื่นในสาขาได้ และ kingstock จัดการได้ทุกสาขา ชื่อต้องไม่ซ้ำกัน</p>
+   <p class="settings-hint">ทุกบัญชีเปลี่ยนชื่อผู้ใช้ของตนเองได้ ผู้มีสิทธิจัดการบัญชีเปลี่ยนชื่อบัญชีอื่นในสาขาได้ และ kiangkai จัดการได้ทุกสาขา ชื่อต้องไม่ซ้ำกัน</p>
    <div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button class="btn">บันทึกชื่อ</button></div></form>`);
 const f = $('#myUsernameForm');
 $('#editMyUsername').onclick = () => { f.elements.username.readOnly = false; f.elements.username.focus(); };
@@ -5334,7 +5334,7 @@ function loadJ() {
 }
 function saveJ() { store.set(jKey(), J); if (JOBS_CLOUD) save(); }
 // พนักงานที่อยู่ในจ๊อบ: หัวหน้าติ๊กเลือกเอง (ถ้ายังไม่เลือก ใช้บัญชีที่ไม่ใช่เจ้าของ/ผู้ดูแล/หัวหน้างาน)
-const jCand = () => U.filter(u => u.active !== false && String(u.name).toLowerCase() !== 'kingstock');
+const jCand = () => U.filter(u => u.active !== false && String(u.name).toLowerCase() !== 'kiangkai');
 const jStaff = () => Array.isArray(J.staff) ? jCand().filter(u => J.staff.includes(u.name)).map(u => u.name) : jCand().filter(u => !fullAccessUser(u) && u.role !== 'supervisor').map(u => u.name);
 const JS = (() => { const t = new Date(); return { y: t.getFullYear(), m: t.getMonth(), sel: dk(t), view: 'cal', who: 'all', periodWeek: 'w1', teamMode: 'month', teamWeek: 'w1' }; })();
 const jNames = () => jMgr() ? (JS.who !== 'all' && jStaff().includes(JS.who) ? [JS.who] : jStaff()) : (jStaff().includes(me.name) ? [me.name] : []);
@@ -5860,14 +5860,14 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
  });
 })();
 
-// ===== ระบบแชท: ผู้ใช้ทุกสาขา <-> ผู้ดูแลระบบ (kingstock) | ข้อความอยู่ได้ 3 วัน =====
+// ===== ระบบแชท: ผู้ใช้ทุกสาขา <-> ผู้ดูแลระบบ (kiangkai) | ข้อความอยู่ได้ 3 วัน =====
 (function chatSystem() {
   const NOTE = '🕒 ข้อความในแชทนี้อยู่ได้ 3 วัน หลังจากนั้นระบบจะล้างให้อัตโนมัติเพื่อประหยัดพื้นที่เก็บข้อมูล';
   const BACK = '<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
   const CH = { admin: false, total: 0, rooms: {}, branchId: '', unavailable: false, busy: false,
     room: null, peer: '', msgs: [], lastId: 0, readUpto: 0, timer: null, roomsTimer: null, pulling: false,
     sending: false, rec: null, pending: null, audio: null, audioId: 0 };
-  const isAdminMe = () => String(me?.name || '').toLowerCase() === 'kingstock';
+  const isAdminMe = () => String(me?.name || '').toLowerCase() === 'kiangkai';
   const missing = e => /Could not find the function|schema cache|chat_/i.test(String(e?.message || ''));
   const rpc = (name, args = {}) => cloudRpc(name, { p_token: cloudToken, ...args });
   const q = s => document.querySelector(s);
@@ -5956,7 +5956,7 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
   const preview = r => (r.last_sender === 'admin' ? 'คุณ: ' : '') + (r.last_kind === 'image' ? '📷 รูปภาพ' : r.last_kind === 'audio' ? '🎤 ข้อความเสียง' : (r.last_body || ''));
   const errText = (e, fb) => missing(e) ? 'ยังไม่ได้ติดตั้งระบบแชทบน Supabase (รันไฟล์ supabase-chat-migration.sql)' : (e?.message || fb);
 
-  /* ---------- รายการห้อง (เฉพาะ kingstock) ---------- */
+  /* ---------- รายการห้อง (เฉพาะ kiangkai) ---------- */
   let roomData = [];
   function renderRooms() {
     const term = q('#crSearch').value.trim().toLowerCase();
@@ -5985,7 +5985,7 @@ const JMENU = [{ id: 'jobs', icon: '🗓️', label: 'จ๊อบพนัก�
       roomData = r.rooms || []; renderRooms();
     } catch (e) { q('#crList').innerHTML = `<div class="cr-empty">${esc(errText(e, 'โหลดรายชื่อไม่สำเร็จ'))}</div>`; }
   }
-  /* ผู้ใช้ทั่วไปเห็นห้องเดียว: ผู้ดูแลระบบ (kingstock) */
+  /* ผู้ใช้ทั่วไปเห็นห้องเดียว: ผู้ดูแลระบบ (kiangkai) */
   let selfLast = null;
   function renderSelfRoom() {
     const unread = CH.total || 0, m = selfLast;
