@@ -4159,7 +4159,7 @@ if (siteSaveButton) siteSaveButton.onclick = async () => {
     if (siteSaveButton.isConnected) { siteSaveButton.disabled = false; siteSaveButton.textContent = 'บันทึกการเปลี่ยนแปลง'; }
   }
 };
-if (cloudToken && $('#adminBackupList')) {if (cloudToken && $('#adminBackupList')) {
+if (cloudToken && $('#adminBackupList')) {
 refreshAdminBackups();
 if ($('#adminBackupRefresh')) $('#adminBackupRefresh').onclick = refreshAdminBackups;
 if ($('#adminBackupNow')) $('#adminBackupNow').onclick = e => createAdminBackup(e.currentTarget);
