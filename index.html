@@ -1771,8 +1771,8 @@ html.formal-theme .top-runway{display:none!important}
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const CLOUD_URL = ''; // KING STOCK must use its own Supabase project; source endpoint intentionally not copied.
-const CLOUD_KEY = ''; // Configure a KING STOCK publishable key only after provisioning its separate backend.
+const CLOUD_URL = 'https://vizffwfyccpyqesjjjaf.supabase.co'; // KING STOCK Supabase project.
+const CLOUD_KEY = 'sb_publishable_lsvmHv6TPfImgeDe1PQCDQ_5ZCX1-X8'; // KING STOCK publishable key; never use service_role in the browser.
 const IS_MOBILE_BROWSER = (() => { try { const ua = navigator.userAgent || ''; return /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1); } catch { return false; } })();
 const mobileSessionBackup = {
 key: 'inv_cloud_session_bk',
@@ -1860,7 +1860,6 @@ const selected = branches.find(b => String(b.id) === String(previous)) || branch
 }
 $('#lgBranch').addEventListener('change', e => { const branch = branches.find(b => String(b.id) === e.target.value); if (branch) { setCurrentBranch(branch); $('#lgMsg').textContent = ''; } });
 async function cloudRpc(name, args = {}) {
-if (!CLOUD_URL || !CLOUD_KEY) throw new Error('KING STOCK ยังไม่ได้เชื่อมต่อฐานข้อมูลของตัวเอง กรุณาตั้งค่า Supabase แยกจากระบบต้นฉบับก่อนใช้งาน');
 const controller = new AbortController();
 const timeout = setTimeout(() => controller.abort(), 15000);
 try {
