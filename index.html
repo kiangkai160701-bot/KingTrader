@@ -697,6 +697,8 @@ html.formal-theme .login-submit,.formal-theme .lg-icon{background:linear-gradien
 html.formal-theme .login-note{color:var(--mute)!important}
 html.formal-theme .hint{background:var(--theme-soft);color:var(--ink)}
 html.formal-theme .theme-opt .theme-emoji{font-family:var(--font);font-size:18px}
+html.formal-theme .runner-toggle-box,html.formal-theme .sticker-level-box{display:none!important}
+
 #themePicker.theme-picker{display:flex!important;grid-template-columns:none!important;gap:0!important;width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--theme-border-strong) transparent;padding:2px 1px 8px;margin-top:9px!important}
 .theme-page{flex:0 0 100%;width:100%;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(5,minmax(55px,auto));gap:6px;padding:2px;scroll-snap-align:start;scroll-snap-stop:always}
 .theme-page .theme-opt{width:100%!important;min-width:0;min-height:55px!important;padding:4px 3px!important;border-radius:12px!important;gap:2px}
@@ -2239,6 +2241,56 @@ const merged = base.concat(extra);
 THEME_CARD_FRIENDS[id] = merged; t.friends = merged;
 });
 })();
+
+/* KING STOCK: exactly ten restrained, professional themes; no character artwork. */
+function createCorporateTheme(id, name, dark, accent, accentHover) {
+  const c = dark ? {
+    bg:'#101114', card:'#191b20', ink:'#f1f2f4', mute:'#a0a4ad', line:'#30343c',
+    soft:'#25282f', chip:'#30343b', input:'#15171b', wash:'rgba(210,45,55,.12)',
+    wash2:'rgba(115,125,145,.10)', story1:'#202329', story2:'#17191e', story3:'#292d34',
+    top:'rgba(20,22,27,.97)', nav:'rgba(20,22,27,.98)', shadow:'rgba(0,0,0,.38)', border:'#454a54'
+  } : {
+    bg:'#f4f5f7', card:'#ffffff', ink:'#202329', mute:'#69717d', line:'#e0e3e8',
+    soft:'#f0f1f3', chip:'#e8eaee', input:'#ffffff', wash:'rgba(195,35,45,.07)',
+    wash2:'rgba(85,100,120,.06)', story1:'#f0f1f3', story2:'#ffffff', story3:'#e8eaee',
+    top:'rgba(255,255,255,.97)', nav:'rgba(255,255,255,.98)', shadow:'rgba(20,25,35,.09)', border:'#cbd0d8'
+  };
+  return {
+    id, name, mascot:'', friends:[], formal:true, dark,
+    colors:{
+      '--bg-app':c.bg,'--card-bg':c.card,'--ink':c.ink,'--mute':c.mute,'--line':c.line,
+      '--acc':accent,'--acc-hover':accentHover,'--acc-light':c.soft,
+      '--acc-glow':dark?'rgba(239,68,68,.20)':'rgba(190,35,45,.14)',
+      '--theme-soft':c.soft,'--theme-chip':c.chip,'--theme-input':c.input,
+      '--theme-wash':c.wash,'--theme-wash-2':c.wash2,
+      '--theme-story-1':c.story1,'--theme-story-2':c.story2,'--theme-story-3':c.story3,
+      '--theme-top-bg':c.top,'--theme-nav-bg':c.nav,'--theme-shadow':c.shadow,
+      '--theme-border-strong':c.border,'--theme-warn-ink':dark?'#f0c778':'#85652d',
+      '--theme-mascot-a':'""','--theme-mascot-b':'""',
+      '--bad':dark?'#ff858d':'#b42332','--bad-bg':dark?'#351b20':'#fff0f1',
+      '--ok':dark?'#72c49a':'#26734d','--ok-bg':dark?'#193126':'#eaf5ee'
+    }
+  };
+}
+const KINGSTOCK_THEME_IDS = [
+  'king-red','king-red-dark','king-carbon','king-carbon-dark','king-wine',
+  'executive-blue','executive-blue-dark','executive-green','executive-green-dark','executive-slate'
+];
+[
+  ['king-red','แดงผู้บริหาร · สว่าง',false,'#c62828','#a91f28'],
+  ['king-red-dark','แดงผู้บริหาร · มืด',true,'#f0444e','#d92d36'],
+  ['king-carbon','คาร์บอนแดง · สว่าง',false,'#a61f2b','#861923'],
+  ['king-carbon-dark','คาร์บอนแดง · มืด',true,'#e5484d','#bd3038'],
+  ['king-wine','ไวน์ดำ · มืด',true,'#d13b50','#aa263b'],
+  ['executive-blue','น้ำเงินองค์กร · สว่าง',false,'#315f91','#244a73'],
+  ['executive-blue-dark','น้ำเงินองค์กร · มืด',true,'#6da8e8','#4d88c9'],
+  ['executive-green','เขียวองค์กร · สว่าง',false,'#28765b','#1d5d47'],
+  ['executive-green-dark','เขียวองค์กร · มืด',true,'#5dbb91','#36966c'],
+  ['executive-slate','สเลต · มืด',true,'#a4adba','#828c9a']
+].forEach(([id,name,dark,accent,hover]) => {
+  THEMES[id] = createCorporateTheme(id,name,dark,accent,hover);
+});
+
 let uiTopRunners = store.get('inv_top_runners', true) !== false;
 const RUNNER_LANE_H = 20;
 function sizeTopRunners() {
@@ -2276,10 +2328,10 @@ if (window.visualViewport) window.visualViewport.addEventListener('resize', size
 }
 }
 }
-let currentTheme = store.get('inv_theme', 'sakura');
+let currentTheme = KINGSTOCK_THEME_IDS.includes(store.get('inv_theme', 'king-red')) ? store.get('inv_theme', 'king-red') : 'king-red';
 function applyTheme(id) {
 const aliases = { teal:'sakura', indigo:'lavender', emerald:'peach', ruby:'ocean' };
-currentTheme = THEMES[id] ? id : (aliases[id] || 'sakura');
+currentTheme = KINGSTOCK_THEME_IDS.includes(id) ? id : (KINGSTOCK_THEME_IDS.includes(aliases[id]) ? aliases[id] : 'king-red');
 const theme = THEMES[currentTheme];
 document.body.setAttribute('data-theme', currentTheme);
 document.documentElement.classList.toggle('formal-theme', !!theme.formal);
@@ -3763,7 +3815,7 @@ confirmBtn.disabled = false; confirmBtn.textContent = 'ยืนยันแล�
 function settingsView() {
 const canViewStorage = !!(me?.owner || me?.role === 'admin');
 const canManageBackup = String(me?.name || '').trim().toLowerCase() === 'kingstock' && me?.owner === true;
-const allThemes = Object.values(THEMES);
+const allThemes = KINGSTOCK_THEME_IDS.map(id => THEMES[id]);
 const themePages = [allThemes]; // KING STOCK theme selector: one page only.
 const stockResetLog = L.find(x => x.note === STOCK_RESET_NOTE);
 const resetAudit = stockResetLog && (!lastReset || Number(stockResetLog.ts) > Number(lastReset.ts || 0)) ? { scope: 'stock', user: stockResetLog.user, ts: stockResetLog.ts } : lastReset;
