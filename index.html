@@ -6579,5 +6579,55 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
   body[data-theme="panda"] #app::after{bottom:100px;left:4px;font-size:25px}
 }
 </style>
+
+<style id="theme-picker-two-row-layout">
+/* Keep all ten theme colors in a tidy, fixed 5-column x 2-row layout. */
+#themePicker.theme-picker{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,minmax(68px,auto))!important;
+  grid-auto-rows:unset!important;
+  gap:10px!important;
+  width:100%!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:7px 3px 9px!important;
+  margin-top:9px!important;
+  scroll-snap-type:none!important;
+}
+#themePicker.theme-picker>.theme-opt,
+#themePicker.theme-picker>.theme-page>.theme-opt{
+  display:flex!important;
+  width:100%!important;
+  min-width:0!important;
+  height:68px!important;
+  min-height:68px!important;
+  padding:7px 3px!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border-radius:12px!important;
+}
+#themePicker .color-swatch{width:28px!important;height:28px!important;flex:0 0 28px}
+#themePicker .theme-label{
+  display:block!important;
+  max-width:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+}
+@media(max-width:380px){
+  #themePicker.theme-picker{gap:7px!important;padding-left:1px!important;padding-right:1px!important}
+  #themePicker.theme-picker>.theme-opt,
+  #themePicker.theme-picker>.theme-page>.theme-opt{height:64px!important;min-height:64px!important}
+  #themePicker .color-swatch{width:25px!important;height:25px!important;flex-basis:25px}
+  #themePicker .theme-label{font-size:9px!important}
+}
+</style>
+
 </body>
 </html>
