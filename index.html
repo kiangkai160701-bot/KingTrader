@@ -1722,7 +1722,7 @@ html.formal-theme .top-runway{display:none!important}
 </style>
 </head>
 <body data-theme="teal">
-<div id="bootScreen" role="status" aria-live="polite"><div class="boot-card"><span class="boot-mascot" aria-hidden="true">📦</span><span class="boot-spinner" aria-hidden="true"></span><strong>กำลังตรวจสอบข้อมูล</strong><small>กรุณารอสักครู่</small></div></div>
+<div id="bootScreen" role="status" aria-live="polite"><div class="boot-card"><span class="boot-mascot" id="bootMascot" aria-hidden="true">📦</span><span class="boot-spinner" aria-hidden="true"></span><strong>กำลังตรวจสอบข้อมูล</strong><small>กรุณารอสักครู่</small></div></div>
 <!-- LOGIN SCREEN -->
 <section id="login" class="hide">
   <div class="login-wrap">
@@ -2341,7 +2341,7 @@ document.documentElement.classList.toggle('dark-theme', !!theme.dark);
 ['--warn','--warn-bg'].forEach(k => document.documentElement.style.removeProperty(k));
 Object.entries(theme.colors).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
 if (theme.friends.length) document.querySelectorAll('.stock-friend').forEach((friend, index) => { const first = friend.childNodes[0]; if (first?.nodeType === Node.TEXT_NODE) first.nodeValue = theme.friends[index % theme.friends.length]; });
-document.querySelectorAll('.story-mark,.brand-badge,.boot-mascot,.lg-icon,.theme-emoji').forEach(mark => { if (mark.classList.contains('theme-emoji')) return; mark.textContent = theme.mascot; });
+document.querySelectorAll('.story-mark,.brand-badge,.boot-mascot,.lg-icon,.theme-emoji').forEach(mark => { if (mark.classList.contains('theme-emoji') || (mark.classList.contains('boot-mascot') && mark.querySelector('img'))) return; mark.textContent = theme.mascot; });
 try { renderTopRunners(); } catch {}
 }
 applyTheme(currentTheme);
@@ -2434,6 +2434,17 @@ function applySiteSettings(settings = siteSettings) {
     badge.replaceChildren();
     if (siteLogo) { const img = document.createElement('img'); img.src = siteLogo; img.alt = 'โลโก้เว็บไซต์'; badge.append(img); }
     else badge.textContent = '📦';
+  }
+  const bootMascot = $('#bootMascot');
+  if (bootMascot) {
+    bootMascot.replaceChildren();
+    if (siteLogo) {
+      const img = document.createElement('img');
+      img.src = siteLogo;
+      img.alt = 'โลโก้เว็บไซต์';
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;border-radius:inherit';
+      bootMascot.append(img);
+    } else bootMascot.textContent = '📦';
   }
   if (me && $('#meName')) $('#meName').textContent = me.name;
 }
