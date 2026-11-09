@@ -1779,14 +1779,14 @@ const CLOUD_URL = 'https://vizffwfyccpyqesjjjaf.supabase.co'; // KING STOCK Supa
 const CLOUD_KEY = 'sb_publishable_lsvmHv6TPfImgeDe1PQCDQ_5ZCX1-X8'; // KING STOCK publishable key; never use service_role in the browser.
 const IS_MOBILE_BROWSER = (() => { try { const ua = navigator.userAgent || ''; return /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1); } catch { return false; } })();
 const mobileSessionBackup = {
-key: 'inv_cloud_session_bk',
+key: 'kingstock_session_bk',
 read() { if (!IS_MOBILE_BROWSER) return null; try { const m = document.cookie.match(new RegExp('(?:^|; )' + this.key + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; } catch { return null; } },
 write(raw, maxAgeSec) { if (!IS_MOBILE_BROWSER) return; try { document.cookie = `${this.key}=${encodeURIComponent(raw)}; path=/; max-age=${Math.max(60, Math.floor(maxAgeSec))}; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`; } catch {} },
 clear() { if (!IS_MOBILE_BROWSER) return; try { document.cookie = `${this.key}=; path=/; max-age=0; SameSite=Lax`; } catch {} }
 };
 if (IS_MOBILE_BROWSER) { try { navigator.storage?.persist?.().catch(() => {}); } catch {} }
 const cloudTokenStore = {
-key: 'inv_cloud_session',
+key: 'kingstock_cloud_session',
 memory: null,
 persist(session) {
 try { localStorage.setItem(this.key, JSON.stringify(session)); } catch {}
