@@ -4094,7 +4094,7 @@ if (siteSaveButton) siteSaveButton.onclick = async () => {
   const pin = String($('#siteSettingsPin')?.value || '');
   if (displayName.length < 2 || displayName.length > 40) return toast('ชื่อโปรไฟล์ต้องมี 2–40 ตัวอักษร', 1);
   if (siteName.length < 2 || siteName.length > 40) return toast('ชื่อเว็บไซต์ต้องมี 2–40 ตัวอักษร', 1);
-  if (!/^\\d{6}$/.test(pin)) return toast('กรุณากรอกรหัสผ่านปัจจุบันให้ครบ 6 หลัก', 1);
+  if (!/^\d{6}$/.test(pin)) return toast('กรุณากรอกรหัสผ่านปัจจุบันให้ครบ 6 หลัก', 1);
   siteSaveButton.disabled = true; siteSaveButton.textContent = 'กำลังบันทึก…';
   try {
     const result = await cloudRpc('api_update_site_settings', { p_token: cloudToken, p_display_name: displayName, p_site_name: siteName, p_old_hash: await hash(pin) });
