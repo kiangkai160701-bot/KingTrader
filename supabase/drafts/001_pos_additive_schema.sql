@@ -1,3 +1,10 @@
+-- STATUS: SUPERSEDED / DO NOT APPLY (2026-11-10)
+-- User clarified that they do NOT want a separate POS backend, multi-tenant schema,
+-- or new database tables. They only want a grocery-store-friendly sales UI and
+-- simple sales/history recording using the existing KingStock state/stock approach.
+-- This file is retained as historical draft only. Do not apply or extend it unless
+-- the user explicitly changes scope and approves a separate schema design.
+
 -- DRAFT ONLY — DO NOT APPLY TO PRODUCTION YET
 -- KingStock POS additive schema proposal.
 -- This file is intentionally not applied. Tenant/session mapping and safe stock mutation
