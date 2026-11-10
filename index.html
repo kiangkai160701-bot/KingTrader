@@ -3927,7 +3927,7 @@ const start = new Date(Math.max(d.getTime(),fromDate.getTime())), end = new Date
 buckets.push({start,end,label:start.toLocaleDateString('th-TH',{month:'short',year:'2-digit'})});
 }
 }
-buckets.forEach(bucket => { const rows=inRange.filter(x=>{const ts=new Date(x.ts);return ts>=bucket.start&&ts<bucket.end;});bucket.in=rows.filter(x=>x.type==='in').length;bucket.out=rows.filter(x=>x.type==='out').length; });
+buckets.forEach(bucket => { const rows=inRange.filter(x=>{const ts=new Date(x.ts);return ts>=bucket.start&&ts<bucket.end;});bucket.in=rows.filter(x=>x.type==='in').length;bucket.out=rows.filter(x=>['out','sale'].includes(x.type)).length; });
 const chartDays = buckets.slice(-12), maxMoves = Math.max(1, ...chartDays.flatMap(d => [d.in,d.out]));
 const pieTotal = Math.max(1, totalItems);
 const inPct = readyCount / pieTotal * 100, lowPct = lowCount / pieTotal * 100;
@@ -3995,15 +3995,15 @@ const rankRowHtml = (row,i)=>`<div class="dash-rank-row${i>=4?' rank-extra':''}"
 window.__rankRow = rankRowHtml;
 const movementRows = (rows,empty,key) => { if (key) (window.__rankData ||= {})[key] = rows; return rows.length ? rows.slice(0,30).map(rankRowHtml).join('') : `<small class="dash-empty-note">${empty}</small>`; };
 const inlineHistoryType = isWideDesktop() ? new URLSearchParams(location.search).get('inlineHistoryType') || '' : '';
-const inlineHistoryLabels = { in:'รับเข้า', out:'เบิกจ่าย', adjust:'ปรับยอด' };
-const inlineHistorySource = inlineHistoryType ? L.filter(row => row.type === inlineHistoryType) : L;
+const inlineHistoryLabels = { in:'รับเข้า', out:'เบิกจ่าย', sale:'ขายสินค้า', adjust:'ปรับยอด' };
+const inlineHistorySource = inlineHistoryType ? L.filter(row => inlineHistoryType === 'out' ? ['out','sale'].includes(row.type) : row.type === inlineHistoryType) : L;
 const latestHistoryRows = isWideDesktop()
 ? [...inlineHistorySource].sort((a,b) => Number(b.ts || 0) - Number(a.ts || 0)).slice(0,10).map(x => {
-const labels = { in:'รับเข้า', out:'เบิกจ่าย', adjust:'ปรับยอด', create:'เพิ่มวัตถุดิบ', edit:'แก้ไขข้อมูล', delete:'ลบวัตถุดิบ', import:'นำเข้าวัตถุดิบ', note:'เพิ่มหมายเหตุ' };
-const amount = Number(x.amt || 0), sign = x.type === 'in' || (x.type !== 'out' && x.type !== 'delete' && amount > 0) ? '+' : x.type === 'out' || x.type === 'delete' || amount < 0 ? '−' : '';
+const labels = { in:'รับเข้า', out:'เบิกจ่าย', sale:'ขายสินค้า', adjust:'ปรับยอด', create:'เพิ่มสินค้า', edit:'แก้ไขข้อมูล', delete:'ลบสินค้า', import:'นำเข้าสินค้า', note:'เพิ่มหมายเหตุ' };
+const amount = Number(x.amt || 0), sign = x.type === 'in' || (x.type !== 'out' && x.type !== 'sale' && x.type !== 'delete' && amount > 0) ? '+' : ['out','sale','delete'].includes(x.type) || amount < 0 ? '−' : '';
 return `<div class="recent-movement desktop-history-row"><div class="recent-movement-name"><b>${esc(x.pname || 'วัตถุดิบ')}</b><div class="desktop-history-meta"><span class="desktop-history-type">${labels[x.type] || 'ทำรายการ'}</span><span>โดย ${esc(x.user || 'ไม่ทราบ')}</span>${x.note ? `<span class="desktop-history-note">${esc(x.note)}</span>` : ''}</div></div><time class="desktop-history-time">${new Date(x.ts).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}</time><div class="amt ${x.type==='in'?'in':x.type==='out'?'out':''}">${amount ? `${sign}${num(Math.abs(amount))} <small>${esc(x.unit || '')}</small>` : '—'}</div></div>`;
 }).join('')
-: inRange.slice(0,6).map(x=>`<div class="recent-movement"><div class="recent-movement-name"><b>${esc(x.pname||'วัตถุดิบ')}</b> <small>(${x.type==='in'?'รับเข้า':x.type==='out'?'เบิกจ่าย':x.type==='adjust'?'ปรับยอด':x.type==='delete'?'ลบรายการ':x.type==='create'?'เพิ่มวัตถุดิบ':'แก้ไขข้อมูล'}) · ${new Date(x.ts).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</small></div><div class="amt ${x.type==='in'?'in':'out'}">${x.type==='in'?'+':x.type==='out'?'−':''}${num(Math.abs(x.amt||0))}</div></div>`).join('');
+: inRange.slice(0,6).map(x=>`<div class="recent-movement"><div class="recent-movement-name"><b>${esc(x.pname||'วัตถุดิบ')}</b> <small>(${x.type==='in'?'รับเข้า':x.type==='sale'?'ขายสินค้า':x.type==='out'?'เบิกจ่าย':x.type==='adjust'?'ปรับยอด':x.type==='delete'?'ลบสินค้า':x.type==='create'?'เพิ่มสินค้า':'แก้ไขข้อมูล'}) · ${new Date(x.ts).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</small></div><div class="amt ${x.type==='in'?'in':'out'}">${x.type==='in'?'+':(['out','sale'].includes(x.type))?'−':''}${num(Math.abs(x.amt||0))}</div></div>`).join('');
 const rankFilter = (type, range) => {
 const title = type === 'out' ? 'เบิกจ่าย' : 'รับเข้า', prefix = type === 'out' ? 'Out' : 'In';
 return `<div class="dash-rank-filter" aria-label="กรองรายการ${title}ตามช่วงวันที่"><label class="dash-rank-date"><span>ตั้งแต่</span><input id="dashboard${prefix}From" type="date" value="${range.from || ''}" aria-label="วันที่เริ่มต้นรายการ${title}"></label><label class="dash-rank-date"><span>ถึง</span><input id="dashboard${prefix}To" type="date" value="${range.to || ''}" aria-label="วันที่สิ้นสุดรายการ${title}"></label><button type="button" data-clear-dashboard-rank="${type}">ล้างตัวกรอง</button></div>`;
@@ -4028,7 +4028,7 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
   </div>
   <div class="dash-grid">
     <div class="dash-card"><h3>⚠️ วัตถุดิบที่ควรจัดการ</h3><div class="dash-rank-list">${needsAttention.map(p=>`<div class="dash-rank-row"><b>${esc(p.name)}</b><span class="dash-status ${status(p)}">${num(p.qty)} ${esc(p.unit)} · ${STX[status(p)]}</span></div>`).join('')||'<small class="dash-empty-note">วัตถุดิบทุกชนิดอยู่ในระดับปกติ</small>'}</div></div>
-    <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>📦 รายการที่เบิกจ่ายมาก</h3><small>${outRankRange.logs.filter(x=>x.type==='out').length} รายการ</small></div>${rankFilter('out',outRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topOut,'ไม่มีรายการเบิกจ่ายในช่วงนี้','out')}</div></div>
+    <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>📦 รายการที่เบิกจ่ายมาก</h3><small>${outRankRange.logs.filter(x=>['out','sale'].includes(x.type)).length} รายการ</small></div>${rankFilter('out',outRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topOut,'ไม่มีรายการเบิกจ่ายในช่วงนี้','out')}</div></div>
     <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>🚚 รายการรับเข้ามาก</h3><small>${inRankRange.logs.filter(x=>x.type==='in').length} รายการ</small></div>${rankFilter('in',inRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topIn,'ไม่มีรายการรับเข้าในช่วงนี้','in')}</div></div>
     <div class="dash-card"><h3>📦 ภาพรวมหมวดหมู่</h3><div class="dash-rank-list">${categoryRows.map(row=>`<div class="dash-rank-row"><b>${esc(row.name)}</b><span>${row.count} รายการ</span></div>`).join('')||'<small class="dash-empty-note">ยังไม่มีหมวดหมู่</small>'}</div></div>
     <div class="dash-card desktop-recent-history">${isWideDesktop()?`<div class="desktop-history-heading"><h3>🕘 ประวัติล่าสุด${inlineHistoryType && inlineHistoryLabels[inlineHistoryType] ? ` · ${inlineHistoryLabels[inlineHistoryType]}` : ''}</h3>${inlineHistoryType ? '<button type="button" class="desktop-history-clear" data-clear-inline-history>ล้าง</button>' : ''}</div>`:'<h3>📦 รายการเคลื่อนไหวล่าสุดในช่วงนี้</h3>'}<div class="recent-movements">${latestHistoryRows || (isWideDesktop() ? '<small class="dash-empty-note">ยังไม่มีประวัติการทำรายการ</small>' : '<small class="dash-empty-note">ไม่มีรายการในช่วงวันที่เลือก</small>')}</div></div>
@@ -5053,7 +5053,7 @@ if (!rows.length) { $('#ihList').innerHTML = `<div class="ih-empty">${ihSticker(
 const shown = rows.slice(0, st.limit);
 $('#ihList').innerHTML = shown.map((x, idx) => {
 const [ico, label, cls] = IH_KINDS[x.type], amt = Number(x.amt) || 0, d = new Date(Number(x.ts) || 0);
-const sign = x.type === 'in' ? '+' : x.type === 'out' ? '−' : amt > 0 ? '+' : amt < 0 ? '−' : '±';
+const sign = x.type === 'in' ? '+' : ['out','sale'].includes(x.type) ? '−' : amt > 0 ? '+' : amt < 0 ? '−' : '±';
 return `<div class="ih-item ${cls}"><span class="ih-ico" aria-hidden="true">${ico}</span><div class="ih-main"><div class="ih-line"><b>${label}</b><strong>${sign}${fmt(Math.abs(amt))} <small>${esc(x.unit || p.unit || '')}</small></strong></div><div class="ih-sub"><span>👤 ${esc(x.user || '-')}</span><span>${IH_DATE.format(d)} · ${IH_TIME.format(d)}</span></div><div class="ih-bal">คงเหลือ ${fmt(x.before)} → ${fmt(x.after)}</div>${x.note ? `<div class="ih-note">“${esc(x.note)}”</div>` : ''}</div>${!x.note && idx % 3 === 1 ? ihSticker(idx, 'stk-item') : ''}</div>`;
 }).join('') + (rows.length > shown.length ? `<button type="button" class="ih-more" id="ihMore">แสดงเพิ่มอีก ${Math.min(150, rows.length - shown.length)} รายการ</button>` : '');
 };
@@ -5076,9 +5076,10 @@ if (!p) return;
 const canMove = can.edit();
 const wideDesktop = isWideDesktop();
 const mobileSheet = !wideDesktop;
-const inner = `<h3>📦 จัดการวัตถุดิบ: ${esc(p.name)}</h3>
+const inner = `<h3>📦 จัดการสินค้า: ${esc(p.name)}</h3>
   <div style="background:var(--theme-soft);padding:12px;border-radius:12px;margin-bottom:14px;font-size:13.5px;border:1px solid var(--line);color:var(--ink);">
     <div>หมวดหมู่: <b>${esc(p.cat)}</b></div>
+    <div>ราคาขาย: <b>${posMoney(p.salePrice || 0)}</b></div>
     <div>คงเหลือ: <b style="font-size:16px;color:var(--acc);">${num(p.qty)}</b> ${esc(p.unit)} (ขั้นต่ำ: ${p.min})</div>
     <div>สถานะ: <b>${STX[status(p)]}</b> | ซัพพลายเออร์: <b>${esc(p.loc || '-')}</b></div>
   </div>
@@ -5133,9 +5134,9 @@ const target = id ? P.find(x => x.id === id) : null;
 if (id && !target) return;
 const p = target ? { ...target, ...draft } : { name: '', cat: '', unit: 'ชิ้น', qty: 0, min: 1, loc: '', salePrice: 0, ...draft };
 if (!p) return;
-openModal(`<h3>${id ? 'แก้ไขวัตถุดิบ' : 'เพิ่มวัตถุดิบใหม่'}</h3><button type="button" class="item-close prod-close" id="prodClose" aria-label="ปิดแท็บ">↓ ปิดแท็บ</button>
+openModal(`<h3>${id ? 'แก้ไขสินค้า' : 'เพิ่มสินค้าใหม่'}</h3><button type="button" class="item-close prod-close" id="prodClose" aria-label="ปิดแท็บ">↓ ปิดแท็บ</button>
   <form id="pf">
-   <label class="fld"><span>ชื่อวัตถุดิบ *</span><input class="in" name="name" required value="${esc(p.name)}"></label>
+   <label class="fld"><span>ชื่อสินค้า *</span><input class="in" name="name" required value="${esc(p.name)}"></label>
    <div class="g2">
      <label class="fld"><span>หมวดหมู่ *</span><div class="select-tools"><select class="in" name="cat" required><option value="">เลือกหมวดหมู่</option>${CATS.map(c => `<option ${p.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editCats" aria-label="แก้ไขหมวดหมู่">✎</button><button type="button" class="icon-tool add-tool" id="addCat" aria-label="เพิ่มหมวดหมู่">+</button>` : ''}</div></label>
      <label class="fld"><span>หน่วยนับ</span><div class="select-tools"><select class="in" name="unit">${[...new Set([...UNITS, p.unit].filter(Boolean))].map(u => `<option ${p.unit === u ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editUnits" aria-label="แก้ไขหน่วยนับ">✎</button><button type="button" class="icon-tool add-tool" id="addUnit" aria-label="เพิ่มหน่วยนับ">+</button>` : ''}</div></label>
@@ -5231,7 +5232,7 @@ if (!dateFrom && !dateTo && legacyDate) dateFrom = dateTo = legacyDate;
 const localDateKey = ts => { const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 if (dateFrom || dateTo) historyQuickKey = null;
 else if (historyQuickKey) { const dq = o => localDateKey(Date.now() - o * 864e5); [dateFrom, dateTo] = historyQuickKey === 'today' ? [dq(0), dq(0)] : historyQuickKey === 'yesterday' ? [dq(1), dq(1)] : historyQuickKey === 'month' ? [dq(29), dq(0)] : [dq(6), dq(0)]; }
-const l = L.filter(x => { const day = localDateKey(x.ts); return (!dateFrom || day >= dateFrom) && (!dateTo || day <= dateTo) && (!typeFilter || (typeFilter === 'note' ? !!String(x.note || '').trim() : x.type === typeFilter)) && (!selectedUser || String(x.user || '').toLowerCase() === selectedUser.toLowerCase()); });
+const l = L.filter(x => { const day = localDateKey(x.ts); return (!dateFrom || day >= dateFrom) && (!dateTo || day <= dateTo) && (!typeFilter || (typeFilter === 'note' ? !!String(x.note || '').trim() : typeFilter === 'out' ? ['out','sale'].includes(x.type) : x.type === typeFilter)) && (!selectedUser || String(x.user || '').toLowerCase() === selectedUser.toLowerCase()); });
 const quickRange = k => { const d = o => localDateKey(Date.now() - o * 864e5); return k === 'today' ? [d(0), d(0)] : k === 'yesterday' ? [d(1), d(1)] : k === 'month' ? [d(29), d(0)] : [d(6), d(0)]; };
 const quickActive = historyQuickKey || '';
 const periodText = `${dateFrom && dateTo ? `${dateFrom} ถึง ${dateTo}` : dateFrom ? `ตั้งแต่ ${dateFrom}` : dateTo ? `ถึง ${dateTo}` : 'ทุกวัน'}${typeFilter ? ` · เฉพาะ${typeLabels[typeFilter]}` : ''}${selectedUser ? ` · ผู้ทำรายการ ${selectedUser}` : ''}`;
