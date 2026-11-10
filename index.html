@@ -6319,7 +6319,6 @@ function posView() {
   const sales = L.filter(x => x.type === 'sale').slice(0, 5);
   const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
   return '<section class="pos-wrap pos-workbench">' +
-    '<header class="pos-topline"><div class="pos-brandmark"><span class="pos-brandicon">▣</span><div><b>จุดขายสินค้า</b><small>เลือกสินค้า · สแกน · ชำระเงิน</small></div></div><span class="pos-live"><i></i> พร้อมขาย</span></header>' +
     '<section class="pos-scanbar"><div class="pos-scan-actions"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span></div>' +
     '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button></div></div>' +
     '<label class="pos-barcode-entry"><span>บาร์โค้ด / ค้นหารหัสสินค้า</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
@@ -6980,7 +6979,7 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 }
 
 /* POS workbench redesign */
-.pos-workbench{max-width:1440px;gap:10px;padding:0 0 18px}
+.pos-workbench{max-width:1440px;gap:7px;padding:0 0 18px}
 .pos-topline{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 2px}
 .pos-brandmark{display:flex;align-items:center;gap:9px}.pos-brandicon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--theme-soft);color:var(--acc-hover);font-size:19px}
 .pos-brandmark>div{display:grid;gap:1px}.pos-brandmark b{font-size:15px}.pos-brandmark small{font-size:10px;color:var(--mute)}
