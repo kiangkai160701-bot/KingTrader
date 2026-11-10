@@ -2799,8 +2799,8 @@ eggFeed: () => fullAccessUser(me) || !!(me?.permissions?.eggFeed ?? defaultPermi
 };
 function tabs() {
 const items = [
-['stock', isWideDesktop() ? 'หน้าหลัก' : 'สต็อก', 'box'],
 ['pos', 'ขาย POS', 'box'],
+['stock', isWideDesktop() ? 'หน้าหลัก' : 'สต็อก', 'box'],
 ['dashboard', 'แดชบอร์ด', 'dashboard'],
 ['log', 'ประวัติ', 'log'],
 ['users', 'ผู้ใช้', 'users'],
@@ -3088,6 +3088,7 @@ render(animate);
 let renderCache = { tab: '', wide: null, html: '' };
 function render(animatePage = false, keepScroll = false) {
 if (document.querySelector('#ov[data-closing]')) { deferredRender = deferredRender === true || animatePage === true; return; }
+if (tab !== 'pos' && typeof posStopScanner === 'function') posStopScanner();
 if (tab !== 'settings' && storageUsageTimer) { clearInterval(storageUsageTimer); storageUsageTimer = null; }
 const main = $('#main');
 const makeHtml = () => tab === 'stock' ? (isWideDesktop() ? desktopStockDashboardView() : stockView()) : tab === 'pos' ? posView() : tab === 'dashboard' ? dashboardView() : tab === 'log' ? logView() : tab === 'users' ? usersView() : tab === 'settings' ? settingsView() : '';
@@ -4854,6 +4855,7 @@ openModal(`<h3>${id ? 'แก้ไขวัตถุดิบ' : 'เพิ่�
   <form id="pf">
    <label class="fld"><span>ชื่อวัตถุดิบ *</span><input class="in" name="name" required value="${esc(p.name)}"></label>
    <label class="fld"><span>ราคาขายต่อหน่วย (บาท)</span><input class="in" name="price" type="number" min="0" step="0.01" inputmode="decimal" value="${Math.max(0, Number(p.price) || 0)}" placeholder="0.00"></label>
+   <label class="fld"><span>บาร์โค้ดสินค้า</span><input class="in" name="barcode" type="text" inputmode="numeric" autocomplete="off" maxlength="80" value="${esc(p.barcode || '')}" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"></label>
    <div class="g2">
      <label class="fld"><span>หมวดหมู่ *</span><div class="select-tools"><select class="in" name="cat" required><option value="">เลือกหมวดหมู่</option>${CATS.map(c => `<option ${p.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editCats" aria-label="แก้ไขหมวดหมู่">✎</button><button type="button" class="icon-tool add-tool" id="addCat" aria-label="เพิ่มหมวดหมู่">+</button>` : ''}</div></label>
      <label class="fld"><span>หน่วยนับ</span><div class="select-tools"><select class="in" name="unit">${[...new Set([...UNITS, p.unit].filter(Boolean))].map(u => `<option ${p.unit === u ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editUnits" aria-label="แก้ไขหน่วยนับ">✎</button><button type="button" class="icon-tool add-tool" id="addUnit" aria-label="เพิ่มหน่วยนับ">+</button>` : ''}</div></label>
@@ -4865,7 +4867,7 @@ openModal(`<h3>${id ? 'แก้ไขวัตถุดิบ' : 'เพิ่�
    <label class="fld"><span>ซัพพลายเออร์ / แหล่งจัดซื้อ</span><input class="in" name="loc" placeholder="เช่น เช่น ผู้จำหน่ายหรือบริษัทจัดซื้อ" value="${esc(p.loc || '')}"></label>
    <div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button class="btn">${id ? 'บันทึก' : 'เพิ่มวัตถุดิบ'}</button></div>
   </form>`, 'product');
-const captureProductDraft = () => { const f = $('#pf'); return { name: fv(f, 'name'), cat: f.elements.cat.value, unit: f.elements.unit.value, qty: f.elements.qty ? f.elements.qty.value : p.qty, min: f.elements.min.value, loc: fv(f, 'loc') }; };
+const captureProductDraft = () => { const f = $('#pf'); return { name: fv(f, 'name'), cat: f.elements.cat.value, unit: f.elements.unit.value, qty: f.elements.qty ? f.elements.qty.value : p.qty, min: f.elements.min.value, loc: fv(f, 'loc'), price: f.elements.price.value, barcode: fv(f, 'barcode') }; };
 const prodCloseBtn = $('#prodClose'); if (prodCloseBtn) prodCloseBtn.onclick = () => closeModal(680);
 if ($('#editCats')) $('#editCats').onclick = () => optionsManager('categories', { type: 'product', id, draft: captureProductDraft() });
 if ($('#addCat')) $('#addCat').onclick = () => addOption('categories', { type: 'product', id, draft: captureProductDraft() });
@@ -4874,7 +4876,9 @@ if ($('#addUnit')) $('#addUnit').onclick = () => addOption('units', { type: 'pro
 $('#pf').onsubmit = e => {
 e.preventDefault();
 const form = e.target;
-const data = { name: fv(form, 'name'), cat: form.elements.cat.value, unit: fv(form, 'unit') || 'กิโลกรัม', min: Math.max(0, parseInt(form.elements.min.value, 10) || 0), loc: fv(form, 'loc'), price: Math.max(0, Number(form.elements.price.value) || 0) };
+const barcode = fv(form, 'barcode').trim();
+if (barcode && P.some(item => String(item.id) !== String(id || '') && String(item.barcode || '').trim().toLowerCase() === barcode.toLowerCase())) return toast('บาร์โค้ดนี้ถูกใช้กับสินค้าอื่นแล้ว', 1);
+const data = { name: fv(form, 'name'), cat: form.elements.cat.value, unit: fv(form, 'unit') || 'กิโลกรัม', min: Math.max(0, parseInt(form.elements.min.value, 10) || 0), loc: fv(form, 'loc'), price: Math.max(0, Number(form.elements.price.value) || 0), barcode };
 if (id) {
 Object.assign(target, data);
 delete target.cost;
