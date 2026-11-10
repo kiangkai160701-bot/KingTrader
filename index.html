@@ -2337,7 +2337,7 @@ Object.entries(theme.colors).forEach(([key, value]) => document.documentElement.
 try { renderTopRunners(); } catch {}
 }
 applyTheme(currentTheme);
-let me = null, tab = 'stock', pageDirection = 'next', F = { q: '', cat: '', sort: 'name' };
+let me = null, tab = 'pos', pageDirection = 'next', F = { q: '', cat: '', sort: 'name' };
 let siteSettings = (() => { const saved = store.get('kingstock_site_settings', {}); return { siteName: String(saved.siteName || 'KING STOCK'), siteLogo: String(saved.siteLogo || '') }; })();
 let pendingSiteLogo = null;
 let siteLogoRemoved = false;
@@ -2480,7 +2480,7 @@ $('#bootScreen').classList.add('hide'); $('#login').classList.add('hide'); $('#a
 $('#meName').textContent = u.owner ? (u.display_name || u.name) : u.name; $('#meRole').textContent = ROLE[u.role] || u.role; $('#btnEditName').classList.toggle('hide', !!u.branchManagerAccess); $('#btnPin').classList.toggle('hide', !!u.branchManagerAccess);
 applySiteSettings(siteSettings);
 refreshSiteSettings();
-tab = 'stock'; build(); startPresence(); refreshAnnouncement(true); if (u.must) pinModal(true);
+tab = 'pos'; build(); startPresence(); refreshAnnouncement(true); if (u.must) pinModal(true);
 }
 function logout() {
 stopPresence();
@@ -7019,6 +7019,19 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
  .pos-scanbar{padding:8px}.pos-scan-btn{min-height:40px;padding:7px 10px;font-size:11px}
  .pos-cart-actions{grid-template-columns:72px 1fr}.pos-cart-actions .btn{min-height:42px;padding:7px 8px;font-size:11px}
  .pos-product{min-height:100px}.pos-payment-grid{grid-template-columns:1fr 1fr}
+}
+
+/* Keep the camera preview docked to the right edge without unused panel space */
+.pos-workbench .pos-camera-panel{width:100%;box-sizing:border-box;justify-content:flex-end;align-items:center}
+.pos-workbench .pos-camera-frame{width:min(100%,420px);margin-left:auto}
+.pos-workbench .pos-camera-tools{margin-left:0}
+@media(max-width:760px){
+ .pos-workbench .pos-camera-panel{width:100%;justify-content:flex-end;align-items:center}
+ .pos-workbench .pos-camera-frame{width:min(100%,420px);height:clamp(136px,38vw,190px);margin-left:auto}
+ .pos-workbench .pos-camera-tools{margin-left:0}
+}
+@media(max-width:390px){
+ .pos-workbench .pos-camera-frame{width:min(100%,420px);height:clamp(128px,42vw,166px)}
 }
 </style>
 
