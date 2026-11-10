@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KingStock POS — Prototype</title>
+<style>
+:root{font-family:Prompt,"Noto Sans Thai",system-ui,sans-serif;color:#17251f;background:#f4f6f2;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;border:0}
+.top{height:68px;background:#173d32;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:12px}
+.brand{font-weight:800;letter-spacing:.5px}.brand small{display:block;font-size:11px;font-weight:400;color:#c9ddd3}
+.status{font-size:12px;color:#d9e9e0}.wrap{max-width:1440px;margin:auto;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:20px}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}.head h1{font-size:23px;margin:0}.muted{color:#728078;font-size:12px}
+.search{width:min(420px,100%);padding:12px 14px;border:1px solid #dce4dc;border-radius:12px;background:white}
+.categories{display:flex;gap:8px;overflow:auto;margin:12px 0 18px}.cat{padding:9px 15px;border:1px solid #dce4dc;background:#fff;border-radius:999px;color:#53635a;white-space:nowrap}.cat.active{background:#e5f1e9;border-color:#8ab69a;color:#1c6242;font-weight:700}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid #e0e6df;border-radius:16px;padding:15px;text-align:left;min-height:146px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s}
+.product:hover{border-color:#80ad8f;transform:translateY(-2px);box-shadow:0 8px 20px #173d3210}
+.p-icon{font-size:27px}.p-name{font-weight:700;margin-top:9px}.p-meta{display:flex;justify-content:space-between;gap:8px;margin-top:7px}.price{font-weight:800;color:#1c7048}.qty{font-size:11px;color:#78857d}
+.cart{background:#fff;border:1px solid #e0e6df;border-radius:18px;padding:18px;position:sticky;top:84px;height:calc(100vh - 108px);display:flex;flex-direction:column;min-height:460px}
+.cart h2{font-size:18px;margin:0}.cart-sub{color:#829087;font-size:11px;margin:3px 0 14px}.items{overflow:auto;flex:1}.empty{padding:50px 10px;text-align:center;color:#89958d;font-size:13px}
+.line{display:grid;grid-template-columns:1fr auto;gap:8px;padding:12px 0;border-bottom:1px solid #edf0ec}.line b{font-size:13px}.line small{display:block;color:#8a968f;font-size:11px;margin-top:3px}
+.controls{display:flex;align-items:center;gap:8px}.controls button{width:27px;height:27px;border-radius:8px;background:#edf4ee;color:#245d3e;font-weight:800}.controls strong{min-width:15px;text-align:center;font-size:12px}
+.summary{border-top:1px solid #e8eee8;padding-top:13px}.sumrow{display:flex;justify-content:space-between;margin:6px 0;font-size:13px;color:#67756c}.total{font-size:21px;font-weight:800;color:#173d32}
+.paylabel{font-size:12px;font-weight:700;margin:13px 0 7px}.payments{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pay{padding:10px;border:1px solid #dce5dc;border-radius:10px;background:white;color:#526258}.pay.active{border-color:#43835e;background:#edf6ef;color:#1d6841;font-weight:700}
+.checkout{width:100%;padding:14px;border-radius:12px;background:#1f6846;color:white;font-weight:800;margin-top:12px}.checkout:disabled{background:#b9c5bc;cursor:not-allowed}
+.note{background:#fff7e8;border:1px solid #f2dfb8;color:#85612b;padding:10px 12px;border-radius:10px;font-size:11px;line-height:1.55;margin-top:14px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#173d32;color:#fff;padding:11px 17px;border-radius:999px;display:none;font-size:12px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:14px}.cart{position:static;height:auto;min-height:420px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.head{align-items:flex-start;flex-direction:column}.search{width:100%}.top{padding:0 16px}}
+@media(max-width:430px){.products{gap:8px}.product{padding:11px;min-height:136px}.head h1{font-size:20px}.status{font-size:10px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">KING STOCK <small>ระบบขายหน้าร้าน · POS</small></div><div class="status">● โหมดตัวอย่าง · สาขาหลัก</div></header>
+<main class="wrap">
+<section>
+<div class="head"><div><h1>ขายสินค้า</h1><div class="muted">ค้นหา แตะสินค้าเพื่อเพิ่มลงบิล</div></div><input id="search" class="search" placeholder="ค้นหาชื่อสินค้า หรือบาร์โค้ด…"></div>
+<div class="categories" id="categories"></div><div class="products" id="products"></div>
+</section>
+<aside class="cart">
+<div><h2>รายการขายปัจจุบัน</h2><div class="cart-sub">บิลตัวอย่าง · ยังไม่บันทึกเข้าฐานข้อมูล</div></div>
+<div class="items" id="items"></div>
+<div class="summary"><div class="sumrow"><span>จำนวนสินค้า</span><b id="count">0 ชิ้น</b></div><div class="sumrow total"><span>ยอดสุทธิ</span><span id="total">฿0.00</span></div>
+<div class="paylabel">ช่องทางชำระเงิน</div><div class="payments"><button class="pay active" data-pay="cash">เงินสด</button><button class="pay" data-pay="qr">โอนเงิน / QR</button></div>
+<button class="checkout" id="checkout" disabled>รับชำระเงิน · ฿0.00</button>
+<div class="note">หน้าจอนี้เป็นต้นแบบ UX พร้อมข้อมูลสมมติเท่านั้น ยังไม่เชื่อม Supabase และไม่ตัดสต๊อกจริง</div>
+</div>
+</aside>
+</main><div class="toast" id="toast"></div>
+<script>
+const catalog=[
+{id:1,name:'น้ำดื่ม 600 มล.',cat:'เครื่องดื่ม',price:10,stock:32,icon:'💧'},
+{id:2,name:'น้ำอัดลม กระป๋อง',cat:'เครื่องดื่ม',price:15,stock:18,icon:'🥤'},
+{id:3,name:'บะหมี่กึ่งสำเร็จรูป',cat:'อาหารแห้ง',price:7,stock:45,icon:'🍜'},
+{id:4,name:'ข้าวสารถุง 1 กก.',cat:'อาหารแห้ง',price:42,stock:12,icon:'🍚'},
+{id:5,name:'ขนมปังแซนด์วิช',cat:'ขนม',price:25,stock:9,icon:'🍞'},
+{id:6,name:'มันฝรั่งทอด',cat:'ขนม',price:20,stock:21,icon:'🥔'},
+{id:7,name:'สบู่ก้อน',cat:'ของใช้',price:18,stock:15,icon:'🧼'},
+{id:8,name:'ยาสีฟัน',cat:'ของใช้',price:39,stock:8,icon:'🪥'},
+{id:9,name:'นมกล่อง',cat:'เครื่องดื่ม',price:13,stock:27,icon:'🥛'}
+];
+let cart={},category='ทั้งหมด',payment='cash';
+const money=n=>'฿'+n.toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2});
+const $=id=>document.getElementById(id);
+function drawCats(){const cats=['ทั้งหมด',...new Set(catalog.map(p=>p.cat))];$('categories').innerHTML=cats.map(c=>'<button class="cat '+(c===category?'active':'')+'" data-cat="'+c+'">'+c+'</button>').join('');}
+function drawProducts(){const q=$('search').value.trim().toLowerCase();const list=catalog.filter(p=>(category==='ทั้งหมด'||p.cat===category)&&(!q||p.name.toLowerCase().includes(q)||String(p.id).includes(q)));$('products').innerHTML=list.map(p=>'<button class="product" data-add="'+p.id+'" '+(p.stock<1?'disabled':'')+'><div><div class="p-icon">'+p.icon+'</div><div class="p-name">'+p.name+'</div></div><div class="p-meta"><span class="price">'+money(p.price)+'</span><span class="qty">คงเหลือ '+p.stock+'</span></div></button>').join('')||'<div class="empty">ไม่พบสินค้า</div>';}
+function drawCart(){const entries=Object.values(cart);const qty=entries.reduce((s,x)=>s+x.qty,0),total=entries.reduce((s,x)=>s+x.qty*x.price,0);$('count').textContent=qty+' ชิ้น';$('total').textContent=money(total);$('checkout').textContent='รับชำระเงิน · '+money(total);$('checkout').disabled=!qty;$('items').innerHTML=entries.length?entries.map(x=>'<div class="line"><div><b>'+x.name+'</b><small>'+money(x.price)+' / ชิ้น</small></div><div class="controls"><button data-minus="'+x.id+'">−</button><strong>'+x.qty+'</strong><button data-plus="'+x.id+'">+</button></div></div>').join(''):'<div class="empty">🛒<br>ยังไม่มีสินค้าในบิล<br>เลือกสินค้าจากรายการทางซ้าย</div>';}
+$('categories').onclick=e=>{const b=e.target.closest('[data-cat]');if(b){category=b.dataset.cat;drawCats();drawProducts();}};
+$('products').onclick=e=>{const b=e.target.closest('[data-add]');if(!b)return;const p=catalog.find(x=>x.id===Number(b.dataset.add));if(!p||p.stock<1)return;cart[p.id]??={...p,qty:0};if(cart[p.id].qty>=p.stock){toast('สินค้าในตัวอย่างมีไม่พอ');return;}cart[p.id].qty++;drawCart();};
+$('items').onclick=e=>{const b=e.target.closest('[data-plus],[data-minus]');if(!b)return;const id=Number(b.dataset.plus||b.dataset.minus);if(b.dataset.plus){if(cart[id].qty>=catalog.find(p=>p.id===id).stock)return;cart[id].qty++;}else if(--cart[id].qty<=0)delete cart[id];drawCart();};
+$('search').oninput=drawProducts;
+document.querySelector('.payments').onclick=e=>{const b=e.target.closest('[data-pay]');if(!b)return;payment=b.dataset.pay;document.querySelectorAll('.pay').forEach(x=>x.classList.toggle('active',x===b));};
+$('checkout').onclick=()=>{const entries=Object.values(cart);if(!entries.length)return;const total=entries.reduce((s,x)=>s+x.qty*x.price,0);toast('ตัวอย่างเท่านั้น · '+(payment==='cash'?'เงินสด':'โอนเงิน / QR')+' · '+money(total));cart={};drawCart();};
+function toast(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2200);}
+drawCats();drawProducts();drawCart();
+</script></body></html>
