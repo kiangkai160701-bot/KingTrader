@@ -1778,7 +1778,7 @@ html.formal-theme .top-runway{display:none!important}
 <div class="toast" id="toast"></div>
 <script>
 const $ = s => document.querySelector(s);
-let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false;
+let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false, posAudioContext = null;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const CLOUD_URL = 'https://vizffwfyccpyqesjjjaf.supabase.co'; // KING STOCK Supabase project.
 const CLOUD_KEY = 'sb_publishable_lsvmHv6TPfImgeDe1PQCDQ_5ZCX1-X8'; // KING STOCK publishable key; never use service_role in the browser.
@@ -6315,14 +6315,13 @@ function posRenderCart() {
   if ($('#posClear')) $('#posClear').disabled = !entries.length || posBusy;
 }
 function posView() {
-  if (!can.edit()) return '<section class="pos-wrap"><div class="pos-head"><div><small>KING STOCK · POINT OF SALE</small><h2>🛒 จุดขาย POS</h2></div><span class="pos-branch">สาขา' + esc(currentBranch?.name || '-') + '</span></div><div class="pos-empty">บัญชีนี้ไม่มีสิทธิ์ทำรายการสต๊อก จึงไม่สามารถขายสินค้าได้</div></section>';
+  if (!can.edit()) return '<section class="pos-wrap"><div class="pos-empty">บัญชีนี้ไม่มีสิทธิ์ทำรายการสต๊อก จึงไม่สามารถขายสินค้าได้</div></section>';
   const sales = L.filter(x => x.type === 'sale').slice(0, 5);
   const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
   return '<section class="pos-wrap">' +
-    '<header class="pos-head"><div><small>KING STOCK · POINT OF SALE</small><h2>🛒 ขายสินค้า</h2><p>สแกนบาร์โค้ดหรือเลือกสินค้า แล้วชำระเงินได้ทันที</p></div><span class="pos-branch">📍 ' + esc(currentBranch?.name || 'สาขา') + '</span></header>' +
-    '<section class="pos-scanbar"><div class="pos-scan-copy"><b>สแกนบาร์โค้ดสินค้า</b><small>เปิดกล้องเฉพาะกรอบเล็ก ๆ ไม่บังหน้าจอ</small></div><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button>' +
-    '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button><small>วางบาร์โค้ดให้อยู่ในกรอบกลางภาพ</small></div></div>' +
-    '<label class="pos-barcode-entry"><span>หรือกรอกรหัสบาร์โค้ด</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="พิมพ์ / ยิงบาร์โค้ดที่นี่"><button type="button" class="btn" id="posBarcodeAdd">เพิ่มสินค้า</button></div></label></section>' +
+    '<section class="pos-scanbar"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ สแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span>' +
+    '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button></div></div>' +
+    '<label class="pos-barcode-entry"><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
     '<div class="pos-layout"><aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการที่เลือก</h3><small class="pos-subtitle">ตรวจสอบจำนวนและยอดก่อนชำระ</small></div><span id="posCount">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
     '<label class="pos-field"><span>ช่องทางชำระเงิน</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label>' +
     '<div class="pos-total-row"><span>ยอดชำระสุทธิ</span><strong id="posTotal">0.00 ฿</strong></div><div class="pos-cart-actions"><button type="button" class="btn sec" id="posClear" disabled>ล้างรายการ</button><button type="button" class="btn" id="posCheckout" disabled>ยืนยันขาย</button></div><small class="pos-safe-note">ยืนยันแล้วระบบจะบันทึกใบขายและตัดสต๊อกพร้อมกัน</small></aside>' +
@@ -6330,22 +6329,46 @@ function posView() {
     '<section class="pos-sales"><div class="pos-section-head"><h3>🧾 การขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div>' + salesHtml + '</section></section>';
 }
 
-function posAddProduct(product) {
+function posPlayScanSound() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    if (!posAudioContext) posAudioContext = new AudioCtx();
+    if (posAudioContext.state === 'suspended') posAudioContext.resume();
+    const ctx = posAudioContext, osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(1050, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1450, ctx.currentTime + 0.09);
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16);
+    osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + 0.17);
+  } catch (error) {}
+}
+function posAddProduct(product, scanned = false) {
   if (!product) return toast('ไม่พบสินค้าจากบาร์โค้ดนี้', 1);
   const available = Math.max(0, Number(product.qty) || 0);
   const row = posCart.get(product.id) || { qty: 0, price: Math.max(0, Number(product.price) || 0) };
   if (row.qty >= available) return toast('สินค้า ' + product.name + ' มีจำนวนคงเหลือไม่พอ', 1);
   row.qty++; posCart.set(product.id, row); posRenderCart();
   const input = $('#posBarcodeInput'); if (input) input.value = '';
-  toast('เพิ่ม ' + product.name + ' ลงตะกร้าแล้ว');
+  if (scanned) {
+    posPlayScanSound();
+    const feedback = $('#posScanFeedback');
+    if (feedback) { feedback.textContent = '✓ สแกนติด · ' + product.name + ' × ' + row.qty; feedback.classList.add('is-success'); }
+    toast('✓ สแกนสำเร็จ เพิ่ม ' + product.name + ' ลงตะกร้าแล้ว');
+  } else toast('เพิ่ม ' + product.name + ' ลงตะกร้าแล้ว');
   return true;
 }
 function posAddByBarcode(value) {
   const code = String(value || '').trim().toLowerCase();
   if (!code) return toast('กรุณาสแกนหรือกรอกรหัสบาร์โค้ด', 1);
   const product = P.find(p => String(p.barcode || '').trim().toLowerCase() === code);
-  if (!product) return toast('ไม่พบสินค้าเลขบาร์โค้ด ' + value, 1);
-  return posAddProduct(product);
+  if (!product) {
+    const feedback = $('#posScanFeedback');
+    if (feedback) { feedback.textContent = 'ไม่พบสินค้า ลองสแกนอีกครั้ง'; feedback.classList.remove('is-success'); }
+    return toast('ไม่พบสินค้าเลขบาร์โค้ด ' + value, 1);
+  }
+  return posAddProduct(product, true);
 }
 function posStopScanner() {
   if (posCameraFrame) cancelAnimationFrame(posCameraFrame);
@@ -6378,6 +6401,7 @@ async function posStartScanner() {
   if (typeof BarcodeDetector === 'undefined') return toast('เบราว์เซอร์นี้ยังไม่รองรับตัวอ่านบาร์โค้ดผ่านกล้อง ใช้ช่องกรอกรหัสด้านล่างได้', 1);
   const panel = $('#posCameraPanel'), video = $('#posCameraVideo'), toggle = $('#posScanToggle');
   if (!panel || !video) return;
+  try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (AudioCtx && !posAudioContext) posAudioContext = new AudioCtx(); if (posAudioContext?.state === 'suspended') posAudioContext.resume(); } catch (error) {}
   panel.hidden = false; if (toggle) { toggle.disabled = true; toggle.textContent = 'กำลังเปิดกล้อง...'; }
   const status = $('#posCameraStatus'); if (status) status.textContent = 'กำลังขออนุญาตใช้กล้อง';
   try {
@@ -6862,6 +6886,57 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 .pos-sale-row b{font-size:12px}.pos-sale-row small{font-size:10px;color:var(--mute)}.pos-sale-row strong{white-space:nowrap;color:var(--acc-hover);font-size:13px}.sale-total{color:var(--acc-hover)!important}
 @media(max-width:760px){.pos-wrap{gap:10px;padding-top:0}.pos-head{padding:13px 14px;border-radius:15px}.pos-head h2{font-size:19px}.pos-head p{font-size:11px}.pos-layout{grid-template-columns:1fr;gap:10px}.pos-cart{order:0}.pos-catalog{order:1}.pos-cart-rows{max-height:260px}.pos-products{grid-template-columns:1fr;max-height:380px}.pos-product{padding:10px}.pos-scanbar,.pos-catalog,.pos-cart,.pos-sales{padding:12px;border-radius:14px}.pos-camera-frame{width:min(100%,260px);height:154px}.pos-camera-panel{align-items:flex-start}}
 @media(max-width:390px){.pos-scanbar{grid-template-columns:1fr}.pos-scan-btn{width:100%}.pos-camera-panel{justify-content:center}.pos-camera-tools{width:100%}.pos-barcode-entry>div{gap:6px}.pos-barcode-entry .btn{padding:7px 9px;font-size:11px}.pos-cart-actions{grid-template-columns:1fr}.pos-cart-actions .btn{width:100%}.pos-head{align-items:flex-start}.pos-branch{font-size:10px;padding:6px 8px}}
+
+/* Compact POS layout: prioritize the cart and keep its long list scrollable */
+.pos-wrap{gap:8px;padding:0 0 14px}
+.pos-head{display:none!important}
+.pos-scanbar{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:center;padding:7px 9px;border:0;border-radius:11px;background:transparent;box-shadow:none}
+.pos-scan-btn{min-height:34px;padding:5px 12px;font-size:11px}
+.pos-scan-feedback{min-width:0;font-size:10px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pos-scan-feedback.is-success{color:var(--ok);font-weight:700}
+.pos-camera-panel{grid-column:1/-1;gap:7px;padding:6px;border-radius:10px}
+.pos-camera-frame{width:min(100%,190px);height:112px;border-radius:9px}
+.pos-camera-tools{display:flex;align-items:center}
+.pos-camera-tools .btn{min-height:30px;padding:4px 9px;font-size:10px}
+.pos-barcode-entry{grid-column:1/-1;gap:0}
+.pos-barcode-entry>div{gap:6px}
+.pos-barcode-entry .in{min-height:36px;padding:6px 9px;font-size:12px}
+.pos-barcode-entry .btn{min-height:36px;padding:5px 10px;font-size:11px}
+.pos-layout{gap:8px}
+.pos-scanbar,.pos-catalog,.pos-cart,.pos-sales{padding:9px;border-radius:12px}
+.pos-section-head{margin-bottom:7px}
+.pos-section-head h3{font-size:13px}
+.pos-cart-rows{max-height:210px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.pos-cart-row{padding:7px 8px;border-radius:9px}
+.pos-cart-title b{font-size:11px}
+.pos-cart-controls{margin-top:5px;gap:6px}
+.pos-qty{gap:6px}
+.pos-qty button{width:28px;height:28px;font-size:15px}
+.pos-price input{width:72px;min-height:28px;font-size:11px}
+.pos-line-total{font-size:11px}
+.pos-stock-hint{margin-top:3px;font-size:9px}
+.pos-field{margin-top:7px;gap:3px}
+.pos-field .in{min-height:35px;padding:6px 8px;font-size:12px}
+.pos-total-row{margin-top:8px;padding:8px 0;font-size:12px}
+.pos-total-row strong{font-size:19px}
+.pos-cart-actions .btn{min-height:38px;padding:7px 9px;font-size:11px}
+@media(max-width:760px){
+ .pos-wrap{gap:7px}
+ .pos-layout{grid-template-columns:1fr;gap:7px}
+ .pos-cart{order:0}
+ .pos-catalog{order:1}
+ .pos-cart-rows{max-height:160px}
+ .pos-scanbar,.pos-catalog,.pos-cart,.pos-sales{padding:8px;border-radius:11px}
+ .pos-camera-frame{width:min(100%,175px);height:102px}
+ .pos-camera-panel{align-items:center;justify-content:flex-start}
+ .pos-cart-actions{grid-template-columns:auto 1fr}
+ .pos-cart-actions .btn{width:auto}
+}
+@media(max-width:390px){
+ .pos-scanbar{grid-template-columns:auto minmax(0,1fr)}
+ .pos-camera-panel{justify-content:flex-start}
+ .pos-cart-actions{grid-template-columns:auto 1fr}
+}
 </style>
 
 </body>
