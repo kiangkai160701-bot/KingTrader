@@ -7005,7 +7005,7 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 @media(max-width:760px){
  .pos-workbench{gap:7px;padding-bottom:12px}.pos-topline{padding:2px 2px 0}.pos-brandicon{width:30px;height:30px}.pos-brandmark b{font-size:13px}.pos-brandmark small{font-size:9px}
  .pos-layout{display:contents}
- .pos-cart{order:0}.pos-scanbar{order:1;width:100%;grid-template-columns:1fr;gap:7px;padding:9px}.pos-catalog{order:2}.pos-sales{order:3}
+ .pos-scanbar{order:0}.pos-cart{order:1;width:100%;grid-template-columns:1fr;gap:7px;padding:9px}.pos-catalog{order:2}.pos-sales{order:3}
  .pos-scan-actions{gap:9px}.pos-scan-btn{min-height:42px}.pos-barcode-entry>div{gap:6px}
  .pos-cart,.pos-catalog,.pos-sales{padding:9px;border-radius:12px}
  .pos-cart-rows{max-height:190px}.pos-products{grid-template-columns:repeat(2,minmax(0,1fr));max-height:440px;gap:6px}
@@ -7025,9 +7025,9 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 .pos-workbench .pos-camera-frame{width:min(100%,420px);margin-left:auto}
 .pos-workbench .pos-camera-tools{margin-left:0}
 @media(max-width:760px){
- .pos-workbench .pos-camera-panel{width:100%;justify-content:flex-end;align-items:center}
+ .pos-workbench .pos-camera-panel{width:100%;flex-direction:column;justify-content:flex-start;align-items:flex-end;gap:8px}
  .pos-workbench .pos-camera-frame{width:min(100%,420px);height:clamp(136px,38vw,190px);margin-left:auto}
- .pos-workbench .pos-camera-tools{margin-left:0}
+ .pos-workbench .pos-camera-tools{width:min(100%,420px);margin-left:0;display:flex;justify-content:flex-end;align-self:flex-end}
 }
 @media(max-width:390px){
  .pos-workbench .pos-camera-frame{width:min(100%,420px);height:clamp(128px,42vw,166px)}
