@@ -6319,9 +6319,9 @@ function posView() {
   const sales = L.filter(x => x.type === 'sale').slice(0, 5);
   const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
   return '<section class="pos-wrap pos-workbench">' +
-    '<section class="pos-scanbar"><div class="pos-scan-actions"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span></div>' +
+    '<section class="pos-scanbar"><label class="pos-barcode-entry"><span>บาร์โค้ด / ค้นหารหัสสินค้า</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label>' +
     '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button></div></div>' +
-    '<label class="pos-barcode-entry"><span>บาร์โค้ด / ค้นหารหัสสินค้า</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
+    '<div class="pos-scan-actions"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span></div></section>' +
     '<div class="pos-layout"><section class="pos-catalog"><div class="pos-section-head"><div><h3>สินค้า</h3><small class="pos-subtitle">แตะปุ่มเพิ่มเพื่อใส่ในรายการขาย</small></div><span class="pos-count-pill">' + P.length + ' รายการ</span></div><input id="posSearch" class="in pos-search" type="search" placeholder="⌕  ค้นหาชื่อสินค้า / หมวดหมู่ / บาร์โค้ด..." value="' + esc(posSearch) + '"><div class="pos-products" id="posProducts">' + posProductsHtml() + '</div></section>' +
     '<aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการขาย</h3><small class="pos-subtitle">ตรวจสอบก่อนยืนยันชำระเงิน</small></div><span id="posCount" class="pos-count-pill">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
     '<div class="pos-payment-grid"><label class="pos-field"><span>ชำระโดย</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label></div>' +
@@ -6951,7 +6951,7 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 }
 
 /* Hand-friendly scanner position and moderate preview size */
-.pos-scan-actions{display:flex;align-items:center;gap:10px;min-width:0}
+.pos-scan-actions{display:flex;align-items:center;gap:10px;min-width:0;grid-column:1/-1}.pos-barcode-entry{grid-column:1/-1}
 .pos-scan-btn{min-height:44px;padding:9px 16px;font-size:12px;border-radius:11px}
 .pos-scan-feedback{font-size:11px}
 .pos-camera-panel{gap:10px;padding:9px}
