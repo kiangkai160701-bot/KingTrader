@@ -900,7 +900,10 @@ html.dark-theme .theme-opt:not([data-dark="1"]) .theme-emoji{background:linear-g
 .pos-add,.pos-set-price{border:0;border-radius:10px;padding:9px 11px;min-height:40px;background:var(--acc);color:#fff;font-size:12px;font-weight:800;white-space:nowrap}
 .pos-set-price{background:var(--theme-soft);color:var(--ink);border:1px solid var(--line)}
 .pos-add:disabled{opacity:.42}
-.pos-empty,.pos-cart-empty{padding:28px 14px;text-align:center;color:var(--mute);font-size:13px}
+ .pos-empty,.pos-cart-empty{padding:28px 14px;text-align:center;color:var(--mute);font-size:13px}
+.pos-empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:6px}
+.pos-empty p{margin:0 0 12px}
+.pos-empty button{border:0;border-radius:10px;background:var(--acc);color:#fff;padding:10px 16px;font-weight:800;min-height:42px}
 .pos-cart-panel{position:sticky;top:12px;background:var(--card-bg);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 24px var(--theme-shadow)}
 .pos-cart-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .pos-cart-heading>div{display:flex;flex-direction:column;gap:3px}
@@ -3314,7 +3317,7 @@ function posView() {
       '<div class="pos-product-top"><span class="pos-product-cat">' + esc(product.cat || 'ไม่ระบุหมวด') + '</span><span class="pos-stock ' + (qty <= 0 ? 'out' : qty <= Number(product.min || 0) ? 'low' : '') + '">' + (qty <= 0 ? 'หมด' : 'เหลือ ' + num(qty) + ' ' + esc(product.unit || 'ชิ้น')) + '</span></div>' +
       '<b class="pos-product-name">' + esc(product.name) + '</b><div class="pos-product-bottom"><strong>' + (price > 0 ? posMoney(price) : '<span class="pos-no-price">ยังไม่ตั้งราคา</span>') + '</strong>' +
       (price > 0 ? '<button type="button" class="pos-add" data-pos-add="' + esc(product.id) + '" ' + (ready ? '' : 'disabled') + '>' + (inCart ? 'เพิ่มอีก · ' + inCart : '+ เพิ่ม') + '</button>' : (can.edit() ? '<button type="button" class="pos-set-price" data-pos-price="' + esc(product.id) + '">ตั้งราคา</button>' : '')) + '</div></article>';
-  }).join('') : '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาหรือเลือกหมวดหมู่อื่น</div>';
+  }).join('') : (P.length ? '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาหรือเลือกหมวดหมู่อื่น</div>' : '<div class="pos-empty"><b>ยังไม่มีสินค้าในสต๊อก</b><p>เพิ่มสินค้าและตั้งราคาขายก่อนเริ่มขาย</p><button type="button" id="posAddFirstProduct">ไปเพิ่มสินค้า</button></div>');
   const cartHtml = cartRows.length ? cartRows.map(({ product, qty, price }) =>
     '<div class="pos-cart-row"><div class="pos-cart-info"><b>' + esc(product.name) + '</b><small>' + posMoney(price) + ' × ' + num(qty) + ' ' + esc(product.unit || 'ชิ้น') + '</small></div>' +
     '<div class="pos-cart-controls"><button type="button" data-pos-qty="-1" data-pos-id="' + esc(product.id) + '" aria-label="ลดจำนวน">−</button><b>' + num(qty) + '</b><button type="button" data-pos-qty="1" data-pos-id="' + esc(product.id) + '" aria-label="เพิ่มจำนวน" ' + (qty >= Number(product.qty) ? 'disabled' : '') + '>+</button></div><strong class="pos-line-total">' + posMoney(qty * price) + '</strong></div>'
@@ -3337,23 +3340,23 @@ const inStock = P.filter(p => p.qty > 0).length;
 const low = P.filter(p => status(p) === 'low').length;
 const out = P.filter(p => status(p) === 'out').length;
 return `<div class="inventory-mode-head"><div><b>จัดการสต๊อกสินค้า</b><small>เพิ่มสินค้า ปรับจำนวน และตรวจสอบยอดคงเหลือ</small></div><button type="button" class="pos-inventory-link" id="backToSales">กลับหน้าขาย</button></div><div class="stats">
-   <div class="st" data-stock-filter="all" role="button" tabindex="0" aria-label="แสดงวัตถุดิบทั้งหมด"><small>วัตถุดิบทั้งหมด</small><b>${P.length}</b><small>รายการวัตถุดิบ</small></div>
-   <div class="st" data-stock-filter="stock-in" role="button" tabindex="0" aria-label="แสดงวัตถุดิบที่มีในคลัง"><small>มีวัตถุดิบในคลัง</small><b>${inStock}</b><small>รายการพร้อมใช้</small></div>
-   <div class="st alert" data-stock-filter="status-low" role="button" tabindex="0" aria-label="แสดงวัตถุดิบใกล้หมด"><small>ใกล้หมด</small><b>${low}</b><small>รายการ</small></div>
-   <div class="st bad" data-stock-filter="status-out" role="button" tabindex="0" aria-label="แสดงวัตถุดิบหมดสต็อก"><small>หมดสต็อก</small><b>${out}</b><small>รายการ</small></div>
+   <div class="st" data-stock-filter="all" role="button" tabindex="0" aria-label="แสดงสินค้าทั้งหมด"><small>สินค้าทั้งหมด</small><b>${P.length}</b><small>รายการสินค้า</small></div>
+   <div class="st" data-stock-filter="stock-in" role="button" tabindex="0" aria-label="แสดงสินค้าที่มีในสต๊อก"><small>มีสินค้าในสต๊อก</small><b>${inStock}</b><small>รายการพร้อมใช้</small></div>
+   <div class="st alert" data-stock-filter="status-low" role="button" tabindex="0" aria-label="แสดงสินค้าใกล้หมด"><small>สินค้าใกล้หมด</small><b>${low}</b><small>รายการ</small></div>
+   <div class="st bad" data-stock-filter="status-out" role="button" tabindex="0" aria-label="แสดงสินค้าหมดสต๊อก"><small>สินค้าหมดสต๊อก</small><b>${out}</b><small>รายการ</small></div>
   </div>
   <div class="tools">
-   <div class="srch">${ic('search')}<input class="in" id="q" placeholder="ค้นหาชื่อหรือหมวดหมู่..." value="${esc(F.q)}"></div>
+   <div class="srch">${ic('search')}<input class="in" id="q" placeholder="ค้นหาชื่อสินค้าหรือหมวดหมู่..." value="${esc(F.q)}"></div>
    <div class="flt">
     <select id="fc" aria-label="หมวดหมู่"><option value="">ทุกหมวดหมู่</option>${CATS.map(c => `<option ${F.cat === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
-    <select id="fo" aria-label="เรียงลำดับและกรองสถานะ">${[['name', 'ชื่อวัตถุดิบ ก–ฮ'], ['name-desc', 'ชื่อวัตถุดิบ ฮ–ก'], ['category', 'หมวดหมู่ ก–ฮ'], ['category-desc', 'หมวดหมู่ ฮ–ก'], ['qty-asc', 'คงเหลือ น้อยไปมาก'], ['qty-desc', 'คงเหลือ มากไปน้อย'], ['stock-in', 'มีวัตถุดิบในคลัง'], ['status-ok', 'สถานะ: ปกติ'], ['status-low', 'สถานะ: ใกล้หมด'], ['status-out', 'สถานะ: หมดสต็อก']].map(o => `<option value="${o[0]}" ${F.sort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
+    <select id="fo" aria-label="เรียงลำดับและกรองสถานะ">${[['name', 'ชื่อสินค้า ก–ฮ'], ['name-desc', 'ชื่อสินค้า ฮ–ก'], ['category', 'หมวดหมู่ ก–ฮ'], ['category-desc', 'หมวดหมู่ ฮ–ก'], ['qty-asc', 'คงเหลือ น้อยไปมาก'], ['qty-desc', 'คงเหลือ มากไปน้อย'], ['stock-in', 'มีวัตถุดิบในคลัง'], ['status-ok', 'สถานะ: ปกติ'], ['status-low', 'สถานะ: ใกล้หมด'], ['status-out', 'สถานะ: หมดสต็อก']].map(o => `<option value="${o[0]}" ${F.sort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
    </div>
    <div class="stock-actions" style="display:flex;gap:8px">
-    ${can.edit() ? `<button class="btn fab" id="add" aria-label="เพิ่มวัตถุดิบ" title="เพิ่มวัตถุดิบ">${ic('plus')}<span class="fab-label"> เพิ่มวัตถุดิบ</span></button>` : ''}
+    ${can.edit() ? `<button class="btn fab" id="add" aria-label="เพิ่มวัตถุดิบ" title="เพิ่มวัตถุดิบ">${ic('plus')}<span class="fab-label"> เพิ่มสินค้า</span></button>` : ''}
    </div>
   </div>
   ${quickBar()}
-  <div class="head"><span>วัตถุดิบ</span><span>คงเหลือ</span><span>ซัพพลายเออร์</span></div>
+  <div class="head"><span>สินค้า</span><span>คงเหลือ</span><span>ซัพพลายเออร์</span></div>
   <div class="list" id="list">${rows()}</div>`;
 }
 // Quick-withdraw bar: top 6 most-withdrawn items (count of withdrawals), blending last month -> this month by day of month
@@ -3468,6 +3471,7 @@ function bindPos() {
   $('#posOpenCheckout')?.addEventListener('click', openCheckout);
   $('#posOpenCheckoutMobile')?.addEventListener('click', openCheckout);
   $('#openInventoryManagement')?.addEventListener('click', () => { stockMode = 'inventory'; render(); });
+  $('#posAddFirstProduct')?.addEventListener('click', () => { stockMode = 'inventory'; render(); });
 }
 function posFilteredProducts() {
   const q = posQuery.trim().toLocaleLowerCase();
@@ -3735,7 +3739,7 @@ const headers = ['ชื่อสินค้า', 'หมวดหมู่', '
 const rows = P.map(p => [p.name, p.cat, p.unit, p.salePrice ?? 0, p.qty, p.min, p.loc].map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','));
 const link = document.createElement('a');
 link.href = URL.createObjectURL(new Blob(['\ufeff' + [headers.join(','), ...rows].join('\n')], { type: 'text/csv' }));
-link.download = `รายการวัตถุดิบ-${safeBranchFileName()}-${new Date().toISOString().slice(0, 10)}.csv`;
+link.download = `รายการสินค้า-${safeBranchFileName()}-${new Date().toISOString().slice(0, 10)}.csv`;
 link.click();
 setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 toast('ส่งออก CSV สำหรับแก้ไขและนำเข้าได้แล้ว');
