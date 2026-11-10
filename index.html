@@ -6294,11 +6294,11 @@ let posCart = new Map(), posSearch = '', posBusy = false;
 function posMoney(value) { return (Number(value) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function posProductsHtml() {
   const term = posSearch.trim().toLocaleLowerCase('th-TH');
-  const rows = P.filter(p => !term || String(p.name || '').toLocaleLowerCase('th-TH').includes(term) || String(p.cat || '').toLocaleLowerCase('th-TH').includes(term));
-  if (!rows.length) return '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาด้วยชื่อหรือหมวดหมู่</div>';
+  const rows = P.filter(p => !term || [p.name,p.cat,p.barcode].some(value => String(value || '').toLocaleLowerCase('th-TH').includes(term)));
+  if (!rows.length) return '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาชื่อ หมวดหมู่ หรือบาร์โค้ด</div>';
   return rows.map(p => {
     const qty = Math.max(0, Number(p.qty) || 0), price = Math.max(0, Number(p.price) || 0);
-    return '<article class="pos-product"><div class="pos-product-info"><b>' + esc(p.name) + '</b><small>' + esc(p.cat || 'ไม่ระบุหมวดหมู่') + ' · ' + esc(p.unit || 'หน่วย') + '</small><strong>' + posMoney(price) + ' บาท</strong><small class="' + (qty <= 0 ? 'pos-out' : qty <= Number(p.min || 0) ? 'pos-low' : 'pos-ready') + '">คงเหลือ ' + num(qty) + ' ' + esc(p.unit || '') + '</small></div><button type="button" class="btn pos-add" data-pos-add="' + esc(p.id) + '"' + (qty <= 0 ? ' disabled' : '') + '>＋ เพิ่ม</button></article>';
+    return '<article class="pos-product"><div class="pos-product-info"><b>' + esc(p.name) + '</b><small>' + esc(p.cat || 'ไม่ระบุหมวดหมู่') + ' · ' + esc(p.unit || 'หน่วย') + '</small><strong>' + posMoney(price) + ' บาท</strong><small class="' + (qty <= 0 ? 'pos-out' : qty <= Number(p.min || 0) ? 'pos-low' : 'pos-ready') + '">คงเหลือ ' + num(qty) + ' ' + esc(p.unit || '') + '</small>' + (p.barcode ? '<small class="pos-barcode-label">▦ ' + esc(p.barcode) + '</small>' : '') + '</div><button type="button" class="btn pos-add" data-pos-add="' + esc(p.id) + '"' + (qty <= 0 ? ' disabled' : '') + '>＋ เพิ่ม</button></article>';
   }).join('');
 }
 function posCartTotal() { return [...posCart.entries()].reduce((sum, entry) => sum + (Number(entry[1].qty) || 0) * (Number(entry[1].price) || 0), 0); }
@@ -6315,8 +6315,86 @@ function posRenderCart() {
 }
 function posView() {
   if (!can.edit()) return '<section class="pos-wrap"><div class="pos-head"><div><small>KING STOCK · POINT OF SALE</small><h2>🛒 จุดขาย POS</h2></div><span class="pos-branch">สาขา' + esc(currentBranch?.name || '-') + '</span></div><div class="pos-empty">บัญชีนี้ไม่มีสิทธิ์ทำรายการสต๊อก จึงไม่สามารถขายสินค้าได้</div></section>';
-  const sales = L.filter(x => x.type === 'sale').slice(0, 8);
-  return '<section class="pos-wrap"><div class="pos-head"><div><small>KING STOCK · POINT OF SALE</small><h2>🛒 จุดขาย POS</h2><p>เลือกสินค้า ใส่จำนวน รับชำระ และตัดสต๊อกในรายการเดียว</p></div><span class="pos-branch">📍 สาขา' + esc(currentBranch?.name || '-') + '</span></div><div class="pos-layout"><section class="pos-catalog"><div class="pos-section-head"><h3>สินค้าในคลัง</h3><span>' + P.length + ' รายการ</span></div><input id="posSearch" class="in pos-search" type="search" placeholder="ค้นหาสินค้า..." value="' + esc(posSearch) + '"><div class="pos-products" id="posProducts">' + posProductsHtml() + '</div></section><aside class="pos-cart"><div class="pos-section-head"><h3>🧺 ตะกร้าขาย</h3><span id="posCount">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div><label class="pos-field"><span>ช่องทางชำระเงิน</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label><div class="pos-total-row"><span>รวมทั้งสิ้น</span><strong id="posTotal">0.00 ฿</strong></div><div class="pos-cart-actions"><button type="button" class="btn sec" id="posClear" disabled>ล้างตะกร้า</button><button type="button" class="btn" id="posCheckout" disabled>ยืนยันขายและตัดสต๊อก</button></div><small class="pos-safe-note">ระบบจะบันทึกใบขายและรายการตัดสต๊อกในธุรกรรมเดียวกัน</small></aside></div><section class="pos-sales"><div class="pos-section-head"><h3>🧾 รายการขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div>' + (sales.length ? '<div class="pos-sales-list">' + sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') + '</div>' : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>') + '</section></section>';
+  const sales = L.filter(x => x.type === 'sale').slice(0, 5);
+  const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
+  return '<section class="pos-wrap">' +
+    '<header class="pos-head"><div><small>KING STOCK · POINT OF SALE</small><h2>🛒 ขายสินค้า</h2><p>สแกนบาร์โค้ดหรือเลือกสินค้า แล้วชำระเงินได้ทันที</p></div><span class="pos-branch">📍 ' + esc(currentBranch?.name || 'สาขา') + '</span></header>' +
+    '<section class="pos-scanbar"><div class="pos-scan-copy"><b>สแกนบาร์โค้ดสินค้า</b><small>เปิดกล้องเฉพาะกรอบเล็ก ๆ ไม่บังหน้าจอ</small></div><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button>' +
+    '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button><small>วางบาร์โค้ดให้อยู่ในกรอบกลางภาพ</small></div></div>' +
+    '<label class="pos-barcode-entry"><span>หรือกรอกรหัสบาร์โค้ด</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="พิมพ์ / ยิงบาร์โค้ดที่นี่"><button type="button" class="btn" id="posBarcodeAdd">เพิ่มสินค้า</button></div></label></section>' +
+    '<div class="pos-layout"><aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการที่เลือก</h3><small class="pos-subtitle">ตรวจสอบจำนวนและยอดก่อนชำระ</small></div><span id="posCount">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
+    '<label class="pos-field"><span>ช่องทางชำระเงิน</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label>' +
+    '<div class="pos-total-row"><span>ยอดชำระสุทธิ</span><strong id="posTotal">0.00 ฿</strong></div><div class="pos-cart-actions"><button type="button" class="btn sec" id="posClear" disabled>ล้างรายการ</button><button type="button" class="btn" id="posCheckout" disabled>ยืนยันขาย</button></div><small class="pos-safe-note">ยืนยันแล้วระบบจะบันทึกใบขายและตัดสต๊อกพร้อมกัน</small></aside>' +
+    '<section class="pos-catalog"><div class="pos-section-head"><div><h3>สินค้าในคลัง</h3><small class="pos-subtitle">แตะสินค้าเพื่อเพิ่มลงตะกร้า</small></div><span>' + P.length + ' รายการ</span></div><input id="posSearch" class="in pos-search" type="search" placeholder="ค้นหาชื่อสินค้า / หมวดหมู่ / บาร์โค้ด..." value="' + esc(posSearch) + '"><div class="pos-products" id="posProducts">' + posProductsHtml() + '</div></section></div>' +
+    '<section class="pos-sales"><div class="pos-section-head"><h3>🧾 การขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div>' + salesHtml + '</section></section>';
+}
+
+let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false;
+function posAddProduct(product) {
+  if (!product) return toast('ไม่พบสินค้าจากบาร์โค้ดนี้', 1);
+  const available = Math.max(0, Number(product.qty) || 0);
+  const row = posCart.get(product.id) || { qty: 0, price: Math.max(0, Number(product.price) || 0) };
+  if (row.qty >= available) return toast('สินค้า ' + product.name + ' มีจำนวนคงเหลือไม่พอ', 1);
+  row.qty++; posCart.set(product.id, row); posRenderCart();
+  const input = $('#posBarcodeInput'); if (input) input.value = '';
+  toast('เพิ่ม ' + product.name + ' ลงตะกร้าแล้ว');
+  return true;
+}
+function posAddByBarcode(value) {
+  const code = String(value || '').trim().toLowerCase();
+  if (!code) return toast('กรุณาสแกนหรือกรอกรหัสบาร์โค้ด', 1);
+  const product = P.find(p => String(p.barcode || '').trim().toLowerCase() === code);
+  if (!product) return toast('ไม่พบสินค้าเลขบาร์โค้ด ' + value, 1);
+  return posAddProduct(product);
+}
+function posStopScanner() {
+  if (posCameraFrame) cancelAnimationFrame(posCameraFrame);
+  posCameraFrame = 0; posCameraBusy = false;
+  if (posCameraStream) posCameraStream.getTracks().forEach(track => track.stop());
+  posCameraStream = null;
+  const video = $('#posCameraVideo'); if (video) { video.pause(); video.srcObject = null; }
+  const panel = $('#posCameraPanel'); if (panel) panel.hidden = true;
+  const toggle = $('#posScanToggle'); if (toggle) { toggle.textContent = '▦ เปิดกล้องสแกน'; toggle.disabled = false; }
+}
+async function posScanFrame() {
+  if (!posCameraStream || !posCameraDetector || posCameraBusy) return;
+  const video = $('#posCameraVideo');
+  if (!video || video.readyState < 2) { posCameraFrame = requestAnimationFrame(posScanFrame); return; }
+  posCameraBusy = true;
+  try {
+    const codes = await posCameraDetector.detect(video);
+    if (codes && codes.length && codes[0].rawValue) {
+      const code = codes[0].rawValue;
+      const found = posAddByBarcode(code);
+      if (found) { posStopScanner(); return; }
+      const status = $('#posCameraStatus'); if (status) status.textContent = 'ไม่พบรหัสนี้ในสินค้า ลองอีกครั้ง';
+    }
+  } catch (error) {}
+  finally { posCameraBusy = false; }
+  if (posCameraStream) posCameraFrame = requestAnimationFrame(posScanFrame);
+}
+async function posStartScanner() {
+  if (!navigator.mediaDevices?.getUserMedia) return toast('เบราว์เซอร์นี้ไม่รองรับการเปิดกล้อง หรือจำเป็นต้องเปิดผ่าน HTTPS', 1);
+  if (typeof BarcodeDetector === 'undefined') return toast('เบราว์เซอร์นี้ยังไม่รองรับตัวอ่านบาร์โค้ดผ่านกล้อง ใช้ช่องกรอกรหัสด้านล่างได้', 1);
+  const panel = $('#posCameraPanel'), video = $('#posCameraVideo'), toggle = $('#posScanToggle');
+  if (!panel || !video) return;
+  panel.hidden = false; if (toggle) { toggle.disabled = true; toggle.textContent = 'กำลังเปิดกล้อง...'; }
+  const status = $('#posCameraStatus'); if (status) status.textContent = 'กำลังขออนุญาตใช้กล้อง';
+  try {
+    const supported = typeof BarcodeDetector.getSupportedFormats === 'function' ? await BarcodeDetector.getSupportedFormats() : ['ean_13','ean_8','upc_a','upc_e','code_128','itf'];
+    const wanted = ['ean_13','ean_8','upc_a','upc_e','code_128','itf'];
+    const formats = wanted.filter(format => supported.includes(format));
+    if (!formats.length) throw new Error('อุปกรณ์ไม่รองรับรูปแบบบาร์โค้ดที่ใช้');
+    posCameraDetector = new BarcodeDetector({ formats });
+    posCameraStream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 960 }, height: { ideal: 540 } } });
+    video.srcObject = posCameraStream; await video.play();
+    if (status) status.textContent = 'กำลังสแกน · จัดบาร์โค้ดให้อยู่ในกรอบ';
+    if (toggle) { toggle.disabled = false; toggle.textContent = '▦ กำลังสแกน'; }
+    posScanFrame();
+  } catch (error) {
+    posStopScanner();
+    toast(error?.name === 'NotAllowedError' ? 'กรุณาอนุญาตให้เว็บไซต์ใช้กล้อง' : (error?.message || 'เปิดกล้องไม่สำเร็จ'), 1);
+  }
 }
 function bindPos() {
   const search = $('#posSearch');
@@ -6324,10 +6402,7 @@ function bindPos() {
   const products = $('#posProducts');
   if (products) products.onclick = e => {
     const button = e.target.closest('[data-pos-add]'); if (!button) return;
-    const p = P.find(x => String(x.id) === button.dataset.posAdd); if (!p) return;
-    const row = posCart.get(p.id) || { qty: 0, price: Math.max(0, Number(p.price) || 0) };
-    if (row.qty >= Number(p.qty || 0)) return toast('สินค้าในสต๊อกไม่เพียงพอ', 1);
-    row.qty++; posCart.set(p.id, row); posRenderCart();
+    const p = P.find(x => String(x.id) === button.dataset.posAdd); posAddProduct(p);
   };
   const cart = $('#posCartRows');
   if (cart) {
@@ -6345,16 +6420,20 @@ function bindPos() {
       const input = e.target.closest('[data-pos-price]'); if (!input) return;
       const row = posCart.get(input.dataset.posPrice); if (!row) return;
       row.price = Math.max(0, Number(input.value) || 0);
-      const total = posCartTotal();
-      if ($('#posSubtotal')) $('#posSubtotal').textContent = posMoney(total) + ' ฿';
-      if ($('#posTotal')) $('#posTotal').textContent = posMoney(total) + ' ฿';
+      if ($('#posTotal')) $('#posTotal').textContent = posMoney(posCartTotal()) + ' ฿';
       const line = input.closest('.pos-cart-controls')?.querySelector('.pos-line-total'); if (line) line.textContent = posMoney(row.qty * row.price) + ' ฿';
     };
   }
   const clear = $('#posClear'); if (clear) clear.onclick = () => { posCart.clear(); posRenderCart(); };
   const checkout = $('#posCheckout'); if (checkout) checkout.onclick = posCheckout;
+  const scan = $('#posScanToggle'); if (scan) scan.onclick = () => posCameraStream ? posStopScanner() : posStartScanner();
+  const stop = $('#posCameraStop'); if (stop) stop.onclick = posStopScanner;
+  const barcode = $('#posBarcodeInput'), addCode = $('#posBarcodeAdd');
+  if (addCode) addCode.onclick = () => posAddByBarcode(barcode?.value);
+  if (barcode) barcode.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); posAddByBarcode(barcode.value); } };
   posRenderCart();
 }
+
 async function posCheckout() {
   if (posBusy) return;
   if (!can.edit()) return toast('บัญชีนี้ไม่มีสิทธิ์ทำรายการสต๊อก', 1);
@@ -6751,58 +6830,38 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 
 
 <style id="kingstock-pos-style">
-.pos-wrap{display:grid;gap:16px;padding:4px 0 22px}
+.pos-wrap{display:grid;gap:14px;padding:4px 0 24px;max-width:1180px;margin:0 auto}
 .pos-head,.pos-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .pos-head{padding:16px 18px;border:1px solid var(--theme-border-strong);border-radius:18px;background:linear-gradient(135deg,var(--theme-wash),var(--card-bg))}
-.pos-head small{font-size:10px;letter-spacing:1.4px;color:var(--mute);font-weight:700}
-.pos-head h2{font-size:22px;margin:3px 0}
-.pos-head p{font-size:12px;color:var(--mute)}
+.pos-head small{font-size:10px;letter-spacing:1.4px;color:var(--mute);font-weight:700}.pos-head h2{font-size:22px;margin:3px 0}.pos-head p{font-size:12px;color:var(--mute)}
 .pos-branch{white-space:nowrap;padding:7px 10px;border-radius:99px;background:var(--theme-soft);font-size:11px;font-weight:650}
-.pos-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.85fr);gap:14px;align-items:start}
-.pos-catalog,.pos-cart,.pos-sales{min-width:0;background:var(--card-bg);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:var(--shadow-sm)}
-.pos-section-head{margin-bottom:11px}
-.pos-section-head h3{font-size:15px}
-.pos-section-head>span{font-size:11px;color:var(--mute)}
-.pos-search{margin-bottom:10px}
-.pos-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-height:610px;overflow:auto;overscroll-behavior:contain}
+.pos-scanbar,.pos-catalog,.pos-cart,.pos-sales{min-width:0;background:var(--card-bg);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:var(--shadow-sm)}
+.pos-scanbar{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.pos-scan-copy{display:grid;gap:3px}.pos-scan-copy b{font-size:13px}.pos-scan-copy small,.pos-subtitle{font-size:10px;color:var(--mute)}
+.pos-scan-btn{min-height:42px;padding:8px 13px;white-space:nowrap}.pos-camera-panel{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px;border:1px solid var(--theme-border-strong);border-radius:14px;background:var(--theme-wash)}.pos-camera-panel[hidden]{display:none}
+.pos-camera-frame{position:relative;width:min(100%,280px);height:166px;overflow:hidden;border-radius:12px;background:#0f172a;display:grid;place-items:center}.pos-camera-frame video{width:100%;height:100%;object-fit:cover}
+.pos-scan-guide{position:absolute;left:12%;right:12%;top:35%;height:30%;border:2px solid #34d399;border-radius:8px;box-shadow:0 0 0 999px #0003;pointer-events:none}
+.pos-camera-status{position:absolute;left:0;right:0;bottom:0;padding:5px 8px;text-align:center;background:#07111dcc;color:white;font-size:10px}.pos-camera-tools{display:grid;gap:8px}.pos-camera-tools small{font-size:10px;color:var(--mute)}
+.pos-barcode-entry{grid-column:1/-1;display:grid;gap:5px}.pos-barcode-entry>span{font-size:10px;color:var(--mute);font-weight:600}.pos-barcode-entry>div{display:flex;gap:8px}.pos-barcode-entry .in{min-width:0;min-height:42px}.pos-barcode-entry .btn{white-space:nowrap}
+.pos-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:14px;align-items:start}.pos-catalog,.pos-cart{min-width:0}
+.pos-section-head{margin-bottom:11px}.pos-section-head h3{font-size:15px}.pos-section-head>span{font-size:11px;color:var(--mute)}
+.pos-search{margin-bottom:10px;min-height:42px}.pos-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-height:610px;overflow:auto;overscroll-behavior:contain}
 .pos-product{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--theme-wash)}
-.pos-product-info{display:grid;gap:3px;min-width:0}
-.pos-product-info b{overflow-wrap:anywhere;font-size:13px}
-.pos-product-info small{font-size:10px;color:var(--mute)}
-.pos-product-info strong{font-size:12px;color:var(--acc-hover)}
-.pos-ready{color:var(--ok)!important}.pos-low{color:var(--warn)!important}.pos-out{color:var(--bad)!important}
-.pos-add{min-height:34px;padding:6px 9px;white-space:nowrap;font-size:11px}
-.pos-add:disabled{opacity:.4;box-shadow:none;cursor:not-allowed}
-.pos-cart{position:sticky;top:82px}
-.pos-cart-rows{display:grid;gap:8px;max-height:390px;overflow:auto}
-.pos-cart-row{padding:10px;border:1px solid var(--line);border-radius:12px}
-.pos-cart-title,.pos-cart-controls{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.pos-cart-title b{font-size:13px}
-.pos-remove{width:26px;height:26px;border-radius:8px;background:var(--bad-bg);color:var(--bad);font-size:19px}
-.pos-cart-controls{margin-top:8px;flex-wrap:wrap}
-.pos-qty{display:flex;align-items:center;gap:9px}
-.pos-qty button{width:29px;height:29px;border:1px solid var(--line);border-radius:9px;background:var(--theme-soft);font-size:17px}
-.pos-price{display:grid;gap:2px;font-size:9px;color:var(--mute)}
-.pos-price input{width:88px;min-height:31px;padding:4px 6px;border:1px solid var(--line);border-radius:8px;background:var(--card-bg);font-size:12px}
-.pos-line-total{font-size:12px;white-space:nowrap}
-.pos-stock-hint{display:block;margin-top:6px;color:var(--mute);font-size:10px}
-.pos-field{display:grid;gap:5px;margin-top:10px;font-size:11px;font-weight:600}
-.pos-field .in{min-height:38px;padding:8px 10px}
-.pos-total-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding:13px 0;border-top:1px dashed var(--line);font-size:14px}
-.pos-total-row strong{font-size:21px;color:var(--acc-hover);font-variant-numeric:tabular-nums}
-.pos-cart-actions{display:grid;grid-template-columns:auto 1fr;gap:8px}
-.pos-cart-actions .btn{min-height:42px;font-size:11px;padding:8px 10px}
-.pos-cart-actions .btn:disabled{opacity:.4;cursor:not-allowed}
-.pos-safe-note{display:block;margin-top:9px;color:var(--mute);font-size:10px;line-height:1.5}
-.pos-empty{padding:22px 12px;text-align:center;color:var(--mute);font-size:12px;line-height:1.7;border:1px dashed var(--line);border-radius:12px;background:var(--theme-wash)}
-.pos-sales-list{display:grid;gap:7px}
-.pos-sale-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:11px}
-.pos-sale-row>div{display:grid;gap:3px;min-width:0}
-.pos-sale-row b{font-size:12px}.pos-sale-row small{font-size:10px;color:var(--mute)}
-.pos-sale-row strong{white-space:nowrap;color:var(--acc-hover);font-size:13px}
-.sale-total{color:var(--acc-hover)!important}
-@media(max-width:760px){.pos-layout{grid-template-columns:1fr}.pos-cart{position:static;order:0}.pos-products{grid-template-columns:1fr;max-height:none}.pos-product{padding:10px}.pos-head{align-items:flex-start}.pos-head h2{font-size:19px}.pos-branch{font-size:10px;padding:6px 8px}.pos-cart-rows{max-height:none}}
-@media(max-width:380px){.pos-cart-actions{grid-template-columns:1fr}.pos-cart-actions .btn{width:100%}.pos-head{flex-direction:column}.pos-branch{align-self:flex-start}}
+.pos-product-info{display:grid;gap:3px;min-width:0}.pos-product-info b{overflow-wrap:anywhere;font-size:13px}.pos-product-info small{font-size:10px;color:var(--mute)}.pos-product-info strong{font-size:12px;color:var(--acc-hover)}
+.pos-ready{color:var(--ok)!important}.pos-low{color:var(--warn)!important}.pos-out{color:var(--bad)!important}.pos-barcode-label{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.pos-add{min-height:38px;padding:7px 10px;white-space:nowrap;font-size:11px}.pos-add:disabled{opacity:.4;box-shadow:none;cursor:not-allowed}
+.pos-cart-rows{display:grid;gap:8px;max-height:430px;overflow:auto}.pos-cart-row{padding:10px;border:1px solid var(--line);border-radius:12px}
+.pos-cart-title,.pos-cart-controls{display:flex;align-items:center;justify-content:space-between;gap:8px}.pos-cart-title b{font-size:13px}.pos-remove{width:30px;height:30px;border-radius:8px;background:var(--bad-bg);color:var(--bad);font-size:19px}
+.pos-cart-controls{margin-top:8px;flex-wrap:wrap}.pos-qty{display:flex;align-items:center;gap:9px}.pos-qty button{width:32px;height:32px;border:1px solid var(--line);border-radius:9px;background:var(--theme-soft);font-size:17px}
+.pos-price{display:grid;gap:2px;font-size:9px;color:var(--mute)}.pos-price input{width:88px;min-height:32px;padding:4px 6px;border:1px solid var(--line);border-radius:8px;background:var(--card-bg);font-size:12px}
+.pos-line-total{font-size:12px;white-space:nowrap}.pos-stock-hint{display:block;margin-top:6px;color:var(--mute);font-size:10px}
+.pos-field{display:grid;gap:5px;margin-top:10px;font-size:11px;font-weight:600}.pos-field .in{min-height:42px;padding:8px 10px}
+.pos-total-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding:13px 0;border-top:1px dashed var(--line);font-size:14px}.pos-total-row strong{font-size:23px;color:var(--acc-hover);font-variant-numeric:tabular-nums}
+.pos-cart-actions{display:grid;grid-template-columns:auto 1fr;gap:8px}.pos-cart-actions .btn{min-height:46px;font-size:12px;padding:9px 10px}.pos-cart-actions .btn:disabled{opacity:.4;cursor:not-allowed}
+.pos-safe-note{display:block;margin-top:9px;color:var(--mute);font-size:10px;line-height:1.5}.pos-empty{padding:22px 12px;text-align:center;color:var(--mute);font-size:12px;line-height:1.7;border:1px dashed var(--line);border-radius:12px;background:var(--theme-wash)}
+.pos-sales-list{display:grid;gap:7px}.pos-sale-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:11px}.pos-sale-row>div{display:grid;gap:3px;min-width:0}
+.pos-sale-row b{font-size:12px}.pos-sale-row small{font-size:10px;color:var(--mute)}.pos-sale-row strong{white-space:nowrap;color:var(--acc-hover);font-size:13px}.sale-total{color:var(--acc-hover)!important}
+@media(max-width:760px){.pos-wrap{gap:10px;padding-top:0}.pos-head{padding:13px 14px;border-radius:15px}.pos-head h2{font-size:19px}.pos-head p{font-size:11px}.pos-layout{grid-template-columns:1fr;gap:10px}.pos-cart{order:0}.pos-catalog{order:1}.pos-cart-rows{max-height:260px}.pos-products{grid-template-columns:1fr;max-height:380px}.pos-product{padding:10px}.pos-scanbar,.pos-catalog,.pos-cart,.pos-sales{padding:12px;border-radius:14px}.pos-camera-frame{width:min(100%,260px);height:154px}.pos-camera-panel{align-items:flex-start}}
+@media(max-width:390px){.pos-scanbar{grid-template-columns:1fr}.pos-scan-btn{width:100%}.pos-camera-panel{justify-content:center}.pos-camera-tools{width:100%}.pos-barcode-entry>div{gap:6px}.pos-barcode-entry .btn{padding:7px 9px;font-size:11px}.pos-cart-actions{grid-template-columns:1fr}.pos-cart-actions .btn{width:100%}.pos-head{align-items:flex-start}.pos-branch{font-size:10px;padding:6px 8px}}
 </style>
 
 </body>
