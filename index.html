@@ -6318,17 +6318,17 @@ function posView() {
   if (!can.edit()) return '<section class="pos-wrap"><div class="pos-empty">บัญชีนี้ไม่มีสิทธิ์ทำรายการสต๊อก จึงไม่สามารถขายสินค้าได้</div></section>';
   const sales = L.filter(x => x.type === 'sale').slice(0, 5);
   const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
-  return '<section class="pos-wrap">' +
+  return '<section class="pos-wrap pos-workbench">' +
+    '<header class="pos-topline"><div class="pos-brandmark"><span class="pos-brandicon">▣</span><div><b>จุดขายสินค้า</b><small>เลือกสินค้า · สแกน · ชำระเงิน</small></div></div><span class="pos-live"><i></i> พร้อมขาย</span></header>' +
     '<section class="pos-scanbar"><div class="pos-scan-actions"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span></div>' +
     '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button></div></div>' +
-    '<label class="pos-barcode-entry"><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
-    '<div class="pos-layout"><aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการที่เลือก</h3><small class="pos-subtitle">ตรวจสอบจำนวนและยอดก่อนชำระ</small></div><span id="posCount">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
-    '<label class="pos-field"><span>ช่องทางชำระเงิน</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label>' +
-    '<div class="pos-total-row"><span>ยอดชำระสุทธิ</span><strong id="posTotal">0.00 ฿</strong></div><div class="pos-cart-actions"><button type="button" class="btn sec" id="posClear" disabled>ล้างรายการ</button><button type="button" class="btn" id="posCheckout" disabled>ยืนยันขาย</button></div><small class="pos-safe-note">ยืนยันแล้วระบบจะบันทึกใบขายและตัดสต๊อกพร้อมกัน</small></aside>' +
-    '<section class="pos-catalog"><div class="pos-section-head"><div><h3>สินค้าในคลัง</h3><small class="pos-subtitle">แตะสินค้าเพื่อเพิ่มลงตะกร้า</small></div><span>' + P.length + ' รายการ</span></div><input id="posSearch" class="in pos-search" type="search" placeholder="ค้นหาชื่อสินค้า / หมวดหมู่ / บาร์โค้ด..." value="' + esc(posSearch) + '"><div class="pos-products" id="posProducts">' + posProductsHtml() + '</div></section></div>' +
-    '<section class="pos-sales"><div class="pos-section-head"><h3>🧾 การขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div>' + salesHtml + '</section></section>';
+    '<label class="pos-barcode-entry"><span>บาร์โค้ด / ค้นหารหัสสินค้า</span><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
+    '<div class="pos-layout"><section class="pos-catalog"><div class="pos-section-head"><div><h3>สินค้า</h3><small class="pos-subtitle">แตะปุ่มเพิ่มเพื่อใส่ในรายการขาย</small></div><span class="pos-count-pill">' + P.length + ' รายการ</span></div><input id="posSearch" class="in pos-search" type="search" placeholder="⌕  ค้นหาชื่อสินค้า / หมวดหมู่ / บาร์โค้ด..." value="' + esc(posSearch) + '"><div class="pos-products" id="posProducts">' + posProductsHtml() + '</div></section>' +
+    '<aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการขาย</h3><small class="pos-subtitle">ตรวจสอบก่อนยืนยันชำระเงิน</small></div><span id="posCount" class="pos-count-pill">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
+    '<div class="pos-payment-grid"><label class="pos-field"><span>ชำระโดย</span><select id="posPayment" class="in"><option value="cash">เงินสด</option><option value="transfer">โอนเงิน</option><option value="card">บัตร / อื่น ๆ</option></select></label><label class="pos-field"><span>ชื่อลูกค้า (ไม่บังคับ)</span><input id="posCustomer" class="in" maxlength="100" placeholder="ลูกค้าทั่วไป"></label></div>' +
+    '<div class="pos-total-row"><span>ยอดสุทธิ</span><strong id="posTotal">0.00 ฿</strong></div><div class="pos-cart-actions"><button type="button" class="btn sec" id="posClear" disabled>ล้าง</button><button type="button" class="btn" id="posCheckout" disabled>ยืนยันขาย · ชำระเงิน</button></div><small class="pos-safe-note">ระบบจะบันทึกใบขายและตัดสต๊อกเมื่อยืนยันรายการ</small></aside></div>' +
+    '<section class="pos-sales"><div class="pos-section-head"><h3>🧾 การขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div><div class="pos-sales-list">' + salesHtml + '</div></section></section>';
 }
-
 function posPlayScanSound() {
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -6977,6 +6977,48 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
 @media(max-width:390px){
  .pos-scan-btn{min-width:124px}
  .pos-camera-frame{width:min(100%,215px);height:128px}
+}
+
+/* POS workbench redesign */
+.pos-workbench{max-width:1440px;gap:10px;padding:0 0 18px}
+.pos-topline{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 2px}
+.pos-brandmark{display:flex;align-items:center;gap:9px}.pos-brandicon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--theme-soft);color:var(--acc-hover);font-size:19px}
+.pos-brandmark>div{display:grid;gap:1px}.pos-brandmark b{font-size:15px}.pos-brandmark small{font-size:10px;color:var(--mute)}
+.pos-live{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;background:var(--theme-wash);color:var(--ok);font-size:10px;font-weight:700}.pos-live i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.pos-scanbar{display:grid;grid-template-columns:minmax(0,.8fr) minmax(260px,1.2fr);gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card-bg);box-shadow:var(--shadow-sm)}
+.pos-scan-actions{display:flex;align-items:center;gap:10px;min-width:0}.pos-scan-btn{min-height:42px;padding:8px 14px;border-radius:10px;font-size:12px;white-space:nowrap}.pos-scan-feedback{font-size:11px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pos-barcode-entry{display:grid;gap:4px;min-width:0}.pos-barcode-entry>span{font-size:10px;color:var(--mute);font-weight:650}.pos-barcode-entry>div{display:flex;gap:6px}.pos-barcode-entry .in{min-width:0;min-height:39px;padding:7px 10px;font-size:12px}.pos-barcode-entry .btn{min-height:39px;padding:7px 13px}
+.pos-camera-panel{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:8px;border-radius:11px}.pos-camera-panel[hidden]{display:none}.pos-camera-frame{width:min(100%,250px);height:148px}.pos-camera-tools .btn{min-height:38px}
+.pos-layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr);gap:10px;align-items:start}
+.pos-catalog,.pos-cart,.pos-sales{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card-bg);box-shadow:var(--shadow-sm);min-width:0}
+.pos-section-head{margin-bottom:8px}.pos-section-head h3{font-size:14px;margin:0}.pos-subtitle{font-size:10px;color:var(--mute)}.pos-count-pill{padding:4px 8px;border-radius:99px;background:var(--theme-wash);font-size:10px!important;font-weight:700;color:var(--acc-hover)!important;white-space:nowrap}
+.pos-search{min-height:40px;margin-bottom:8px;padding:8px 11px;font-size:12px}
+.pos-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:570px;overflow:auto;overscroll-behavior:contain}
+.pos-product{padding:9px;border-radius:11px;gap:7px;min-height:82px;background:var(--theme-wash)}
+.pos-product-info{gap:2px}.pos-product-info b{font-size:12px;line-height:1.35}.pos-product-info small{font-size:9px}.pos-product-info strong{font-size:11px}.pos-add{min-height:34px;padding:6px 9px;border-radius:8px;font-size:10px}
+.pos-cart-rows{display:grid;gap:6px;max-height:390px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.pos-cart-row{padding:8px 9px;border-radius:10px;background:var(--theme-wash)}.pos-cart-title b{font-size:12px}.pos-cart-controls{margin-top:5px;gap:7px}.pos-qty{gap:7px}.pos-qty button{width:30px;height:30px;border-radius:8px}.pos-price{font-size:9px}.pos-price input{width:76px;min-height:30px}.pos-line-total{font-size:11px}.pos-stock-hint{font-size:9px;margin-top:3px}
+.pos-payment-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:8px}.pos-field{margin-top:9px;gap:4px;font-size:10px}.pos-field .in{min-height:37px;padding:7px 9px;font-size:11px}
+.pos-total-row{margin-top:9px;padding:10px 0;font-size:12px}.pos-total-row strong{font-size:23px}
+.pos-cart-actions{grid-template-columns:84px 1fr;gap:7px}.pos-cart-actions .btn{min-height:44px;border-radius:10px;font-size:12px}
+.pos-safe-note{font-size:9px;margin-top:7px}
+.pos-sales{padding:10px 12px}.pos-sales .pos-section-head{margin-bottom:7px}.pos-sales-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.pos-sale-row{padding:8px 9px;border-radius:9px}.pos-sale-row b{font-size:11px}.pos-sale-row small{font-size:9px}.pos-sale-row strong{font-size:11px}
+@media(max-width:760px){
+ .pos-workbench{gap:7px;padding-bottom:12px}.pos-topline{padding:2px 2px 0}.pos-brandicon{width:30px;height:30px}.pos-brandmark b{font-size:13px}.pos-brandmark small{font-size:9px}
+ .pos-layout{display:contents}
+ .pos-cart{order:0}.pos-scanbar{order:1;width:100%;grid-template-columns:1fr;gap:7px;padding:9px}.pos-catalog{order:2}.pos-sales{order:3}
+ .pos-scan-actions{gap:9px}.pos-scan-btn{min-height:42px}.pos-barcode-entry>div{gap:6px}
+ .pos-cart,.pos-catalog,.pos-sales{padding:9px;border-radius:12px}
+ .pos-cart-rows{max-height:190px}.pos-products{grid-template-columns:repeat(2,minmax(0,1fr));max-height:440px;gap:6px}
+ .pos-product{align-items:flex-start;padding:8px;min-height:94px}.pos-product-info b{font-size:11px}.pos-product-info small{font-size:9px}.pos-add{min-height:31px;padding:5px 7px}
+ .pos-payment-grid{grid-template-columns:1fr 1fr;gap:6px}.pos-field .in{min-height:35px}
+ .pos-total-row{padding:8px 0}.pos-total-row strong{font-size:21px}
+ .pos-sales-list{grid-template-columns:1fr}
+}
+@media(max-width:390px){
+ .pos-scanbar{padding:8px}.pos-scan-btn{min-height:40px;padding:7px 10px;font-size:11px}
+ .pos-cart-actions{grid-template-columns:72px 1fr}.pos-cart-actions .btn{min-height:42px;padding:7px 8px;font-size:11px}
+ .pos-product{min-height:100px}.pos-payment-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 
