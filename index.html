@@ -1778,6 +1778,7 @@ html.formal-theme .top-runway{display:none!important}
 <div class="toast" id="toast"></div>
 <script>
 const $ = s => document.querySelector(s);
+let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const CLOUD_URL = 'https://vizffwfyccpyqesjjjaf.supabase.co'; // KING STOCK Supabase project.
 const CLOUD_KEY = 'sb_publishable_lsvmHv6TPfImgeDe1PQCDQ_5ZCX1-X8'; // KING STOCK publishable key; never use service_role in the browser.
@@ -6329,7 +6330,6 @@ function posView() {
     '<section class="pos-sales"><div class="pos-section-head"><h3>🧾 การขายล่าสุด</h3><span>' + sales.length + ' รายการ</span></div>' + salesHtml + '</section></section>';
 }
 
-let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false;
 function posAddProduct(product) {
   if (!product) return toast('ไม่พบสินค้าจากบาร์โค้ดนี้', 1);
   const available = Math.max(0, Number(product.qty) || 0);
