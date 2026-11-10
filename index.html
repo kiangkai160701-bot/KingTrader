@@ -1778,7 +1778,7 @@ html.formal-theme .top-runway{display:none!important}
 <div class="toast" id="toast"></div>
 <script>
 const $ = s => document.querySelector(s);
-let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false, posAudioContext = null;
+let posCameraStream = null, posCameraFrame = 0, posCameraDetector = null, posCameraBusy = false, posAudioContext = null, posScanLatched = false, posNoCodeSince = 0;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const CLOUD_URL = 'https://vizffwfyccpyqesjjjaf.supabase.co'; // KING STOCK Supabase project.
 const CLOUD_KEY = 'sb_publishable_lsvmHv6TPfImgeDe1PQCDQ_5ZCX1-X8'; // KING STOCK publishable key; never use service_role in the browser.
@@ -6319,7 +6319,7 @@ function posView() {
   const sales = L.filter(x => x.type === 'sale').slice(0, 5);
   const salesHtml = sales.length ? sales.map(x => '<article class="pos-sale-row"><div><b>' + esc(x.receiptNo || 'ใบขาย') + '</b><small>' + new Date(x.ts).toLocaleString('th-TH') + ' · ' + esc(x.user || '') + ' · ' + (x.items || []).length + ' รายการ</small></div><strong>' + posMoney(x.total || 0) + ' ฿</strong></article>').join('') : '<div class="pos-empty">ยังไม่มีประวัติการขาย</div>';
   return '<section class="pos-wrap">' +
-    '<section class="pos-scanbar"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ สแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span>' +
+    '<section class="pos-scanbar"><div class="pos-scan-actions"><button type="button" class="btn pos-scan-btn" id="posScanToggle">▦ เปิดกล้องสแกน</button><span class="pos-scan-feedback" id="posScanFeedback" aria-live="polite">พร้อมสแกนสินค้า</span></div>' +
     '<div class="pos-camera-panel" id="posCameraPanel" hidden><div class="pos-camera-frame"><video id="posCameraVideo" playsinline muted></video><span class="pos-scan-guide" aria-hidden="true"></span><span class="pos-camera-status" id="posCameraStatus">กำลังเตรียมกล้อง...</span></div><div class="pos-camera-tools"><button type="button" class="btn sec" id="posCameraStop">ปิดกล้อง</button></div></div>' +
     '<label class="pos-barcode-entry"><div><input id="posBarcodeInput" class="in" type="text" inputmode="numeric" autocomplete="off" placeholder="สแกนหรือกรอกรหัสบาร์โค้ด"><button type="button" class="btn" id="posBarcodeAdd">เพิ่ม</button></div></label></section>' +
     '<div class="pos-layout"><aside class="pos-cart"><div class="pos-section-head"><div><h3>🧺 รายการที่เลือก</h3><small class="pos-subtitle">ตรวจสอบจำนวนและยอดก่อนชำระ</small></div><span id="posCount">0 ชิ้น</span></div><div id="posCartRows" class="pos-cart-rows"></div>' +
@@ -6372,7 +6372,7 @@ function posAddByBarcode(value) {
 }
 function posStopScanner() {
   if (posCameraFrame) cancelAnimationFrame(posCameraFrame);
-  posCameraFrame = 0; posCameraBusy = false;
+  posCameraFrame = 0; posCameraBusy = false; posScanLatched = false; posNoCodeSince = 0;
   if (posCameraStream) posCameraStream.getTracks().forEach(track => track.stop());
   posCameraStream = null;
   const video = $('#posCameraVideo'); if (video) { video.pause(); video.srcObject = null; }
@@ -6387,10 +6387,23 @@ async function posScanFrame() {
   try {
     const codes = await posCameraDetector.detect(video);
     if (codes && codes.length && codes[0].rawValue) {
+      posNoCodeSince = 0;
       const code = codes[0].rawValue;
-      const found = posAddByBarcode(code);
-      if (found) { posStopScanner(); return; }
-      const status = $('#posCameraStatus'); if (status) status.textContent = 'ไม่พบรหัสนี้ในสินค้า ลองอีกครั้ง';
+      if (!posScanLatched) {
+        posScanLatched = true;
+        const found = posAddByBarcode(code);
+        if (found) {
+          const status = $('#posCameraStatus'); if (status) status.textContent = '✓ เพิ่มสินค้าแล้ว · พร้อมสแกนชิ้นถัดไป';
+          const feedback = $('#posScanFeedback');
+          if (feedback) feedback.textContent = '✓ เพิ่มแล้ว · สแกนสินค้าชิ้นถัดไปได้เลย';
+        } else {
+          const status = $('#posCameraStatus'); if (status) status.textContent = 'ไม่พบรหัสนี้ในสินค้า ลองอีกครั้ง';
+          posScanLatched = false;
+        }
+      }
+    } else {
+      if (!posNoCodeSince) posNoCodeSince = performance.now();
+      if (performance.now() - posNoCodeSince > 550) posScanLatched = false;
     }
   } catch (error) {}
   finally { posCameraBusy = false; }
@@ -6936,6 +6949,33 @@ body[data-theme="panda"] .btn:not(.sec),body[data-theme="panda"] .fab{box-shadow
  .pos-scanbar{grid-template-columns:auto minmax(0,1fr)}
  .pos-camera-panel{justify-content:flex-start}
  .pos-cart-actions{grid-template-columns:auto 1fr}
+}
+
+/* Hand-friendly scanner position and moderate preview size */
+.pos-scan-actions{display:flex;align-items:center;gap:10px;min-width:0}
+.pos-scan-btn{min-height:44px;padding:9px 16px;font-size:12px;border-radius:11px}
+.pos-scan-feedback{font-size:11px}
+.pos-camera-panel{gap:10px;padding:9px}
+.pos-camera-frame{width:min(100%,230px);height:136px}
+.pos-camera-tools .btn{min-height:38px;padding:7px 12px;font-size:11px}
+@media(max-width:760px){
+ .pos-layout{display:contents}
+ .pos-cart{order:0}
+ .pos-scanbar{order:1;width:100%;display:grid;grid-template-columns:1fr;gap:9px;padding:10px;border:1px solid var(--line);background:var(--card-bg);box-shadow:var(--shadow-sm)}
+ .pos-catalog{order:2}
+ .pos-scan-actions{width:100%;gap:10px}
+ .pos-scan-btn{min-height:46px;min-width:132px;font-size:13px}
+ .pos-scan-feedback{flex:1;white-space:normal;line-height:1.35}
+ .pos-camera-panel{display:flex;align-items:center;justify-content:flex-start}
+ .pos-camera-panel[hidden]{display:none}
+ .pos-camera-frame{width:min(100%,230px);height:136px}
+ .pos-camera-tools{display:flex;align-items:center}
+ .pos-camera-tools .btn{min-height:42px;padding:8px 14px}
+ .pos-cart-rows{max-height:180px}
+}
+@media(max-width:390px){
+ .pos-scan-btn{min-width:124px}
+ .pos-camera-frame{width:min(100%,215px);height:128px}
 }
 </style>
 
