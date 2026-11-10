@@ -3166,7 +3166,7 @@ card.append(mascot);
 }
 let pageAnimation = null, mascotTimer = 0;
 const isWideDesktop = () => window.matchMedia('(min-width: 1100px)').matches;
-const isDashboardWorkspace = () => tab === 'dashboard' || (tab === 'stock' && isWideDesktop());
+const isDashboardWorkspace = () => tab === 'dashboard';
 function desktopStockDashboardView() {
 return `<div class="desktop-workspace">
     <section class="desktop-stock-panel" aria-label="สต็อกวัตถุดิบ">
@@ -3969,10 +3969,10 @@ const modeText = bucketMode==='day'?'รายวัน':bucketMode==='week'?'�
 const peakPeriodLabel = peak ? `${bucketMode==='month'?'เดือน':'วันที่'} ${peak.label}` : '–';
 const netMove = totalIn-totalOut;
 const movementChartCard = `<section class="dash-chart dc-card">
-    <div class="dc-head"><h3>📊 รับเข้า · เบิกจ่าย</h3><small>${modeText} · จำนวนครั้ง</small></div>
+    <div class="dc-head"><h3>📊 รับเข้า · ขาย / เบิกจ่าย</h3><small>${modeText} · จำนวนครั้ง</small></div>
     <div class="dc-kpis">
       <div class="dc-k-in"><small>รับเข้า</small><b>${totalIn}</b></div>
-      <div class="dc-k-out"><small>เบิกจ่าย</small><b>${totalOut}</b></div>
+      <div class="dc-k-out"><small>ขาย / เบิกจ่าย</small><b>${totalOut}</b></div>
       <div class="net"><small>ผลต่าง</small><b>${netMove>0?'+':''}${netMove}</b></div>
       <div class="dc-k-peak"><small>ค่าสูงสุด</small><b>${peak && (peak.in+peak.out)>0 ? esc(peakPeriodLabel) : '–'}</b></div>
     </div>
@@ -4005,7 +4005,7 @@ return `<div class="recent-movement desktop-history-row"><div class="recent-move
 }).join('')
 : inRange.slice(0,6).map(x=>`<div class="recent-movement"><div class="recent-movement-name"><b>${esc(x.pname||'วัตถุดิบ')}</b> <small>(${x.type==='in'?'รับเข้า':x.type==='sale'?'ขายสินค้า':x.type==='out'?'เบิกจ่าย':x.type==='adjust'?'ปรับยอด':x.type==='delete'?'ลบสินค้า':x.type==='create'?'เพิ่มสินค้า':'แก้ไขข้อมูล'}) · ${new Date(x.ts).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</small></div><div class="amt ${x.type==='in'?'in':'out'}">${x.type==='in'?'+':(['out','sale'].includes(x.type))?'−':''}${num(Math.abs(x.amt||0))}</div></div>`).join('');
 const rankFilter = (type, range) => {
-const title = type === 'out' ? 'เบิกจ่าย' : 'รับเข้า', prefix = type === 'out' ? 'Out' : 'In';
+const title = type === 'out' ? 'ขาย / เบิกจ่าย' : 'รับเข้า', prefix = type === 'out' ? 'Out' : 'In';
 return `<div class="dash-rank-filter" aria-label="กรองรายการ${title}ตามช่วงวันที่"><label class="dash-rank-date"><span>ตั้งแต่</span><input id="dashboard${prefix}From" type="date" value="${range.from || ''}" aria-label="วันที่เริ่มต้นรายการ${title}"></label><label class="dash-rank-date"><span>ถึง</span><input id="dashboard${prefix}To" type="date" value="${range.to || ''}" aria-label="วันที่สิ้นสุดรายการ${title}"></label><button type="button" data-clear-dashboard-rank="${type}">ล้างตัวกรอง</button></div>`;
 };
 return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา':'แดชบอร์ดสรุปภาพรวม'}</h2><small>สถานะคลังปัจจุบันและการเคลื่อนไหวในช่วงวันที่เลือก</small></div>
@@ -4018,7 +4018,7 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
   </div>
   <div class="dash-activity-stats">
     <button type="button" class="dash-action-card" data-dashboard-movement-filter="in" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการรับเข้าในช่วงวันที่เลือก"><small>รับเข้า</small><b>${inLogs.length}</b><span>ครั้ง · ${quantityText(inLogs)}</span></button>
-    <button type="button" class="dash-action-card" data-dashboard-movement-filter="out" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการเบิกจ่ายในช่วงวันที่เลือก"><small>เบิกจ่าย</small><b>${outLogs.length}</b><span>ครั้ง · ${quantityText(outLogs)}</span></button>
+    <button type="button" class="dash-action-card" data-dashboard-movement-filter="out" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการเบิกจ่ายในช่วงวันที่เลือก"><small>ขาย / เบิกจ่าย</small><b>${outLogs.length}</b><span>ครั้ง · ${quantityText(outLogs)}</span></button>
     <button type="button" class="dash-action-card" data-dashboard-movement-filter="adjust" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการปรับยอดในช่วงวันที่เลือก"><small>ปรับยอด</small><b>${adjustLogs.length}</b><span>ครั้งในช่วงนี้</span></button>
     <div><small>พนักงานที่ทำรายการ</small><b>${activeNames.length}</b><span>${activeNames.length ? activeNames.map(esc).join(', ') : 'ยังไม่มีรายการ'}</span></div>
   </div>
@@ -5046,7 +5046,7 @@ const draw = () => {
 const from = st.from ? new Date(`${st.from}T00:00:00`).getTime() : 0;
 const to = st.to ? new Date(`${st.to}T00:00:00`).getTime() + 86400000 : Infinity;
 const rows = base.filter(x => { const t = Number(x.ts) || 0; return (!st.user || x.user === st.user) && t >= from && t < to; });
-const sum = type => rows.filter(x => x.type === type).reduce((n, x) => n + Math.abs(Number(x.amt) || 0), 0);
+const sum = type => rows.filter(x => type === 'out' ? ['out','sale'].includes(x.type) : x.type === type).reduce((n, x) => n + Math.abs(Number(x.amt) || 0), 0);
 const unit = esc(p.unit || '');
 $('#ihSum').innerHTML = `<div class="in"><small>รับเข้า</small><b>${fmt(sum('in'))}</b><em>${unit}</em></div><div class="out"><small>เบิกจ่าย</small><b>${fmt(sum('out'))}</b><em>${unit}</em></div><div><small>ทั้งหมด</small><b>${rows.length}</b><em>ครั้ง</em></div>`;
 if (!rows.length) { $('#ihList').innerHTML = `<div class="ih-empty">${ihSticker(0, 'stk-empty')}${base.length ? 'ไม่พบรายการตามตัวกรองที่เลือก' : 'ยังไม่มีประวัติของรายการนี้'}</div>`; return; }
@@ -5332,7 +5332,7 @@ history.pushState({}, '', url); render(); return;
 }
 const dashboardStockCard = e.target.closest('[data-dashboard-stock-filter]');
 if (dashboardStockCard && isDashboardWorkspace()) {
-F.q = ''; F.cat = '';
+stockMode = 'inventory'; F.q = ''; F.cat = '';
 F.sort = dashboardStockCard.dataset.dashboardStockFilter === 'all' ? 'name' : dashboardStockCard.dataset.dashboardStockFilter;
 if (tab === 'stock' && isWideDesktop()) { render(); return; }
 pageDirection = 'prev'; tab = 'stock'; render(true); return;
