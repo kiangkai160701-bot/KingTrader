@@ -862,7 +862,114 @@ html.dark-theme .theme-opt:not([data-dark="1"]) .theme-emoji{background:linear-g
 /* KING STOCK core build: hide optional modules without dedicated RPC support. */
 .announce-bar,.announce-card,.chat-btn,.chat-rooms-btn,.chat-dot,.chp,#chatRooms,#chatRoom,#chatRoomsBtn,
 #eggFeedPage,.ef-page,.backup-admin-card{display:none!important}
-.appearance-mode-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--theme-soft)}.appearance-mode-row b{font-size:13px}.appearance-mode-row .settings-hint{margin:2px 0 0}.color-theme-opt{min-height:62px!important;gap:7px!important}.color-swatch{display:block;width:27px;height:27px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 2px 5px rgba(0,0,0,.12)}.color-theme-opt.active{outline:2px solid var(--acc)!important}</style>
+.appearance-mode-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--theme-soft)}.appearance-mode-row b{font-size:13px}.appearance-mode-row .settings-hint{margin:2px 0 0}.color-theme-opt{min-height:62px!important;gap:7px!important}.color-swatch{display:block;width:27px;height:27px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 2px 5px rgba(0,0,0,.12)}.color-theme-opt.active{outline:2px solid var(--acc)!important}
+/* KING STOCK — mobile-first grocery sales screen */
+.pos-page{padding:clamp(12px,2.4vw,24px);padding-bottom:150px;color:var(--ink)}
+.pos-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.pos-heading h2{font-size:clamp(24px,3vw,32px);margin:3px 0 2px;font-weight:850;letter-spacing:-.03em}
+.pos-heading p{margin:0;color:var(--mute);font-size:13px}
+.pos-kicker{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--acc)}
+.pos-inventory-link{border:1px solid var(--line);background:var(--card-bg);color:var(--ink);border-radius:12px;padding:11px 14px;font-weight:750;min-height:44px;white-space:nowrap}
+.pos-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:14px}
+.pos-stats>div{min-width:0;background:var(--card-bg);border:1px solid var(--line);border-radius:15px;padding:12px;box-shadow:0 5px 18px var(--theme-shadow)}
+.pos-stats small{display:block;color:var(--mute);font-size:11px;white-space:nowrap}
+.pos-stats b{display:block;margin-top:5px;font-size:clamp(15px,2vw,21px);font-weight:850;overflow-wrap:anywhere}
+.pos-search-wrap{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--line);border-radius:14px;padding:0 14px;min-height:50px}
+.pos-search-wrap>span{font-size:26px;color:var(--mute);line-height:1}
+.pos-search-wrap input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font-size:15px;padding:13px 0}
+.pos-categories{display:flex;gap:8px;overflow-x:auto;padding:12px 1px 14px;scrollbar-width:none}
+.pos-categories::-webkit-scrollbar{display:none}
+.pos-cat{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:9px 15px;background:var(--card-bg);color:var(--ink);font-weight:700;font-size:12px;min-height:40px}
+.pos-cat.active{background:var(--acc);border-color:var(--acc);color:#fff}
+.pos-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,350px);gap:16px;align-items:start}
+.pos-section-title{display:flex;justify-content:space-between;align-items:center;margin:2px 0 10px}
+.pos-section-title b{font-size:16px}
+.pos-section-title small{color:var(--mute)}
+.pos-product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.pos-product{background:var(--card-bg);border:1px solid var(--line);border-radius:16px;padding:13px;min-width:0;display:flex;flex-direction:column;gap:11px;box-shadow:0 5px 16px var(--theme-shadow)}
+.pos-product.is-out{opacity:.68}
+.pos-product-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.pos-product-cat{font-size:10px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pos-stock{font-size:10px;color:var(--ok);font-weight:750;white-space:nowrap}
+.pos-stock.low{color:#b7791f}
+.pos-stock.out{color:var(--bad)}
+.pos-product-name{font-size:14px;line-height:1.35;min-height:38px;overflow-wrap:anywhere}
+.pos-product-bottom{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:auto}
+.pos-product-bottom>strong{font-size:15px;font-weight:850}
+.pos-no-price{font-size:11px;color:var(--mute);font-weight:600}
+.pos-add,.pos-set-price{border:0;border-radius:10px;padding:9px 11px;min-height:40px;background:var(--acc);color:#fff;font-size:12px;font-weight:800;white-space:nowrap}
+.pos-set-price{background:var(--theme-soft);color:var(--ink);border:1px solid var(--line)}
+.pos-add:disabled{opacity:.42}
+ .pos-empty,.pos-cart-empty{padding:28px 14px;text-align:center;color:var(--mute);font-size:13px}
+.pos-empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:6px}
+.pos-empty p{margin:0 0 12px}
+.pos-empty button{border:0;border-radius:10px;background:var(--acc);color:#fff;padding:10px 16px;font-weight:800;min-height:42px}
+.pos-cart-panel{position:sticky;top:12px;background:var(--card-bg);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 24px var(--theme-shadow)}
+.pos-cart-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.pos-cart-heading>div{display:flex;flex-direction:column;gap:3px}
+.pos-cart-heading b{font-size:16px}
+.pos-cart-heading small{font-size:11px;color:var(--mute)}
+.pos-cart-heading button{border:0;background:transparent;color:var(--bad);font-size:12px;font-weight:700}
+.pos-cart-heading button:disabled{opacity:.35}
+.pos-cart-list{display:grid;gap:10px;padding:12px 0;max-height:42vh;overflow:auto}
+.pos-cart-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+.pos-cart-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.pos-cart-info b{font-size:12px;overflow-wrap:anywhere}
+.pos-cart-info small{font-size:10px;color:var(--mute)}
+.pos-cart-controls{display:flex;align-items:center;gap:8px}
+.pos-cart-controls button{width:32px;height:32px;border:1px solid var(--line);border-radius:9px;background:var(--theme-soft);color:var(--ink);font-size:18px;font-weight:700}
+.pos-cart-controls button:disabled{opacity:.35}
+.pos-cart-controls b{min-width:14px;text-align:center;font-size:12px}
+.pos-line-total{grid-column:1/-1;text-align:right;font-size:12px}
+.pos-cart-total{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:13px 0 11px;font-size:13px}
+.pos-cart-total strong{font-size:21px;font-weight:900}
+.pos-checkout{width:100%;min-height:48px;border:0;border-radius:12px;background:var(--acc);color:#fff;font-size:14px;font-weight:850}
+.pos-checkout:disabled,.pos-mobile-dock button:disabled{opacity:.4}
+.pos-mobile-dock{display:none}
+.inventory-mode-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0;padding:12px 14px;background:var(--card-bg);border:1px solid var(--line);border-radius:14px}
+.inventory-mode-head>div{display:flex;flex-direction:column;gap:3px}
+.inventory-mode-head b{font-size:15px}
+.inventory-mode-head small{font-size:11px;color:var(--mute)}
+.pos-pay-total{display:flex;flex-direction:column;gap:5px;padding:16px;background:var(--theme-soft);border:1px solid var(--line);border-radius:14px;margin-bottom:14px}
+.pos-pay-total small{color:var(--mute);font-size:12px}
+.pos-pay-total strong{font-size:28px;font-weight:900}
+.pos-payment-options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.pos-payment-options label{position:relative}
+.pos-payment-options input{position:absolute;opacity:0}
+.pos-payment-options span{display:flex;align-items:center;justify-content:center;min-height:52px;border:1px solid var(--line);border-radius:12px;background:var(--card-bg);font-weight:750;font-size:13px}
+.pos-payment-options input:checked+span{border-color:var(--acc);background:var(--theme-wash);box-shadow:inset 0 0 0 1px var(--acc)}
+.pos-change-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;color:var(--mute)}
+.pos-change-row b{color:var(--ok);font-size:19px}
+.pos-transfer-note{padding:12px;border-radius:10px;background:var(--theme-soft);font-size:12px;color:var(--mute);line-height:1.55}
+@media(max-width:760px){
+  .pos-page{padding:12px 12px 155px}
+  .pos-heading{align-items:flex-start}
+  .pos-heading h2{font-size:25px}
+  .pos-heading p{font-size:11px;max-width:230px}
+  .pos-inventory-link{padding:9px 10px;font-size:11px;min-height:40px}
+  .pos-stats{gap:7px}
+  .pos-stats>div{padding:10px 9px;border-radius:12px}
+  .pos-stats small{font-size:9px}
+  .pos-stats b{font-size:14px}
+  .pos-layout{grid-template-columns:1fr;gap:14px}
+  .pos-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .pos-product{padding:10px;border-radius:13px;gap:9px}
+  .pos-product-name{font-size:13px;min-height:36px}
+  .pos-product-bottom{align-items:flex-end}
+  .pos-product-bottom>strong{font-size:13px}
+  .pos-add,.pos-set-price{padding:8px 9px;min-height:38px;font-size:11px}
+  .pos-cart-panel{position:static;padding:12px}
+  .pos-cart-list{max-height:none}
+  .pos-mobile-dock{display:flex;position:fixed;z-index:70;left:10px;right:10px;bottom:calc(76px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.18)}
+  .pos-mobile-dock>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .pos-mobile-dock small{font-size:10px;color:var(--mute)}
+  .pos-mobile-dock b{font-size:17px;font-weight:900}
+  .pos-mobile-dock button{border:0;border-radius:11px;background:var(--acc);color:#fff;font-weight:850;padding:0 20px;min-height:44px;white-space:nowrap}
+  .inventory-mode-head{margin:10px 0;align-items:center}
+}
+@media(min-width:761px) and (max-width:1099px){.pos-layout{grid-template-columns:minmax(0,1fr) 300px}.pos-product-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}}
+
+</style>
 <style id="smooth-motion">
 html{-webkit-text-size-adjust:100%}
 button,.row,[data-t]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -2477,7 +2584,7 @@ $('#bootScreen').classList.add('hide'); $('#login').classList.add('hide'); $('#a
 $('#meName').textContent = u.owner ? (u.display_name || u.name) : u.name; $('#meRole').textContent = ROLE[u.role] || u.role; $('#btnEditName').classList.toggle('hide', !!u.branchManagerAccess); $('#btnPin').classList.toggle('hide', !!u.branchManagerAccess);
 applySiteSettings(siteSettings);
 refreshSiteSettings();
-tab = 'stock'; build(); startPresence(); refreshAnnouncement(true); if (u.must) pinModal(true);
+tab = 'stock'; stockMode = 'pos'; posCart.clear(); build(); startPresence(); refreshAnnouncement(true); if (u.must) pinModal(true);
 }
 function logout() {
 stopPresence();
@@ -2797,13 +2904,13 @@ eggFeed: () => fullAccessUser(me) || !!(me?.permissions?.eggFeed ?? defaultPermi
 };
 function tabs() {
 const items = [
-['stock', isWideDesktop() ? 'หน้าหลัก' : 'สต็อก', 'box'],
+['stock', 'ขายสินค้า', 'box'],
 ['dashboard', 'แดชบอร์ด', 'dashboard'],
 ['log', 'ประวัติ', 'log'],
 ['users', 'ผู้ใช้', 'users'],
 ['settings', 'ตั้งค่า', 'settings']
 ];
-return isWideDesktop() ? items.filter(([key]) => !['dashboard', 'log'].includes(key)) : items;
+return items;
 }
 function build(keepScroll = false) {
 const nav = $('#nav');
@@ -3062,7 +3169,7 @@ card.append(mascot);
 }
 let pageAnimation = null, mascotTimer = 0;
 const isWideDesktop = () => window.matchMedia('(min-width: 1100px)').matches;
-const isDashboardWorkspace = () => tab === 'dashboard' || (tab === 'stock' && isWideDesktop());
+const isDashboardWorkspace = () => tab === 'dashboard';
 function desktopStockDashboardView() {
 return `<div class="desktop-workspace">
     <section class="desktop-stock-panel" aria-label="สต็อกวัตถุดิบ">
@@ -3087,7 +3194,7 @@ function render(animatePage = false, keepScroll = false) {
 if (document.querySelector('#ov[data-closing]')) { deferredRender = deferredRender === true || animatePage === true; return; }
 if (tab !== 'settings' && storageUsageTimer) { clearInterval(storageUsageTimer); storageUsageTimer = null; }
 const main = $('#main');
-const makeHtml = () => tab === 'stock' ? (isWideDesktop() ? desktopStockDashboardView() : stockView()) : tab === 'dashboard' ? dashboardView() : tab === 'log' ? logView() : tab === 'users' ? usersView() : tab === 'settings' ? settingsView() : '';
+const makeHtml = () => tab === 'stock' ? stockView() : tab === 'dashboard' ? dashboardView() : tab === 'log' ? logView() : tab === 'users' ? usersView() : tab === 'settings' ? settingsView() : '';
 let preHtml = null;
 const scrollEls = [document.scrollingElement, document.documentElement, document.body, document.querySelector('#app'), main];
 const keepPos = keepScroll ? scrollEls.map(el => (el ? el.scrollTop : 0)) : [];
@@ -3096,8 +3203,8 @@ if (keepScroll) {
   preHtml = makeHtml();
   if (renderCache.tab === tab && renderCache.wide === isWideDesktop() && renderCache.html === preHtml && main.childElementCount) { syncNav(); if (tab === 'users') refreshPresence(); return; }
 }
-const desktopPanelScroll = isWideDesktop() && tab === 'stock' ? main.querySelector('.desktop-dashboard-panel')?.scrollTop ?? null : null;
-const desktopHistoryScroll = isWideDesktop() && tab === 'stock' ? main.querySelector('.desktop-history-panel>.history-list')?.scrollTop ?? null : null;
+const desktopPanelScroll = null;
+const desktopHistoryScroll = null;
 if (pageAnimation) { pageAnimation.cancel(); pageAnimation = null; main.style.willChange = ''; }
 if (textScaleObserver) textScaleObserver.disconnect();
 syncNav();
@@ -3174,28 +3281,82 @@ category: byCategory, 'category-desc': (a, b) => byCategory(b, a),
 };
 return list.sort(sorters[F.sort] || sorters.name);
 }
-function stockView() {
+
+let stockMode = 'pos', posQuery = '', posCategory = '';
+const posCart = new Map();
+let posSaleBusy = false;
+const POS_MONEY = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', maximumFractionDigits: 2 });
+const posMoney = value => POS_MONEY.format(Number(value) || 0);
+function posCartRows() {
+  return [...posCart.entries()].map(([id, qty]) => {
+    const product = P.find(item => String(item.id) === String(id));
+    return product ? { product, qty: Math.min(Number(qty) || 0, Math.max(0, Number(product.qty) || 0)), price: Number(product.salePrice) || 0 } : null;
+  }).filter(row => row && row.qty > 0);
+}
+function posCartTotal() { return posCartRows().reduce((sum, row) => sum + row.qty * row.price, 0); }
+function posBillSummary() {
+  const start = new Date(); start.setHours(0, 0, 0, 0);
+  const bills = new Map();
+  L.filter(row => row.type === 'sale' && Number(row.ts) >= start.getTime()).forEach(row => {
+    const key = row.saleId || ('legacy-' + row.ts + '-' + row.pid);
+    if (!bills.has(key)) bills.set(key, { total: Number(row.saleTotal) || 0, ts: Number(row.ts) || 0, payment: row.paymentMethod || '' });
+  });
+  const rows = [...bills.values()];
+  return { count: rows.length, total: rows.reduce((sum, bill) => sum + bill.total, 0) };
+}
+function posView() {
+  const summary = posBillSummary(), low = P.filter(product => status(product) === 'low').length;
+  const q = posQuery.trim().toLocaleLowerCase();
+  const products = P.filter(product => (!q || [product.name, product.id, product.cat].some(value => String(value || '').toLocaleLowerCase().includes(q))) && (!posCategory || product.cat === posCategory));
+  const cartRows = posCartRows(), total = posCartTotal();
+  const categoryButtons = ['ทั้งหมด', ...CATS].map(category => '<button type="button" class="pos-cat' + ((category === 'ทั้งหมด' ? !posCategory : posCategory === category) ? ' active' : '') + '" data-pos-category="' + esc(category === 'ทั้งหมด' ? '' : category) + '">' + esc(category) + '</button>').join('');
+  const productCards = products.length ? products.map(product => {
+    const price = Number(product.salePrice) || 0, qty = Number(product.qty) || 0, inCart = Number(posCart.get(String(product.id))) || 0;
+    const ready = price > 0 && qty > inCart && can.edit();
+    return '<article class="pos-product ' + (qty <= 0 ? 'is-out' : '') + '" data-pos-product="' + esc(product.id) + '">' +
+      '<div class="pos-product-top"><span class="pos-product-cat">' + esc(product.cat || 'ไม่ระบุหมวด') + '</span><span class="pos-stock ' + (qty <= 0 ? 'out' : qty <= Number(product.min || 0) ? 'low' : '') + '">' + (qty <= 0 ? 'หมด' : 'เหลือ ' + num(qty) + ' ' + esc(product.unit || 'ชิ้น')) + '</span></div>' +
+      '<b class="pos-product-name">' + esc(product.name) + '</b><div class="pos-product-bottom"><strong>' + (price > 0 ? posMoney(price) : '<span class="pos-no-price">ยังไม่ตั้งราคา</span>') + '</strong>' +
+      (price > 0 ? '<button type="button" class="pos-add" data-pos-add="' + esc(product.id) + '" ' + (ready ? '' : 'disabled') + '>' + (inCart ? 'เพิ่มอีก · ' + inCart : '+ เพิ่ม') + '</button>' : (can.edit() ? '<button type="button" class="pos-set-price" data-pos-price="' + esc(product.id) + '">ตั้งราคา</button>' : '')) + '</div></article>';
+  }).join('') : (P.length ? '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาหรือเลือกหมวดหมู่อื่น</div>' : '<div class="pos-empty"><b>ยังไม่มีสินค้าในสต๊อก</b><p>เพิ่มสินค้าและตั้งราคาขายก่อนเริ่มขาย</p><button type="button" id="posAddFirstProduct">ไปเพิ่มสินค้า</button></div>');
+  const cartHtml = cartRows.length ? cartRows.map(({ product, qty, price }) =>
+    '<div class="pos-cart-row"><div class="pos-cart-info"><b>' + esc(product.name) + '</b><small>' + posMoney(price) + ' × ' + num(qty) + ' ' + esc(product.unit || 'ชิ้น') + '</small></div>' +
+    '<div class="pos-cart-controls"><button type="button" data-pos-qty="-1" data-pos-id="' + esc(product.id) + '" aria-label="ลดจำนวน">−</button><b>' + num(qty) + '</b><button type="button" data-pos-qty="1" data-pos-id="' + esc(product.id) + '" aria-label="เพิ่มจำนวน" ' + (qty >= Number(product.qty) ? 'disabled' : '') + '>+</button></div><strong class="pos-line-total">' + posMoney(qty * price) + '</strong></div>'
+  ).join('') : '<div class="pos-cart-empty">แตะสินค้าด้านบนเพื่อเพิ่มลงรายการขาย</div>';
+  const itemCount = cartRows.reduce((sum, row) => sum + row.qty, 0);
+  return '<section class="pos-page">' +
+    '<div class="pos-heading"><div><span class="pos-kicker">KING STOCK · SALES</span><h2>ขายสินค้า</h2><p>แตะสินค้าเพื่อเพิ่มลงรายการ แล้วชำระเงินได้ทันที</p></div><button type="button" class="pos-inventory-link" id="openInventoryManagement">จัดการสต๊อก</button></div>' +
+    '<div class="pos-stats"><div><small>ยอดขายวันนี้</small><b>' + posMoney(summary.total) + '</b></div><div><small>จำนวนบิลวันนี้</small><b>' + num(summary.count) + '</b></div><div><small>สินค้าใกล้หมด</small><b>' + num(low) + ' รายการ</b></div></div>' +
+    '<div class="pos-search-wrap"><span aria-hidden="true">⌕</span><input id="posSearch" type="search" autocomplete="off" placeholder="ค้นหาชื่อสินค้า หรือรหัสสินค้า..." value="' + esc(posQuery) + '"></div>' +
+    '<div class="pos-categories" id="posCategoryBar">' + categoryButtons + '</div>' +
+    '<div class="pos-layout"><section class="pos-catalog"><div class="pos-section-title"><b>เลือกสินค้า</b><small>' + num(products.length) + ' รายการ</small></div><div class="pos-product-grid" id="posProducts">' + productCards + '</div></section>' +
+    '<aside class="pos-cart-panel"><div class="pos-cart-heading"><div><b>รายการขาย</b><small>' + num(itemCount) + ' ชิ้น</small></div><button type="button" id="posClearCart" ' + (cartRows.length ? '' : 'disabled') + '>ล้างรายการ</button></div>' +
+    '<div class="pos-cart-list" id="posCartList">' + cartHtml + '</div><div class="pos-cart-total"><span>ยอดสุทธิ</span><strong>' + posMoney(total) + '</strong></div><button type="button" class="pos-checkout" id="posOpenCheckout" ' + (cartRows.length && !posSaleBusy ? '' : 'disabled') + '>ชำระเงิน · ' + posMoney(total) + '</button></aside></div>' +
+    '<div class="pos-mobile-dock"><div><small>' + num(itemCount) + ' ชิ้นในรายการ</small><b>' + posMoney(total) + '</b></div><button type="button" id="posOpenCheckoutMobile" ' + (cartRows.length && !posSaleBusy ? '' : 'disabled') + '>ชำระเงิน</button></div></section>';
+}
+function stockView() { return stockMode === 'inventory' ? inventoryView() : posView(); }
+
+function inventoryView() {
 const inStock = P.filter(p => p.qty > 0).length;
 const low = P.filter(p => status(p) === 'low').length;
 const out = P.filter(p => status(p) === 'out').length;
-return `<div class="stats">
-   <div class="st" data-stock-filter="all" role="button" tabindex="0" aria-label="แสดงวัตถุดิบทั้งหมด"><small>วัตถุดิบทั้งหมด</small><b>${P.length}</b><small>รายการวัตถุดิบ</small></div>
-   <div class="st" data-stock-filter="stock-in" role="button" tabindex="0" aria-label="แสดงวัตถุดิบที่มีในคลัง"><small>มีวัตถุดิบในคลัง</small><b>${inStock}</b><small>รายการพร้อมใช้</small></div>
-   <div class="st alert" data-stock-filter="status-low" role="button" tabindex="0" aria-label="แสดงวัตถุดิบใกล้หมด"><small>ใกล้หมด</small><b>${low}</b><small>รายการ</small></div>
-   <div class="st bad" data-stock-filter="status-out" role="button" tabindex="0" aria-label="แสดงวัตถุดิบหมดสต็อก"><small>หมดสต็อก</small><b>${out}</b><small>รายการ</small></div>
+return `<div class="inventory-mode-head"><div><b>จัดการสต๊อกสินค้า</b><small>เพิ่มสินค้า ปรับจำนวน และตรวจสอบยอดคงเหลือ</small></div><button type="button" class="pos-inventory-link" id="backToSales">กลับหน้าขาย</button></div><div class="stats">
+   <div class="st" data-stock-filter="all" role="button" tabindex="0" aria-label="แสดงสินค้าทั้งหมด"><small>สินค้าทั้งหมด</small><b>${P.length}</b><small>รายการสินค้า</small></div>
+   <div class="st" data-stock-filter="stock-in" role="button" tabindex="0" aria-label="แสดงสินค้าที่มีในสต๊อก"><small>มีสินค้าในสต๊อก</small><b>${inStock}</b><small>รายการพร้อมใช้</small></div>
+   <div class="st alert" data-stock-filter="status-low" role="button" tabindex="0" aria-label="แสดงสินค้าใกล้หมด"><small>สินค้าใกล้หมด</small><b>${low}</b><small>รายการ</small></div>
+   <div class="st bad" data-stock-filter="status-out" role="button" tabindex="0" aria-label="แสดงสินค้าหมดสต๊อก"><small>สินค้าหมดสต๊อก</small><b>${out}</b><small>รายการ</small></div>
   </div>
   <div class="tools">
-   <div class="srch">${ic('search')}<input class="in" id="q" placeholder="ค้นหาชื่อหรือหมวดหมู่..." value="${esc(F.q)}"></div>
+   <div class="srch">${ic('search')}<input class="in" id="q" placeholder="ค้นหาชื่อสินค้าหรือหมวดหมู่..." value="${esc(F.q)}"></div>
    <div class="flt">
     <select id="fc" aria-label="หมวดหมู่"><option value="">ทุกหมวดหมู่</option>${CATS.map(c => `<option ${F.cat === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
-    <select id="fo" aria-label="เรียงลำดับและกรองสถานะ">${[['name', 'ชื่อวัตถุดิบ ก–ฮ'], ['name-desc', 'ชื่อวัตถุดิบ ฮ–ก'], ['category', 'หมวดหมู่ ก–ฮ'], ['category-desc', 'หมวดหมู่ ฮ–ก'], ['qty-asc', 'คงเหลือ น้อยไปมาก'], ['qty-desc', 'คงเหลือ มากไปน้อย'], ['stock-in', 'มีวัตถุดิบในคลัง'], ['status-ok', 'สถานะ: ปกติ'], ['status-low', 'สถานะ: ใกล้หมด'], ['status-out', 'สถานะ: หมดสต็อก']].map(o => `<option value="${o[0]}" ${F.sort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
+    <select id="fo" aria-label="เรียงลำดับและกรองสถานะ">${[['name', 'ชื่อสินค้า ก–ฮ'], ['name-desc', 'ชื่อสินค้า ฮ–ก'], ['category', 'หมวดหมู่ ก–ฮ'], ['category-desc', 'หมวดหมู่ ฮ–ก'], ['qty-asc', 'คงเหลือ น้อยไปมาก'], ['qty-desc', 'คงเหลือ มากไปน้อย'], ['stock-in', 'มีวัตถุดิบในคลัง'], ['status-ok', 'สถานะ: ปกติ'], ['status-low', 'สถานะ: ใกล้หมด'], ['status-out', 'สถานะ: หมดสต็อก']].map(o => `<option value="${o[0]}" ${F.sort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
    </div>
    <div class="stock-actions" style="display:flex;gap:8px">
-    ${can.edit() ? `<button class="btn fab" id="add" aria-label="เพิ่มวัตถุดิบ" title="เพิ่มวัตถุดิบ">${ic('plus')}<span class="fab-label"> เพิ่มวัตถุดิบ</span></button>` : ''}
+    ${can.edit() ? `<button class="btn fab" id="add" aria-label="เพิ่มวัตถุดิบ" title="เพิ่มวัตถุดิบ">${ic('plus')}<span class="fab-label"> เพิ่มสินค้า</span></button>` : ''}
    </div>
   </div>
   ${quickBar()}
-  <div class="head"><span>วัตถุดิบ</span><span>คงเหลือ</span><span>ซัพพลายเออร์</span></div>
+  <div class="head"><span>สินค้า</span><span>คงเหลือ</span><span>ซัพพลายเออร์</span></div>
   <div class="list" id="list">${rows()}</div>`;
 }
 // Quick-withdraw bar: top 6 most-withdrawn items (count of withdrawals), blending last month -> this month by day of month
@@ -3203,7 +3364,7 @@ function quickBar() {
   const now = new Date(), w = now.getDate() / new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   const cur = now.getFullYear() * 12 + now.getMonth(), score = {};
   L.forEach(x => {
-    if (x.type !== 'out' || !x.pid) return;
+    if (!['out', 'sale'].includes(x.type) || !x.pid) return;
     const d = new Date(Number(x.ts)), m = d.getFullYear() * 12 + d.getMonth();
     if (m === cur) score[x.pid] = (score[x.pid] || 0) + w;
     else if (m === cur - 1) score[x.pid] = (score[x.pid] || 0) + (1 - w);
@@ -3273,7 +3434,133 @@ function setupStockMore() {
   stockObs.observe(more);
 }
 
+
+function bindPos() {
+  const search = $('#posSearch');
+  if (search) search.oninput = event => {
+    posQuery = event.target.value;
+    const products = $('#posProducts'); if (products) products.innerHTML = posProductCardsHtml();
+    const count = $('.pos-section-title small'); if (count) count.textContent = num(posFilteredProducts().length) + ' รายการ';
+  };
+  const categories = $('#posCategoryBar');
+  if (categories) categories.onclick = event => { const button = event.target.closest('[data-pos-category]'); if (!button) return; posCategory = button.dataset.posCategory || ''; render(); };
+  const products = $('#posProducts');
+  if (products) products.onclick = event => {
+    const priceButton = event.target.closest('[data-pos-price]');
+    if (priceButton) return prodModal(priceButton.dataset.posPrice);
+    const button = event.target.closest('[data-pos-add]'); if (!button) return;
+    const product = P.find(item => String(item.id) === String(button.dataset.posAdd)); if (!product) return;
+    const next = (Number(posCart.get(String(product.id))) || 0) + 1;
+    if (!can.edit()) return toast('บัญชีนี้ไม่มีสิทธิ์ทำรายการขาย', 1);
+    if (!(Number(product.salePrice) > 0)) return toast('กรุณาตั้งราคาขายสินค้านี้ก่อน', 1);
+    if (next > Number(product.qty)) return toast('สินค้าในสต๊อกไม่เพียงพอ', 1);
+    posCart.set(String(product.id), next); render();
+  };
+  const cart = $('#posCartList');
+  if (cart) cart.onclick = event => {
+    const button = event.target.closest('[data-pos-qty]'); if (!button) return;
+    const id = String(button.dataset.posId), product = P.find(item => String(item.id) === id);
+    const next = (Number(posCart.get(id)) || 0) + Number(button.dataset.posQty);
+    if (next <= 0) posCart.delete(id);
+    else if (product && next <= Number(product.qty)) posCart.set(id, next);
+    else return toast('สินค้าในสต๊อกไม่เพียงพอ', 1);
+    render();
+  };
+  const clear = $('#posClearCart'); if (clear) clear.onclick = () => { posCart.clear(); render(); };
+  const openCheckout = () => openPosCheckout();
+  $('#posOpenCheckout')?.addEventListener('click', openCheckout);
+  $('#posOpenCheckoutMobile')?.addEventListener('click', openCheckout);
+  $('#openInventoryManagement')?.addEventListener('click', () => { stockMode = 'inventory'; render(); });
+  $('#posAddFirstProduct')?.addEventListener('click', () => { stockMode = 'inventory'; render(); });
+}
+function posFilteredProducts() {
+  const q = posQuery.trim().toLocaleLowerCase();
+  return P.filter(product => (!q || [product.name, product.id, product.cat].some(value => String(value || '').toLocaleLowerCase().includes(q))) && (!posCategory || product.cat === posCategory));
+}
+function posProductCardsHtml() {
+  return posFilteredProducts().map(product => {
+    const price = Number(product.salePrice) || 0, qty = Number(product.qty) || 0, inCart = Number(posCart.get(String(product.id))) || 0;
+    const ready = price > 0 && qty > inCart && can.edit();
+    return '<article class="pos-product ' + (qty <= 0 ? 'is-out' : '') + '" data-pos-product="' + esc(product.id) + '">' +
+      '<div class="pos-product-top"><span class="pos-product-cat">' + esc(product.cat || 'ไม่ระบุหมวด') + '</span><span class="pos-stock ' + (qty <= 0 ? 'out' : qty <= Number(product.min || 0) ? 'low' : '') + '">' + (qty <= 0 ? 'หมด' : 'เหลือ ' + num(qty) + ' ' + esc(product.unit || 'ชิ้น')) + '</span></div>' +
+      '<b class="pos-product-name">' + esc(product.name) + '</b><div class="pos-product-bottom"><strong>' + (price > 0 ? posMoney(price) : '<span class="pos-no-price">ยังไม่ตั้งราคา</span>') + '</strong>' +
+      (price > 0 ? '<button type="button" class="pos-add" data-pos-add="' + esc(product.id) + '" ' + (ready ? '' : 'disabled') + '>' + (inCart ? 'เพิ่มอีก · ' + inCart : '+ เพิ่ม') + '</button>' : (can.edit() ? '<button type="button" class="pos-set-price" data-pos-price="' + esc(product.id) + '">ตั้งราคา</button>' : '')) + '</div></article>';
+  }).join('') || '<div class="pos-empty">ไม่พบสินค้า ลองค้นหาหรือเลือกหมวดหมู่อื่น</div>';
+}
+function openPosCheckout() {
+  const rows = posCartRows(), total = posCartTotal();
+  if (!rows.length) return toast('กรุณาเลือกสินค้าก่อนชำระเงิน', 1);
+  if (rows.some(row => !(row.price > 0))) return toast('มีสินค้าที่ยังไม่ได้ตั้งราคาขาย', 1);
+  openModal('<h3>รับชำระเงิน</h3><div class="pos-pay-total"><small>ยอดที่ต้องชำระ</small><strong>' + posMoney(total) + '</strong></div>' +
+    '<form id="posPayForm"><div class="pos-payment-options"><label><input type="radio" name="paymentMethod" value="cash" checked><span>💵 เงินสด</span></label><label><input type="radio" name="paymentMethod" value="transfer"><span>📱 โอนเงิน / QR</span></label></div>' +
+    '<label class="fld" id="posCashField"><span>รับเงินจากลูกค้า</span><input class="in" id="posCashReceived" name="cashReceived" type="number" min="' + total + '" step="0.01" inputmode="decimal" value="' + total + '" required></label>' +
+    '<div class="pos-change-row" id="posChangeRow"><span>เงินทอน</span><b id="posChangeValue">' + posMoney(0) + '</b></div><p class="pos-transfer-note" id="posTransferNote" hidden>กรุณาตรวจสอบยอดโอนจากลูกค้าก่อนกดยืนยัน ระบบจะบันทึกวิธีชำระเป็นโอนเงิน / QR</p>' +
+    '<div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button type="submit" class="btn" id="posConfirmSale">ยืนยันการขาย</button></div></form>');
+  const form = $('#posPayForm'), cashField = $('#posCashField'), changeRow = $('#posChangeRow'), transferNote = $('#posTransferNote'), cashInput = $('#posCashReceived');
+  const updatePayment = () => {
+    const method = form.elements.paymentMethod.value, isCash = method === 'cash';
+    cashField.hidden = !isCash; changeRow.hidden = !isCash; transferNote.hidden = isCash;
+    if (isCash) { const received = Number(cashInput.value) || 0; $('#posChangeValue').textContent = posMoney(Math.max(0, received - total)); }
+  };
+  form.onchange = event => { if (event.target.name === 'paymentMethod') updatePayment(); };
+  cashInput.oninput = updatePayment;
+  form.onsubmit = async event => {
+    event.preventDefault();
+    const method = form.elements.paymentMethod.value, received = method === 'cash' ? Number(cashInput.value) : total;
+    if (method === 'cash' && (!Number.isFinite(received) || received < total)) return toast('จำนวนเงินที่รับต้องไม่น้อยกว่ายอดที่ต้องชำระ', 1);
+    const button = $('#posConfirmSale'); if (button) button.disabled = true;
+    try { await commitPosSale(method, received); }
+    catch (error) { if (button?.isConnected) button.disabled = false; toast(error.message || 'บันทึกการขายไม่สำเร็จ', 1); }
+  };
+  updatePayment();
+}
+async function commitPosSale(paymentMethod, cashReceived) {
+  if (posSaleBusy) throw new Error('กำลังบันทึกการขาย กรุณารอสักครู่');
+  if (!can.edit()) throw new Error('บัญชีนี้ไม่มีสิทธิ์ทำรายการขาย');
+  const lines = posCartRows().map(row => ({ id: row.product.id, qty: row.qty, price: row.price }));
+  if (!lines.length) throw new Error('ไม่มีสินค้าในรายการขาย');
+  const total = lines.reduce((sum, line) => sum + line.qty * line.price, 0);
+  const saleId = 'S-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+  posSaleBusy = true;
+  const task = syncQueue.then(async () => {
+    if (!cloudToken || !syncSnapshot) throw new Error('เซสชันหมดอายุหรือระบบยังไม่พร้อมบันทึก กรุณาเข้าสู่ระบบใหม่');
+    const beforeProducts = cloneData(P), beforeLog = cloneData(L), base = cloneData(syncSnapshot);
+    const now = Date.now(), paymentLabel = paymentMethod === 'cash' ? 'เงินสด' : 'โอนเงิน / QR';
+    for (const line of lines) {
+      const product = P.find(item => String(item.id) === String(line.id));
+      if (!product || Number(product.qty) < line.qty) throw new Error('สินค้า ' + (product?.name || line.id) + ' คงเหลือไม่เพียงพอ กรุณาตรวจสอบรายการอีกครั้ง');
+      if (Number(product.salePrice) !== line.price || !(line.price > 0)) throw new Error('ราคาสินค้า ' + product.name + ' เปลี่ยนแปลง กรุณาตรวจสอบรายการอีกครั้ง');
+    }
+    try {
+      cloudBusy = true;
+      for (const line of lines) {
+        const product = P.find(item => String(item.id) === String(line.id));
+        const before = Number(product.qty), after = before - line.qty;
+        product.qty = after;
+        L.unshift({ ts: now, user: me.name, role: ROLE[me.role] || me.role, type: 'sale', saleId, paymentMethod, saleTotal: total, cashReceived: Number(cashReceived) || 0, change: paymentMethod === 'cash' ? Math.max(0, Number(cashReceived) - total) : 0, lineTotal: line.qty * line.price, pid: product.id, pname: product.name, unit: product.unit || '', amt: line.qty, before, after, note: 'ขายหน้าร้าน · ' + paymentLabel + ' · บิล ' + saleId });
+      }
+      L = pruneActivityLog(L);
+      const next = { users: U, products: P, log: L, roles: ROLE, categories: CATS, units: UNITS, ...(JOBS_CLOUD && J ? { jobs: J } : {}) };
+      const result = await cloudRpc('api_sync', { p_token: cloudToken, p_base: base, p_data: next });
+      if (!result?.ok) throw new Error(result?.error || 'บันทึกการขายไม่สำเร็จ');
+      P = result.state?.products || P; L = result.state?.log || L;
+      syncSnapshot = cloneData(result.state); syncVersion = result.version || syncVersion + 1; logNeedsPrune = false;
+    } catch (error) {
+      P = beforeProducts; L = beforeLog;
+      throw error;
+    } finally { cloudBusy = false; }
+  });
+  syncQueue = task.catch(() => {});
+  try {
+    await task;
+    posCart.clear(); closeModal(); stockMode = 'pos'; render();
+    toast('ขายสำเร็จ ' + posMoney(total) + ' · ตัดสต๊อกและบันทึกประวัติแล้ว');
+  } finally { posSaleBusy = false; }
+}
+
 function bindStock() {
+if (stockMode === 'pos') { bindPos(); return; }
+const backToSales = $('#backToSales'); if (backToSales) backToSales.onclick = () => { stockMode = 'pos'; render(); };
 let searchTimer = 0, lastCost = 0;
 stockAppendToken++; stockAppendBusy = false;
 setupStockMore();
@@ -3448,11 +3735,11 @@ handle.onpointercancel = finish;
 });
 }
 function exportCSV() {
-const headers = ['ชื่อวัตถุดิบ', 'หมวดหมู่', 'หน่วย', 'คงเหลือ', 'ขั้นต่ำ', 'ซัพพลายเออร์'];
-const rows = P.map(p => [p.name, p.cat, p.unit, p.qty, p.min, p.loc].map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','));
+const headers = ['ชื่อสินค้า', 'หมวดหมู่', 'หน่วย', 'ราคาขาย', 'คงเหลือ', 'ขั้นต่ำ', 'ซัพพลายเออร์'];
+const rows = P.map(p => [p.name, p.cat, p.unit, p.salePrice ?? 0, p.qty, p.min, p.loc].map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','));
 const link = document.createElement('a');
 link.href = URL.createObjectURL(new Blob(['\ufeff' + [headers.join(','), ...rows].join('\n')], { type: 'text/csv' }));
-link.download = `รายการวัตถุดิบ-${safeBranchFileName()}-${new Date().toISOString().slice(0, 10)}.csv`;
+link.download = `รายการสินค้า-${safeBranchFileName()}-${new Date().toISOString().slice(0, 10)}.csv`;
 link.click();
 setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 toast('ส่งออก CSV สำหรับแก้ไขและนำเข้าได้แล้ว');
@@ -3522,6 +3809,7 @@ unit: ['หน่วย', 'unit'],
 qty: ['คงเหลือ', 'จำนวนคงเหลือ', 'จำนวน', 'ยอดคงเหลือ', 'qty', 'quantity', 'stock'],
 min: ['ขั้นต่ำ', 'จำนวนขั้นต่ำ', 'จุดสั่งซื้อ', 'min', 'minimum', 'reorderlevel'],
 loc: ['ซัพพลายเออร์', 'แหล่งจัดซื้อ', 'ผู้จำหน่าย', 'supplier', 'loc', 'location'],
+salePrice: ['ราคาขาย', 'ราคา', 'saleprice', 'sellingprice', 'unitprice'],
 id: ['รหัสอ้างอิง', 'รหัสสินค้า', 'id', 'productid']
 };
 const get = (row, key) => {
@@ -3542,12 +3830,15 @@ const canonical = value => String(value ?? '').normalize('NFKC').trim().toLocale
 const identityKey = [name, cat, unit, loc].map(canonical).join('\u0000');
 if (seenNames.has(identityKey)) throw new Error(`รายการ "${name}" หมวด "${cat || 'ไม่ระบุ'}" หน่วย "${unit || 'ไม่ระบุ'}" ซ้ำระหว่างแถว ${seenNames.get(identityKey)} และ ${index + 2}`);
 seenNames.set(identityKey, index + 2);
+const salePriceRaw = String(get(row, 'salePrice') ?? '').trim().replace(/,/g, '');
+const salePrice = salePriceRaw === '' ? undefined : Number(salePriceRaw);
+if (salePrice !== undefined && (!Number.isFinite(salePrice) || salePrice < 0)) throw new Error('แถวที่ ' + (index + 2) + ': ราคาขายต้องเป็นตัวเลขตั้งแต่ 0 ขึ้นไป');
 const qtyRaw = String(get(row, 'qty') ?? '').trim().replace(/,/g, '');
 const minRaw = String(get(row, 'min') ?? '').trim().replace(/,/g, '');
 const qty = Number(qtyRaw), min = minRaw === '' ? 0 : Number(minRaw);
 if (qtyRaw === '' || !Number.isFinite(qty) || qty < 0) throw new Error(`แถวที่ ${index + 2}: จำนวนคงเหลือต้องเป็นตัวเลขตั้งแต่ 0 ขึ้นไป`);
 if (!Number.isFinite(min) || min < 0) throw new Error(`แถวที่ ${index + 2}: จำนวนขั้นต่ำต้องเป็นตัวเลขตั้งแต่ 0 ขึ้นไป`);
-parsed.push({ id: String(get(row, 'id') ?? '').trim(), name, cat, unit, qty, min, loc });
+parsed.push({ id: String(get(row, 'id') ?? '').trim(), name, cat, unit, qty, min, loc, ...(salePrice !== undefined ? { salePrice } : {}) });
 });
 if (!parsed.length) throw new Error('ไม่พบรายการวัตถุดิบที่นำเข้าได้');
 return parsed;
@@ -3570,12 +3861,12 @@ if (candidates.length > 1) throw new Error(`พบชื่อ "${item.name}" �
 target = candidates[0];
 }
 if (target) {
-Object.assign(target, { name: item.name, cat: item.cat || target.cat || 'อื่นๆ', unit: item.unit || target.unit || 'ชิ้น', qty: item.qty, min: item.min, loc: item.loc });
+Object.assign(target, { name: item.name, cat: item.cat || target.cat || 'อื่นๆ', unit: item.unit || target.unit || 'ชิ้น', qty: item.qty, min: item.min, loc: item.loc, salePrice: item.salePrice ?? target.salePrice ?? 0 });
 delete target.cost; delete target.price; updated++;
 } else {
 let id;
 do { id = 'P-' + (1000 + Math.floor(Math.random() * 9000)); } while (next.some(product => product.id === id));
-next.unshift({ id, name: item.name, cat: item.cat || 'อื่นๆ', unit: item.unit || 'ชิ้น', qty: item.qty, min: item.min, loc: item.loc });
+next.unshift({ id, name: item.name, cat: item.cat || 'อื่นๆ', unit: item.unit || 'ชิ้น', qty: item.qty, min: item.min, loc: item.loc, salePrice: item.salePrice ?? 0 });
 added++;
 }
 if (item.cat && !CATS.includes(item.cat)) CATS.push(item.cat);
@@ -3609,14 +3900,14 @@ return (!start || time >= start) && (!end || time < end);
 return { from, to, logs, key };
 };
 const outRankRange = getRankRange('out'), inRankRange = getRankRange('in');
-const inLogs = inRange.filter(x => x.type === 'in'), outLogs = inRange.filter(x => x.type === 'out'), adjustLogs = inRange.filter(x => x.type === 'adjust');
+const inLogs = inRange.filter(x => x.type === 'in'), outLogs = inRange.filter(x => ['out', 'sale'].includes(x.type)), adjustLogs = inRange.filter(x => x.type === 'adjust');
 const activeNames = [...new Set(inRange.map(x => x.user).filter(Boolean))];
 const quantityText = rows => { const units=new Map(); rows.forEach(x=>{const unit=x.unit||'หน่วย';units.set(unit,(units.get(unit)||0)+Math.abs(Number(x.amt)||0));}); return [...units].map(([unit,qty])=>`${num(qty)} ${esc(unit)}`).join(' · ')||'0'; };
 const activityDays = new Set(inRange.map(x => dayKey(new Date(x.ts)))).size;
 const categoryRows = [...new Set(P.map(p => p.cat || 'ไม่ระบุหมวดหมู่'))].map(name => ({name,count:P.filter(p => (p.cat || 'ไม่ระบุหมวดหมู่') === name).length})).sort((a,b)=>b.count-a.count).slice(0,5);
 const rankItems = (type, source = inRange) => {
 const grouped = new Map();
-for (const x of source.filter(row => row.type === type)) {
+for (const x of source.filter(row => type === 'out' ? ['out', 'sale'].includes(row.type) : row.type === type)) {
 const key = `${x.pid || x.pname}|${x.unit || ''}`, current = grouped.get(key) || {name:x.pname || 'วัตถุดิบ',unit:x.unit || '',qty:0,count:0};
 current.qty += Math.abs(Number(x.amt)||0); current.count++; grouped.set(key,current);
 }
@@ -3640,7 +3931,7 @@ const start = new Date(Math.max(d.getTime(),fromDate.getTime())), end = new Date
 buckets.push({start,end,label:start.toLocaleDateString('th-TH',{month:'short',year:'2-digit'})});
 }
 }
-buckets.forEach(bucket => { const rows=inRange.filter(x=>{const ts=new Date(x.ts);return ts>=bucket.start&&ts<bucket.end;});bucket.in=rows.filter(x=>x.type==='in').length;bucket.out=rows.filter(x=>x.type==='out').length; });
+buckets.forEach(bucket => { const rows=inRange.filter(x=>{const ts=new Date(x.ts);return ts>=bucket.start&&ts<bucket.end;});bucket.in=rows.filter(x=>x.type==='in').length;bucket.out=rows.filter(x=>['out','sale'].includes(x.type)).length; });
 const chartDays = buckets.slice(-12), maxMoves = Math.max(1, ...chartDays.flatMap(d => [d.in,d.out]));
 const pieTotal = Math.max(1, totalItems);
 const inPct = readyCount / pieTotal * 100, lowPct = lowCount / pieTotal * 100;
@@ -3682,10 +3973,10 @@ const modeText = bucketMode==='day'?'รายวัน':bucketMode==='week'?'�
 const peakPeriodLabel = peak ? `${bucketMode==='month'?'เดือน':'วันที่'} ${peak.label}` : '–';
 const netMove = totalIn-totalOut;
 const movementChartCard = `<section class="dash-chart dc-card">
-    <div class="dc-head"><h3>📊 รับเข้า · เบิกจ่าย</h3><small>${modeText} · จำนวนครั้ง</small></div>
+    <div class="dc-head"><h3>📊 รับเข้า · ขาย / เบิกจ่าย</h3><small>${modeText} · จำนวนครั้ง</small></div>
     <div class="dc-kpis">
       <div class="dc-k-in"><small>รับเข้า</small><b>${totalIn}</b></div>
-      <div class="dc-k-out"><small>เบิกจ่าย</small><b>${totalOut}</b></div>
+      <div class="dc-k-out"><small>ขาย / เบิกจ่าย</small><b>${totalOut}</b></div>
       <div class="net"><small>ผลต่าง</small><b>${netMove>0?'+':''}${netMove}</b></div>
       <div class="dc-k-peak"><small>ค่าสูงสุด</small><b>${peak && (peak.in+peak.out)>0 ? esc(peakPeriodLabel) : '–'}</b></div>
     </div>
@@ -3708,17 +3999,17 @@ const rankRowHtml = (row,i)=>`<div class="dash-rank-row${i>=4?' rank-extra':''}"
 window.__rankRow = rankRowHtml;
 const movementRows = (rows,empty,key) => { if (key) (window.__rankData ||= {})[key] = rows; return rows.length ? rows.slice(0,30).map(rankRowHtml).join('') : `<small class="dash-empty-note">${empty}</small>`; };
 const inlineHistoryType = isWideDesktop() ? new URLSearchParams(location.search).get('inlineHistoryType') || '' : '';
-const inlineHistoryLabels = { in:'รับเข้า', out:'เบิกจ่าย', adjust:'ปรับยอด' };
-const inlineHistorySource = inlineHistoryType ? L.filter(row => row.type === inlineHistoryType) : L;
+const inlineHistoryLabels = { in:'รับเข้า', out:'เบิกจ่าย', sale:'ขายสินค้า', adjust:'ปรับยอด' };
+const inlineHistorySource = inlineHistoryType ? L.filter(row => inlineHistoryType === 'out' ? ['out','sale'].includes(row.type) : row.type === inlineHistoryType) : L;
 const latestHistoryRows = isWideDesktop()
 ? [...inlineHistorySource].sort((a,b) => Number(b.ts || 0) - Number(a.ts || 0)).slice(0,10).map(x => {
-const labels = { in:'รับเข้า', out:'เบิกจ่าย', adjust:'ปรับยอด', create:'เพิ่มวัตถุดิบ', edit:'แก้ไขข้อมูล', delete:'ลบวัตถุดิบ', import:'นำเข้าวัตถุดิบ', note:'เพิ่มหมายเหตุ' };
-const amount = Number(x.amt || 0), sign = x.type === 'in' || (x.type !== 'out' && x.type !== 'delete' && amount > 0) ? '+' : x.type === 'out' || x.type === 'delete' || amount < 0 ? '−' : '';
+const labels = { in:'รับเข้า', out:'เบิกจ่าย', sale:'ขายสินค้า', adjust:'ปรับยอด', create:'เพิ่มสินค้า', edit:'แก้ไขข้อมูล', delete:'ลบสินค้า', import:'นำเข้าสินค้า', note:'เพิ่มหมายเหตุ' };
+const amount = Number(x.amt || 0), sign = x.type === 'in' || (x.type !== 'out' && x.type !== 'sale' && x.type !== 'delete' && amount > 0) ? '+' : ['out','sale','delete'].includes(x.type) || amount < 0 ? '−' : '';
 return `<div class="recent-movement desktop-history-row"><div class="recent-movement-name"><b>${esc(x.pname || 'วัตถุดิบ')}</b><div class="desktop-history-meta"><span class="desktop-history-type">${labels[x.type] || 'ทำรายการ'}</span><span>โดย ${esc(x.user || 'ไม่ทราบ')}</span>${x.note ? `<span class="desktop-history-note">${esc(x.note)}</span>` : ''}</div></div><time class="desktop-history-time">${new Date(x.ts).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}</time><div class="amt ${x.type==='in'?'in':x.type==='out'?'out':''}">${amount ? `${sign}${num(Math.abs(amount))} <small>${esc(x.unit || '')}</small>` : '—'}</div></div>`;
 }).join('')
-: inRange.slice(0,6).map(x=>`<div class="recent-movement"><div class="recent-movement-name"><b>${esc(x.pname||'วัตถุดิบ')}</b> <small>(${x.type==='in'?'รับเข้า':x.type==='out'?'เบิกจ่าย':x.type==='adjust'?'ปรับยอด':x.type==='delete'?'ลบรายการ':x.type==='create'?'เพิ่มวัตถุดิบ':'แก้ไขข้อมูล'}) · ${new Date(x.ts).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</small></div><div class="amt ${x.type==='in'?'in':'out'}">${x.type==='in'?'+':x.type==='out'?'−':''}${num(Math.abs(x.amt||0))}</div></div>`).join('');
+: inRange.slice(0,6).map(x=>`<div class="recent-movement"><div class="recent-movement-name"><b>${esc(x.pname||'วัตถุดิบ')}</b> <small>(${x.type==='in'?'รับเข้า':x.type==='sale'?'ขายสินค้า':x.type==='out'?'เบิกจ่าย':x.type==='adjust'?'ปรับยอด':x.type==='delete'?'ลบสินค้า':x.type==='create'?'เพิ่มสินค้า':'แก้ไขข้อมูล'}) · ${new Date(x.ts).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}</small></div><div class="amt ${x.type==='in'?'in':'out'}">${x.type==='in'?'+':(['out','sale'].includes(x.type))?'−':''}${num(Math.abs(x.amt||0))}</div></div>`).join('');
 const rankFilter = (type, range) => {
-const title = type === 'out' ? 'เบิกจ่าย' : 'รับเข้า', prefix = type === 'out' ? 'Out' : 'In';
+const title = type === 'out' ? 'ขาย / เบิกจ่าย' : 'รับเข้า', prefix = type === 'out' ? 'Out' : 'In';
 return `<div class="dash-rank-filter" aria-label="กรองรายการ${title}ตามช่วงวันที่"><label class="dash-rank-date"><span>ตั้งแต่</span><input id="dashboard${prefix}From" type="date" value="${range.from || ''}" aria-label="วันที่เริ่มต้นรายการ${title}"></label><label class="dash-rank-date"><span>ถึง</span><input id="dashboard${prefix}To" type="date" value="${range.to || ''}" aria-label="วันที่สิ้นสุดรายการ${title}"></label><button type="button" data-clear-dashboard-rank="${type}">ล้างตัวกรอง</button></div>`;
 };
 return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา':'แดชบอร์ดสรุปภาพรวม'}</h2><small>สถานะคลังปัจจุบันและการเคลื่อนไหวในช่วงวันที่เลือก</small></div>
@@ -3731,7 +4022,7 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
   </div>
   <div class="dash-activity-stats">
     <button type="button" class="dash-action-card" data-dashboard-movement-filter="in" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการรับเข้าในช่วงวันที่เลือก"><small>รับเข้า</small><b>${inLogs.length}</b><span>ครั้ง · ${quantityText(inLogs)}</span></button>
-    <button type="button" class="dash-action-card" data-dashboard-movement-filter="out" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการเบิกจ่ายในช่วงวันที่เลือก"><small>เบิกจ่าย</small><b>${outLogs.length}</b><span>ครั้ง · ${quantityText(outLogs)}</span></button>
+    <button type="button" class="dash-action-card" data-dashboard-movement-filter="out" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการเบิกจ่ายในช่วงวันที่เลือก"><small>ขาย / เบิกจ่าย</small><b>${outLogs.length}</b><span>ครั้ง · ${quantityText(outLogs)}</span></button>
     <button type="button" class="dash-action-card" data-dashboard-movement-filter="adjust" onclick="openDashboardMovement(this)" aria-label="ดูประวัติการปรับยอดในช่วงวันที่เลือก"><small>ปรับยอด</small><b>${adjustLogs.length}</b><span>ครั้งในช่วงนี้</span></button>
     <div><small>พนักงานที่ทำรายการ</small><b>${activeNames.length}</b><span>${activeNames.length ? activeNames.map(esc).join(', ') : 'ยังไม่มีรายการ'}</span></div>
   </div>
@@ -3741,7 +4032,7 @@ return `<div class="sect"><h2>${isWideDesktop()?'ภาพรวมสาขา'
   </div>
   <div class="dash-grid">
     <div class="dash-card"><h3>⚠️ วัตถุดิบที่ควรจัดการ</h3><div class="dash-rank-list">${needsAttention.map(p=>`<div class="dash-rank-row"><b>${esc(p.name)}</b><span class="dash-status ${status(p)}">${num(p.qty)} ${esc(p.unit)} · ${STX[status(p)]}</span></div>`).join('')||'<small class="dash-empty-note">วัตถุดิบทุกชนิดอยู่ในระดับปกติ</small>'}</div></div>
-    <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>📦 รายการที่เบิกจ่ายมาก</h3><small>${outRankRange.logs.filter(x=>x.type==='out').length} รายการ</small></div>${rankFilter('out',outRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topOut,'ไม่มีรายการเบิกจ่ายในช่วงนี้','out')}</div></div>
+    <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>📦 รายการที่เบิกจ่ายมาก</h3><small>${outRankRange.logs.filter(x=>['out','sale'].includes(x.type)).length} รายการ</small></div>${rankFilter('out',outRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topOut,'ไม่มีรายการเบิกจ่ายในช่วงนี้','out')}</div></div>
     <div class="dash-card dash-rank-card"><div class="dash-rank-heading"><h3>🚚 รายการรับเข้ามาก</h3><small>${inRankRange.logs.filter(x=>x.type==='in').length} รายการ</small></div>${rankFilter('in',inRankRange)}<div class="dash-rank-list dash-rank-scroll">${movementRows(topIn,'ไม่มีรายการรับเข้าในช่วงนี้','in')}</div></div>
     <div class="dash-card"><h3>📦 ภาพรวมหมวดหมู่</h3><div class="dash-rank-list">${categoryRows.map(row=>`<div class="dash-rank-row"><b>${esc(row.name)}</b><span>${row.count} รายการ</span></div>`).join('')||'<small class="dash-empty-note">ยังไม่มีหมวดหมู่</small>'}</div></div>
     <div class="dash-card desktop-recent-history">${isWideDesktop()?`<div class="desktop-history-heading"><h3>🕘 ประวัติล่าสุด${inlineHistoryType && inlineHistoryLabels[inlineHistoryType] ? ` · ${inlineHistoryLabels[inlineHistoryType]}` : ''}</h3>${inlineHistoryType ? '<button type="button" class="desktop-history-clear" data-clear-inline-history>ล้าง</button>' : ''}</div>`:'<h3>📦 รายการเคลื่อนไหวล่าสุดในช่วงนี้</h3>'}<div class="recent-movements">${latestHistoryRows || (isWideDesktop() ? '<small class="dash-empty-note">ยังไม่มีประวัติการทำรายการ</small>' : '<small class="dash-empty-note">ไม่มีรายการในช่วงวันที่เลือก</small>')}</div></div>
@@ -4618,7 +4909,7 @@ L = pruneActivityLog(L);
 }
 const IH_DATE = new Intl.DateTimeFormat('th-TH', { day: 'numeric', month: 'short' });
 const IH_TIME = new Intl.DateTimeFormat('th-TH', { hour: '2-digit', minute: '2-digit' });
-const IH_KINDS = { in: ['↓', 'รับเข้า', 'in'], out: ['↑', 'เบิกจ่าย', 'out'], adjust: ['⇄', 'ปรับยอด', 'adj'] };
+const IH_KINDS = { in: ['↓', 'รับเข้า', 'in'], out: ['↑', 'เบิกจ่าย', 'out'], sale: ['🛒', 'ขายสินค้า', 'sale'], adjust: ['⇄', 'ปรับยอด', 'adj'] };
 function itemHistoryBase(p) { return L.filter(x => x.pid === p.id && IH_KINDS[x.type]); }
 function itemHistorySection(p, wide = false) {
 const users = [...new Set(itemHistoryBase(p).map(x => x.user).filter(Boolean))];
@@ -4759,14 +5050,14 @@ const draw = () => {
 const from = st.from ? new Date(`${st.from}T00:00:00`).getTime() : 0;
 const to = st.to ? new Date(`${st.to}T00:00:00`).getTime() + 86400000 : Infinity;
 const rows = base.filter(x => { const t = Number(x.ts) || 0; return (!st.user || x.user === st.user) && t >= from && t < to; });
-const sum = type => rows.filter(x => x.type === type).reduce((n, x) => n + Math.abs(Number(x.amt) || 0), 0);
+const sum = type => rows.filter(x => type === 'out' ? ['out','sale'].includes(x.type) : x.type === type).reduce((n, x) => n + Math.abs(Number(x.amt) || 0), 0);
 const unit = esc(p.unit || '');
 $('#ihSum').innerHTML = `<div class="in"><small>รับเข้า</small><b>${fmt(sum('in'))}</b><em>${unit}</em></div><div class="out"><small>เบิกจ่าย</small><b>${fmt(sum('out'))}</b><em>${unit}</em></div><div><small>ทั้งหมด</small><b>${rows.length}</b><em>ครั้ง</em></div>`;
 if (!rows.length) { $('#ihList').innerHTML = `<div class="ih-empty">${ihSticker(0, 'stk-empty')}${base.length ? 'ไม่พบรายการตามตัวกรองที่เลือก' : 'ยังไม่มีประวัติของรายการนี้'}</div>`; return; }
 const shown = rows.slice(0, st.limit);
 $('#ihList').innerHTML = shown.map((x, idx) => {
 const [ico, label, cls] = IH_KINDS[x.type], amt = Number(x.amt) || 0, d = new Date(Number(x.ts) || 0);
-const sign = x.type === 'in' ? '+' : x.type === 'out' ? '−' : amt > 0 ? '+' : amt < 0 ? '−' : '±';
+const sign = x.type === 'in' ? '+' : ['out','sale'].includes(x.type) ? '−' : amt > 0 ? '+' : amt < 0 ? '−' : '±';
 return `<div class="ih-item ${cls}"><span class="ih-ico" aria-hidden="true">${ico}</span><div class="ih-main"><div class="ih-line"><b>${label}</b><strong>${sign}${fmt(Math.abs(amt))} <small>${esc(x.unit || p.unit || '')}</small></strong></div><div class="ih-sub"><span>👤 ${esc(x.user || '-')}</span><span>${IH_DATE.format(d)} · ${IH_TIME.format(d)}</span></div><div class="ih-bal">คงเหลือ ${fmt(x.before)} → ${fmt(x.after)}</div>${x.note ? `<div class="ih-note">“${esc(x.note)}”</div>` : ''}</div>${!x.note && idx % 3 === 1 ? ihSticker(idx, 'stk-item') : ''}</div>`;
 }).join('') + (rows.length > shown.length ? `<button type="button" class="ih-more" id="ihMore">แสดงเพิ่มอีก ${Math.min(150, rows.length - shown.length)} รายการ</button>` : '');
 };
@@ -4789,9 +5080,10 @@ if (!p) return;
 const canMove = can.edit();
 const wideDesktop = isWideDesktop();
 const mobileSheet = !wideDesktop;
-const inner = `<h3>📦 จัดการวัตถุดิบ: ${esc(p.name)}</h3>
+const inner = `<h3>📦 จัดการสินค้า: ${esc(p.name)}</h3>
   <div style="background:var(--theme-soft);padding:12px;border-radius:12px;margin-bottom:14px;font-size:13.5px;border:1px solid var(--line);color:var(--ink);">
     <div>หมวดหมู่: <b>${esc(p.cat)}</b></div>
+    <div>ราคาขาย: <b>${posMoney(p.salePrice || 0)}</b></div>
     <div>คงเหลือ: <b style="font-size:16px;color:var(--acc);">${num(p.qty)}</b> ${esc(p.unit)} (ขั้นต่ำ: ${p.min})</div>
     <div>สถานะ: <b>${STX[status(p)]}</b> | ซัพพลายเออร์: <b>${esc(p.loc || '-')}</b></div>
   </div>
@@ -4844,23 +5136,24 @@ toast(p.qty <= p.min ? `บันทึกแล้ว — ${p.name} ใกล�
 function prodModal(id, draft = {}) {
 const target = id ? P.find(x => x.id === id) : null;
 if (id && !target) return;
-const p = target ? { ...target, ...draft } : { name: '', cat: '', unit: 'กิโลกรัม', qty: 0, min: 1, loc: '', ...draft };
+const p = target ? { ...target, ...draft } : { name: '', cat: '', unit: 'ชิ้น', qty: 0, min: 1, loc: '', salePrice: 0, ...draft };
 if (!p) return;
-openModal(`<h3>${id ? 'แก้ไขวัตถุดิบ' : 'เพิ่มวัตถุดิบใหม่'}</h3><button type="button" class="item-close prod-close" id="prodClose" aria-label="ปิดแท็บ">↓ ปิดแท็บ</button>
+openModal(`<h3>${id ? 'แก้ไขสินค้า' : 'เพิ่มสินค้าใหม่'}</h3><button type="button" class="item-close prod-close" id="prodClose" aria-label="ปิดแท็บ">↓ ปิดแท็บ</button>
   <form id="pf">
-   <label class="fld"><span>ชื่อวัตถุดิบ *</span><input class="in" name="name" required value="${esc(p.name)}"></label>
+   <label class="fld"><span>ชื่อสินค้า *</span><input class="in" name="name" required value="${esc(p.name)}"></label>
    <div class="g2">
      <label class="fld"><span>หมวดหมู่ *</span><div class="select-tools"><select class="in" name="cat" required><option value="">เลือกหมวดหมู่</option>${CATS.map(c => `<option ${p.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editCats" aria-label="แก้ไขหมวดหมู่">✎</button><button type="button" class="icon-tool add-tool" id="addCat" aria-label="เพิ่มหมวดหมู่">+</button>` : ''}</div></label>
      <label class="fld"><span>หน่วยนับ</span><div class="select-tools"><select class="in" name="unit">${[...new Set([...UNITS, p.unit].filter(Boolean))].map(u => `<option ${p.unit === u ? 'selected' : ''}>${esc(u)}</option>`).join('')}</select>${can.lists() ? `<button type="button" class="icon-tool" id="editUnits" aria-label="แก้ไขหน่วยนับ">✎</button><button type="button" class="icon-tool add-tool" id="addUnit" aria-label="เพิ่มหน่วยนับ">+</button>` : ''}</div></label>
    </div>
    <div class="g2">
-     ${id ? '' : `<label class="fld"><span>จำนวนเริ่มต้น *</span><input class="in" name="qty" type="number" min="0" step="1" inputmode="numeric" required value="${p.qty || 0}"></label>`}
-     <label class="fld"><span>แจ้งเตือนเมื่อเหลือต่ำกว่า</span><input class="in" name="min" type="number" min="0" step="1" inputmode="numeric" value="${p.min ?? 1}"></label>
+     <label class="fld"><span>ราคาขาย (บาท) *</span><input class="in" name="salePrice" type="number" min="0" step="0.01" inputmode="decimal" value="${Number(p.salePrice) || 0}" required></label>
+     <label class="fld"><span>แจ้งเตือนเมื่อเหลือน้อยกว่า</span><input class="in" name="min" type="number" min="0" step="1" inputmode="numeric" value="${p.min ?? 1}"></label>
    </div>
+   ${id ? '' : `<label class="fld"><span>จำนวนเริ่มต้น *</span><input class="in" name="qty" type="number" min="0" step="1" inputmode="numeric" required value="${p.qty || 0}"></label>`}
    <label class="fld"><span>ซัพพลายเออร์ / แหล่งจัดซื้อ</span><input class="in" name="loc" placeholder="เช่น เช่น ผู้จำหน่ายหรือบริษัทจัดซื้อ" value="${esc(p.loc || '')}"></label>
    <div class="acts"><button type="button" class="btn sec" onclick="closeModal()">ยกเลิก</button><button class="btn">${id ? 'บันทึก' : 'เพิ่มวัตถุดิบ'}</button></div>
   </form>`, 'product');
-const captureProductDraft = () => { const f = $('#pf'); return { name: fv(f, 'name'), cat: f.elements.cat.value, unit: f.elements.unit.value, qty: f.elements.qty ? f.elements.qty.value : p.qty, min: f.elements.min.value, loc: fv(f, 'loc') }; };
+const captureProductDraft = () => { const f = $('#pf'); return { name: fv(f, 'name'), cat: f.elements.cat.value, unit: f.elements.unit.value, salePrice: f.elements.salePrice.value, qty: f.elements.qty ? f.elements.qty.value : p.qty, min: f.elements.min.value, loc: fv(f, 'loc') }; };
 const prodCloseBtn = $('#prodClose'); if (prodCloseBtn) prodCloseBtn.onclick = () => closeModal(680);
 if ($('#editCats')) $('#editCats').onclick = () => optionsManager('categories', { type: 'product', id, draft: captureProductDraft() });
 if ($('#addCat')) $('#addCat').onclick = () => addOption('categories', { type: 'product', id, draft: captureProductDraft() });
@@ -4869,7 +5162,9 @@ if ($('#addUnit')) $('#addUnit').onclick = () => addOption('units', { type: 'pro
 $('#pf').onsubmit = e => {
 e.preventDefault();
 const form = e.target;
-const data = { name: fv(form, 'name'), cat: form.elements.cat.value, unit: fv(form, 'unit') || 'กิโลกรัม', min: Math.max(0, parseInt(form.elements.min.value, 10) || 0), loc: fv(form, 'loc') };
+const salePrice = Number(form.elements.salePrice.value);
+if (!Number.isFinite(salePrice) || salePrice < 0) return toast('ราคาขายต้องเป็นตัวเลขตั้งแต่ 0 บาทขึ้นไป', 1);
+const data = { name: fv(form, 'name'), cat: form.elements.cat.value, unit: fv(form, 'unit') || 'ชิ้น', salePrice, min: Math.max(0, parseInt(form.elements.min.value, 10) || 0), loc: fv(form, 'loc') };
 if (id) {
 Object.assign(target, data);
 delete target.cost; delete target.price;
@@ -4931,24 +5226,25 @@ const params = new URLSearchParams(location.search);
 const cardFilter = historyCardFilter;
 let dateFrom = params.get('historyFrom') || cardFilter?.from || '', dateTo = params.get('historyTo') || cardFilter?.to || '';
 const requestedType = params.get('historyType') || cardFilter?.type || '';
-const typeFilter = ['in', 'out', 'adjust', 'create', 'note', 'edit', 'delete', 'import'].includes(requestedType) ? requestedType : '';
+const typeFilter = ['in', 'out', 'sale', 'adjust', 'create', 'note', 'edit', 'delete', 'import'].includes(requestedType) ? requestedType : '';
 const requestedUser = params.get('historyUser') || '';
 const userNames = [...new Set([...U.map(user => user.name), ...L.map(item => item.user).filter(Boolean)])].filter(Boolean).sort((a,b) => a.localeCompare(b, 'th'));
 const selectedUser = userNames.find(name => name.toLowerCase() === requestedUser.toLowerCase()) || '';
-const typeLabels = { in: 'รับเข้า', out: 'เบิกจ่าย', adjust: 'ปรับยอด', create: 'เพิ่มวัตถุดิบ', note: 'รายการที่มีหมายเหตุ', edit: 'แก้ไขข้อมูล', delete: 'ลบวัตถุดิบ', import: 'นำเข้าวัตถุดิบ' };
+const typeLabels = { in: 'รับเข้า', out: 'เบิกจ่าย', sale: 'ขายสินค้า', adjust: 'ปรับยอด', create: 'เพิ่มสินค้า', note: 'รายการที่มีหมายเหตุ', edit: 'แก้ไขข้อมูล', delete: 'ลบสินค้า', import: 'นำเข้าสินค้า' };
 const legacyDate = params.get('historyDate') || '';
 if (!dateFrom && !dateTo && legacyDate) dateFrom = dateTo = legacyDate;
 const localDateKey = ts => { const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 if (dateFrom || dateTo) historyQuickKey = null;
 else if (historyQuickKey) { const dq = o => localDateKey(Date.now() - o * 864e5); [dateFrom, dateTo] = historyQuickKey === 'today' ? [dq(0), dq(0)] : historyQuickKey === 'yesterday' ? [dq(1), dq(1)] : historyQuickKey === 'month' ? [dq(29), dq(0)] : [dq(6), dq(0)]; }
-const l = L.filter(x => { const day = localDateKey(x.ts); return (!dateFrom || day >= dateFrom) && (!dateTo || day <= dateTo) && (!typeFilter || (typeFilter === 'note' ? !!String(x.note || '').trim() : x.type === typeFilter)) && (!selectedUser || String(x.user || '').toLowerCase() === selectedUser.toLowerCase()); });
+const l = L.filter(x => { const day = localDateKey(x.ts); return (!dateFrom || day >= dateFrom) && (!dateTo || day <= dateTo) && (!typeFilter || (typeFilter === 'note' ? !!String(x.note || '').trim() : typeFilter === 'out' ? ['out','sale'].includes(x.type) : x.type === typeFilter)) && (!selectedUser || String(x.user || '').toLowerCase() === selectedUser.toLowerCase()); });
 const quickRange = k => { const d = o => localDateKey(Date.now() - o * 864e5); return k === 'today' ? [d(0), d(0)] : k === 'yesterday' ? [d(1), d(1)] : k === 'month' ? [d(29), d(0)] : [d(6), d(0)]; };
 const quickActive = historyQuickKey || '';
 const periodText = `${dateFrom && dateTo ? `${dateFrom} ถึง ${dateTo}` : dateFrom ? `ตั้งแต่ ${dateFrom}` : dateTo ? `ถึง ${dateTo}` : 'ทุกวัน'}${typeFilter ? ` · เฉพาะ${typeLabels[typeFilter]}` : ''}${selectedUser ? ` · ผู้ทำรายการ ${selectedUser}` : ''}`;
-const LT = { in: ['รับเข้า', 'in'], out: ['เบิกจ่าย', 'out'], adjust: ['ปรับยอด', 'adjust'], create: ['เพิ่มวัตถุดิบ', 'create'], edit: ['แก้ไขข้อมูล', 'edit'], delete: ['ลบวัตถุดิบ', 'delete'], import: ['นำเข้าวัตถุดิบ', 'import'] };
+const LT = { in: ['รับเข้า', 'in'], out: ['เบิกจ่าย', 'out'], sale: ['ขายสินค้า', 'sale'], adjust: ['ปรับยอด', 'adjust'], create: ['เพิ่มสินค้า', 'create'], edit: ['แก้ไขข้อมูล', 'edit'], delete: ['ลบสินค้า', 'delete'], import: ['นำเข้าสินค้า', 'import'] };
 const historyIcons = {
 in: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 13h15l-1.2 7H5.7z"/><path d="M12 3.5v8.5m-3.5-3.5 3.5 3.5 3.5-3.5"/><path d="M8 16.5h8"/></svg>',
 out: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 13h15l-1.2 7H5.7z"/><path d="M12 12.5V4m-3.5 3.5L12 4l3.5 3.5"/><path d="M8 16.5h8"/></svg>',
+sale: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 13h15l-1.2 7H5.7z"/><path d="M12 12.5V4m-3.5 3.5L12 4l3.5 3.5"/><path d="M8 16.5h8"/></svg>',
 adjust: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M7 9h6m-3-3v6m5 6h4"/></svg>',
 create: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4-8-4Z"/><path d="M4 8v8l8 4 8-4V8m-8 4v8"/><path d="M18.5 2.5v5m-2.5-2.5h5"/></svg>',
 edit: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5 5 5M4 20l4.2-.8L20 7.4 16.6 4 4.8 15.8 4 20Z"/><path d="M13 20h7"/></svg>',
@@ -4960,7 +5256,7 @@ const historyProductUnits = new Map(P.map(product => [product.id, product.unit |
 const historyDateFormatter = new Intl.DateTimeFormat('th-TH', { dateStyle: 'medium', timeStyle: 'short' });
 const rowHtml = x => {
     const t = LT[x.type] || ['ทำรายการ', '', '📋', 'บันทึกรายการ'];
-    const amount = Number(x.amt || 0), delta = ['out', 'delete'].includes(x.type) ? '−' : x.type === 'in' ? '+' : amount > 0 ? '+' : amount < 0 ? '−' : '';
+    const amount = Number(x.amt || 0), delta = ['out', 'sale', 'delete'].includes(x.type) ? '−' : x.type === 'in' ? '+' : amount > 0 ? '+' : amount < 0 ? '−' : '';
     const unit = x.unit || historyProductUnits.get(x.pid) || '';
     const date = historyDateFormatter.format(new Date(x.ts));
     const role = x.role || historyUserRoles.get(x.user) || '';
@@ -5040,7 +5336,7 @@ history.pushState({}, '', url); render(); return;
 }
 const dashboardStockCard = e.target.closest('[data-dashboard-stock-filter]');
 if (dashboardStockCard && isDashboardWorkspace()) {
-F.q = ''; F.cat = '';
+stockMode = 'inventory'; F.q = ''; F.cat = '';
 F.sort = dashboardStockCard.dataset.dashboardStockFilter === 'all' ? 'name' : dashboardStockCard.dataset.dashboardStockFilter;
 if (tab === 'stock' && isWideDesktop()) { render(); return; }
 pageDirection = 'prev'; tab = 'stock'; render(true); return;
